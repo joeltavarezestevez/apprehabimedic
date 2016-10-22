@@ -1,0 +1,94 @@
+[
+    {
+        "id": 1,
+        "nombres": "ARS SENASA"
+    }, 
+    {
+        "id": 2,
+        "nombres": "ARS APS"
+    }, 
+    {
+        "id": 3,
+        "nombres": "ARS ASEMAP"
+    }, 
+    {
+        "id": 4,
+        "nombres": "ARS BMI"
+    }, 
+    {
+        "id": 5,
+        "nombres": "ARS CMD"
+    }, 
+    {
+        "id": 6,
+        "nombres": "ARS Constitucion"
+    }, 
+    {
+        "id": 7,
+        "nombres": "ARS DR. Yunen"
+    }, 
+    {
+        "id": 8,
+        "nombres": "ARS FFAA"
+    }, 
+    {
+        "id": 9,
+        "nombres": "ARS Futuro"
+    },
+    {
+        "id": 10, 
+        "nombres": "ARS GMA"
+    },
+    {
+        "id": 11, 
+        "nombres": "ARS Humano"
+    },
+    {
+        "id": 12, 
+        "nombres": "ARS MetaSalud"
+    },
+    {
+        "id": 13, 
+        "nombres": "ARS Monumental"
+    },
+    {
+        "id": 14, 
+        "nombres": "ARS Salud Segura"
+    },
+    {
+        "id": 15, 
+        "nombres": "ARS SEMUNASED"
+    },    
+    {
+        "id": 16, 
+        "nombres": "ARS P.N."
+    },
+    {
+        "id": 17, 
+        "nombres": "ARS Palic Salud"
+    },
+    {
+        "id": 18, 
+        "nombres": "ARS Plan Salud"
+    },    
+    {
+        "id": 19, 
+        "nombres": "ARS Renacer"
+    },    
+    {
+        "id": 20, 
+        "nombres": "ARS Reservas"
+    },    
+    {
+        "id": 21, 
+        "nombres": "ARS SEMMA"
+    },    
+    {
+        "id": 22, 
+        "nombres": "ARS SIMAG"
+    },    
+    {
+        "id": 23, 
+        "nombres": "ARS Universal"
+    }  
+]

@@ -1,0 +1,191 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Editar Consulta';">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.consultas">Consultas</a>
+            </li>
+            <li class="active">
+                <strong>Editar consulta</strong>
+            </li>
+        </ol>
+        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Datos de la Consulta</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-bottom-0">
+                    <div class="row well">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-lg-4 text-left">
+                                    <label class="form-label" for="field-1">Paciente</label>
+                                    <br>
+                                    <label>{{consulta.paciente.persona.persona_nombres}} {{consulta.paciente.persona.persona_apellidos}}
+                                    </label>                                    
+                                </div>
+                                <div class="col-lg-4 text-left">
+                                    <label class="form-label" for="field-1">Doctor</label>
+                                    <br>
+                                    <label>{{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}
+                                    </label>                                    
+                                </div>
+                                <div class="col-lg-4 text-left">
+                                    <label class="form-label" for="field-1">Fecha</label>
+                                    <br>
+                                    <label>{{consulta.consulta_fecha |date:'dd/MM/yyyy'}}
+                                    </label>                                    
+                                </div>                                
+                            </div>
+                        </div>                         
+                    </div>                        
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="consulta_motivo">Motivo de Consulta <span class="text-danger">*</span></label>
+                                <span class="desc">Detalle el(los) motivo(s) de la consulta</span>
+                                <div class="controls">
+                                    <textarea class="form-control" cols="2" rows="5" id="consulta_motivo" name="consulta_motivo" ng-model="consulta.consulta_motivo"></textarea>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="consulta_historia">Historia de la enfermedad actual <span class="text-danger"> * </span></label>
+                                <span class="desc">Describa la historia actual de la enfermedad</span>
+                                <div class="controls">
+                                    <textarea class="form-control" cols="3" rows="10" id="consulta_historia" name="consulta_historia" ng-model="consulta.consulta_historia"></textarea>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_app">App <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_app" name="consulta_app" ng-model="consulta.consulta_app" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_toxicos">T&oacute;xicos <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_toxicos" name="consulta_toxicos" ng-model="consulta.consulta_toxicos">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_alergicos">Al&eacute;rgicos <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_alergicos" name="consulta_alergicos" ng-model="consulta.consulta_alergicos">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_medicamentos">Medicamentos <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_medicamentos" name="consulta_medicamentos" ng-model="consulta.consulta_medicamentos" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_qx">Qx <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_qx" name="consulta_qx" ng-model="consulta.consulta_qx">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_transfusionales">Transfusionales <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_transfusionales" name="consulta_transfusionales" ng-model="consulta.consulta_transfusionales">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Examen f&iacute;sico</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-bottom-0">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_examen_fisico_extension">Extensi&oacute;n <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_examen_fisico_extension" name="consulta_examen_fisico_extension" ng-model="consulta.consulta_examen_fisico_extension" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_examen_fisico_flexion">Flexi&oacute;n <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_examen_fisico_flexion" name="consulta_examen_fisico_flexion" ng-model="consulta.consulta_examen_fisico_flexion">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <label class="form-label" for="consulta_examen_fisico_ead">E.A.D. <span class="text-danger">*</span></label>
+                                <span class="desc"></span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="consulta_examen_fisico_ead" name="consulta_examen_fisico_ead" ng-model="consulta.consulta_examen_fisico_ead">
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                       
+                </div>
+            </section>
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left"></h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-bottom-0">
+                  <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="consulta_diagnostico">Diagn&oacute;stico <span class="text-danger">*</span></label>
+                                <span class="desc">Detalle el diagn&oacute;stico de la consulta</span>
+                                <div class="controls">
+                                    <textarea class="form-control" cols="2" rows="5" id="consulta_diagnostico" name="consulta_diagnostico" ng-model="consulta.consulta_diagnostico"></textarea>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+            </section>
+            <div class="row text-center">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled='form.$invalid' ng-click="update()"> Guardar </button>
+                        <button type="button" class="btn btn-lg btn-danger" ng-click="back()"> Cancelar </button>
+                    </div>
+                </div>
+            </div>
+        </form>            
+    </div>
+</div>

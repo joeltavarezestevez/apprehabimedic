@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Coding Notes by Daniele Zanni">
+
+    <title>Mock up your REST API with JSON Server - Better Pixels</title>
+
+    <!-- OPEN GRAPH -->
+    <meta content="Better Pixels" property="og:site_name">
+    
+    <meta content="Mock up your REST API with JSON Server" property="og:title">
+    
+    
+    <meta content="article" property="og:type">
+    
+    
+    <meta content="Use JSON Server to create REST API in 5 minutes" property="og:description">
+    
+    
+    <meta content="http://www.betterpixels.co.uk/projects/2015/05/09/mock-up-your-rest-api-with-json-server/" property="og:url">
+    
+    
+    <meta content="2015-05-09T00:00:00+00:00" property="article:published_time">
+    <meta content="http://www.betterpixels.co.uk/pages/about.html" property="article:author">
+    
+    
+    <meta content="http://www.betterpixels.co.uk/img/violet.png" property="og:image">
+    
+    
+    
+    <meta content="projects" property="article:section">
+    
+    
+    
+    
+    <meta content="code" property="article:tag">
+    
+    <meta content="node.js" property="article:tag">
+    
+    <meta content="modules" property="article:tag">
+    
+    <meta content="back-end" property="article:tag">
+    
+    <meta content="javascript" property="article:tag">
+    
+    
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@better_pixels">
+    <meta name="twitter:creator" content="@syymza">
+    
+    <meta name="twitter:title" content="Mock up your REST API with JSON Server">
+    
+    
+    <meta name="twitter:description" content="Use JSON Server to create REST API in 5 minutes">
+    
+    
+    <meta name="twitter:image" content="http://www.betterpixels.co.uk/img/violet.png">
+    
+
+    <link rel="canonical" href="http://www.betterpixels.co.uk/projects/2015/05/09/mock-up-your-rest-api-with-json-server/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Favivon -->
+    <link rel="shortcut icon" href="/myfavicon.ico" type="image/x-icon">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Better Pixels</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">About</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/violet.png')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Mock up your REST API with JSON Server</h1>
+                    
+                    <h2 class="subheading">Set up your Back End prototype in 5 minutes</h2>
+                    
+                    <span class="meta">Posted by Daniele Zanni on May 9, 2015</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <h2 id="description">Description</h2>
+
+<p>Sometimes you are hitching for starting to work on the Front End of your application (or on your new mobile app), but have to wait for your pal to finish that REST API you agreed on days ago.
+You could create a static JSON file in your application, but that would be so… well.. static!</p>
+
+<p>What if I told you that you can mock up that REST API you are waiting for in just 5 minutes and you can start to write your client code right now, without having to wait?
+<strong><a href="https://github.com/typicode/json-server">JSON Server</a></strong> is a very useful <em>npm module</em>, open source and released under the MIT licence, that allows developers to prototype their Back End quickly.
+When the actual real API will be ready, it will just be a matter of switching the base URL your Front End sends requests to.</p>
+
+<h2 id="the-demo">The demo</h2>
+
+<p>Let’s say you want to create the killer TODO app. You synchronise the list of your tasks to your Back End and you use your REST API to:</p>
+
+<ul>
+  <li>retrieve the list of tasks;</li>
+  <li>add a new task;</li>
+  <li>get the details of a specific task;</li>
+  <li>change the state of a task from “TO-DO” to “DONE” (and vice versa);</li>
+  <li>delete a task.</li>
+</ul>
+
+<p>What you need is an API with an endpoint <code>/tasks</code> and the possibility to send <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code> and <code>DELETE</code> requests to it.
+In particular:</p>
+
+<ul>
+  <li><code>GET /tasks</code> will retrieve a list of tasks;</li>
+  <li><code>POST /tasks</code> will add a task to the list of tasks;</li>
+  <li><code>GET /tasks/:id</code> will retrieve a single task;</li>
+  <li><code>PUT /tasks/:id</code> will edit a property of a task;</li>
+  <li><code>DELETE /tasks/:id</code> will delete a task.</li>
+</ul>
+
+<hr />
+
+<h2 id="the-tools">The tools</h2>
+
+<ul>
+  <li><strong>JSON Server</strong>. The magic will happen there.</li>
+  <li><strong><a href="https://nodejs.org/">Node.js</a></strong>. <em>JSON Server</em> is an <em>npm module</em>, hence it requires node.</li>
+  <li><strong>Chrome &gt;= v42</strong>. Since Chrome 42, <code>fetch()</code> (<em><a href="https://fetch.spec.whatwg.org/">here more</a></em>) is fully supported by Chrome. I can essentially send GET and POST easily for the Chrome console. Tools like <strong><a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en">Postman</a></strong> are now getting dusty on my machine.</li>
+</ul>
+
+<hr />
+
+<h2 id="setup">Setup</h2>
+
+<p>1.Install <em>JSON Server</em> as a global module:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>npm install -g json-server</code></pre></div>
+
+<p>2.Create a project folder and add a file named <em>db.json</em> to it:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#Create the new project folder</span>
+<span class="nv">$ </span>mkdir json-server-api
+
+<span class="c">#Enter the newly created folder</span>
+<span class="nv">$ </span><span class="nb">cd </span>json-server-api
+
+<span class="c">#Create &#39;db.json&#39;</span>
+<span class="nv">$ </span>touch db.json</code></pre></div>
+
+<hr />
+
+<h2 id="the-code">The code</h2>
+
+<p>There is actually no code involved. You will only have to edit your <em>db.json</em> file to specify the endpoints you want to provide.
+In our case we only have a single endpoint (<code>/tasks</code>) to add, and we want to start with an empty list of tasks. Open it with your favorite editor and add the following lines:</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;tasks&quot;</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span></code></pre></div>
+
+<p>Now you can start <em>JSON server</em> and it will listen to requests on the <code>/tasks</code> endpoint and respond to them appropriately.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>json-server db.json</code></pre></div>
+
+<p>That’s all folks. You have your REST endpoint. Let’s check with Chrome’s <em>Developer Tools</em> that everything works as we expect.</p>
+
+<hr />
+
+<h2 id="testing-the-endpoint">Testing the endpoint</h2>
+
+<p>In this paragraph, I will assume you are testing on your local machine. If you are connected through <code>SSH</code> to the machine you are deploying to, I assume you will be able to change any reference to <code>localhost</code> to the IP of that machine.</p>
+
+<p>By default, <em>JSON Server</em> listens to requests on the port 3000. You can verify that by going to <code>http://localhost:3000/</code> with your browser (once there you should see a nice welcome page listing the available endpoints).</p>
+
+<p>Open Chrome’s <em>Developer Tools</em> and go to the <em>Console</em> tab. You can easily log the list of tasks pasting the following snippet (<code>fetch()</code> uses <em>Javascript Promises</em>):</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://localhost:3000/tasks/&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+  <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsed json: &#39;</span><span class="p">,</span> <span class="nx">json</span><span class="p">)</span>
+  <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsing failed: &#39;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">)</span>
+  <span class="p">});</span></code></pre></div>
+
+<p>Your console should at this point have logged an empty array. We do not in fact have any task yet in our <em>db.json</em>. Let’s add one.
+We have probably a <em>Model</em> of what a task is in our application, and we will have to serialize a JSON representation of it and send it with a <code>POST</code> to <code>/tasks/</code>.</p>
+
+<p>A possible task is the following:</p>
+
+<div class="highlight"><pre><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="s2">&quot;Add a post to the blog about Angular2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;dueDate&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-05-23T18:25:43.511Z&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;done&quot;</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span></code></pre></div>
+
+<p>We can post it to our <code>/tasks</code> endpoint with <code>fetch()</code> from the console:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://localhost:3000/tasks/&#39;</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span>
+  <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;Accept&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">body</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+       <span class="s2">&quot;title&quot;</span><span class="o">:</span>   <span class="s2">&quot;Add a blogpost about Angular2&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;dueDate&quot;</span><span class="o">:</span> <span class="s2">&quot;2015-05-23T18:25:43.511Z&quot;</span><span class="p">,</span>
+       <span class="s2">&quot;done&quot;</span><span class="o">:</span> <span class="kc">false</span>
+   <span class="p">})</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+    <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsed json: &#39;</span><span class="p">,</span> <span class="nx">json</span><span class="p">)</span>
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsing failed: &#39;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">)</span>
+    <span class="p">});</span></code></pre></div>
+
+<p><em>JSON Server</em> will respond at this point with <em>201 Created</em> (which should be visible in the <em>Network</em> tab of the <em>Developer Tools</em>) and the newly created task with an <code>id</code> (which should be 1 since this is the first task we are adding).</p>
+
+<p><img src="/img/fetch-post.png" alt="Adding the first task to our list" />
+<span class="caption text-muted">We have successfully added a task to the list, with id 1.</span></p>
+
+<p>We can now ask again for the list of tasks, re-sending a <code>GET</code> request to <code>/tasks</code> (this time we will see an array with a single element) or ask about a single task, sending for example a <code>GET</code> to <code>/tasks/1</code> (we should receive a single Object in the response).</p>
+
+<p>Very similarly, we can now send a <code>PUT</code> on the single resource (task) request to edit the <code>done</code> property to become true:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://localhost:3000/tasks/1&#39;</span><span class="p">,</span> <span class="p">{</span>
+  <span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;put&#39;</span><span class="p">,</span>
+  <span class="nx">headers</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;Accept&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Content-Type&#39;</span><span class="o">:</span> <span class="s1">&#39;application/json&#39;</span>
+  <span class="p">},</span>
+  <span class="nx">body</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+       <span class="s2">&quot;done&quot;</span><span class="o">:</span> <span class="kc">true</span>
+   <span class="p">})</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+    <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsed json: &#39;</span><span class="p">,</span> <span class="nx">json</span><span class="p">)</span>
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsing failed: &#39;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">)</span>
+    <span class="p">});</span></code></pre></div>
+
+<p>If we send another <code>GET</code> to <code>/task/1</code>,  we are going to see that the task is marked as done.</p>
+
+<p>Before testing the <code>DELETE</code> request, we can also open the <em>db.json</em> file to verify that the changes are being kept up to date. You should in fact see the task you have added in the <code>tasks</code> property of the main JSON object.
+<em>JSON Server</em> is using <strong><a href="https://github.com/typicode/lowdb">lowdb</a></strong> under the hood to achieve the synchronization.</p>
+
+<p>If you finally want to delete the task, send another request using <code>fetch()</code> passing <code>'delete'</code> in the method property:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;http://localhost:3000/tasks/1&#39;</span><span class="p">,</span> <span class="p">{</span>
+<span class="nx">method</span><span class="o">:</span> <span class="s1">&#39;delete&#39;</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+ <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsed json: &#39;</span><span class="p">,</span> <span class="nx">json</span><span class="p">)</span>
+ <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">ex</span><span class="p">)</span> <span class="p">{</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;parsing failed: &#39;</span><span class="p">,</span> <span class="nx">ex</span><span class="p">)</span>
+ <span class="p">});</span></code></pre></div>
+
+<p>Now if you fetch again the list of tasks, you should once again receive an empty array.</p>
+
+<hr />
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>This is just a simple demo using <em>JSON Server</em> and the structure of our tasks was quite simple. You can do a lot more. For instance, you could use pagination, you can sort elements and you can make full-text searches.
+Just have a look at the <em><a href="https://github.com/typicode/json-server">JSON Server Github repository</a></em> where you will find the documentation and some examples.</p>
+
+<p>More importantly, you will not have any excuse to procrastinate: you can immediately start to create a new application, even if you do not have the Back End API ready yet.</p>
+
+
+                <hr>
+
+                
+
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/projects/2015/05/04/get-notified-when-someone-posts-an-article-from-about-javascript-on-hacker-news-using-nodejs-firebase-and-emailjs/" data-toggle="tooltip" data-placement="top" title="Get Notified When Someone Posts An Article From About Javascript on Hacker News Using io.js, Firebase and Email.js">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+                <hr>
+
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+    
+    var disqus_shortname = 'betterpixels';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' +  disqus_shortname  + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+            </div>
+
+        </div>
+    </div>
+</article>
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/syymza">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://github.com/syymza">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.linkedin.com/in/danielezanni">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Better Pixels 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+<!-- Github -->
+
+
+<!-- Analytics -->
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+
+
+
+
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-4573836-10']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+
+
+</body>
+
+</html>

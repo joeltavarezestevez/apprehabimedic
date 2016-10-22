@@ -1,0 +1,44 @@
+<div class='content-wrapper' ng-controller="PacientesCtrl" ng-init="app.settings.pagetitle = 'Pacientes';">
+    <div class="col-lg-12 well" ng-hide="1==1">
+        <br>
+        <h4 class="text-danger text-center">No tiene permisos para acceder a esta opción</h4>
+        <br>
+    </div> 
+    <div class="col-lg-12" ng-hide="loading">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <strong class="active">Pacientes</strong>
+            </li>
+        </ol>           
+        <a class="btn btn-lg btn-success" href="#/app/pacientes/nuevo"><i class="fa fa-plus"></i>&nbsp;Nuevo Paciente</a>
+        <section class="box ">
+            <header class="panel_header">
+                <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Pacientes</h2>
+            </header>
+            <div class="content-body padding-bottom-15">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="PacientesTable">
+                        <table class="table table-striped" ui-jq="dataTable" ui-options="tbOptions" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:10%"><i class="fa fa-image"></i></th>
+                                    <th style="width:25%">Nombre</th>
+                                    <th style="width:15%">Telefono</th>
+                                    <th style="width:25%">Correo Electr&oacute;nico</th>
+                                    <th style="width:10">Balance</th>
+                                    <th style="width:10%">Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,599 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Registrar Paciente';">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.pacientes">Pacientes</a>
+            </li>
+            <li class="active">
+                <strong>Registrar paciente</strong>
+            </li>
+        </ol>
+        <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-hide="!alert">
+            <button type="button" class="close" ng-click="closeAlert()">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div>
+                <span class="ng-binding ng-scope">
+                    Errores al crear el registro:
+                    <li class="danger" ng-repeat="mensaje in mensajes">{{mensaje}}.</li>
+                </span>
+            </div>
+        </div>
+        <form id="form" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">        
+            <uib-tabset class="tab-container primary">
+                <uib-tab>
+                    <uib-tab-heading>
+                        <i class="material-icons">person</i> Datos del paciente
+                    </uib-tab-heading>    
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Información General</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="persona_nombres">Nombres <span class="text-danger">*</span></label>
+                                        <span class="desc">Escriba los nombres del paciente</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Nombres del Paciente" id="persona_nombres" name="persona_nombres" ng-model="paciente.persona_nombres" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="persona_apellidos">Apellidos <span class="text-danger">*</span></label>
+                                        <span class="desc">Escriba los apellidos del paciente</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Apellidos del Paciente" id="persona_apellidos" name="persona_apellidos" ng-model="paciente.persona_apellidos" required>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-controller="DatepickerDemoCtrl">
+                                        <label class="form-label" for="persona_fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
+                                        <span class="desc">Seleccione la fecha de nacimiento</span>
+                                        <div class="input-group" inputgroup>
+                                            <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2016-07-27'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" id="persona_fecha_nacimiento" ng-model="paciente.persona_fecha_nacimiento">
+                                            <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #999;"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                            
+                                        <label class="form-label" for="field-1">Lugar de Nacimiento <span class="text-danger">*</span></label>
+                                        <span class="desc">Seleccione el lugar de nacimiento</span>
+                                        <div class="controls">
+                                            <select ui-jq="chosen" class="form-control" ng-model="paciente.pais_id" required>
+                                                <option value="">Seleccione el pais</option>
+                                                <option ng-repeat="pais in paises" value="{{pais.id}}">{{pais.pais_nombre}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>                        
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="field-5">Estado Civil <span class="text-danger">*</span></label>
+                                        <span class="desc">Elija el estado civil del paciente</span>
+                                        <div class="radio" ng-repeat="estado_civil in estados_civiles">
+                                            <label class="icheck icheck-info">
+                                                <input type="radio" name="estado_civil" value="{{estado_civil.id}}" ng-model="paciente.estado_civil_id" required>
+                                                <i></i> {{estado_civil.estado_civil_nombre}}
+                                            </label>
+                                        </div>                                          
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="field-5">Sexo <span class="text-danger">*</span></label>
+                                        <span class="desc">Elija el sexo del paciente</span>
+                                        <div class="radio" ng-repeat="sexo in sexos">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="sexo" value="{{sexo.id}}" ng-model="paciente.sexo_id" required>
+                                                <i></i> {{sexo.sexo_nombre}}
+                                            </label>
+                                        </div>
+                                    </div>                                               
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Imagen de perfil</label>
+                                        <span class="desc">Elija una imagen de su PC o tome una Imagen desde la c&aacute;mara</span>
+                                        <div class="alert alert-error ng-scope" ng-show="webcamError" style="">
+                                            <span>Webcam could not be started. Did you give access to it?</span>
+                                        </div>
+                                        <br>
+                                        <webcam ng-if="!paciente.persona_imagen_perfil" channel="channel" 
+                                                on-streaming="onSuccess()" 
+                                                on-error="onError(err)" 
+                                                on-stream="onStream(stream)" 
+                                                class="img-responsive">
+                                        </webcam>
+                                        <div ng-if="paciente.persona_imagen_perfil">&nbsp;</div>
+                                        <img ng-if="paciente.persona_imagen_perfil" src="{{paciente.persona_imagen_perfil}}" width="320" class="img-responsive">
+                                        <canvas style="display: none" id="snapshot"></canvas>
+                                        <input class="ng-hide" type="file" id="trigger" onchange="angular.element(this).scope().setImage(this)" accept="image/*">
+                                        <div class="row btn-iconic margin-left-30">
+                                            <button ng-if="!paciente.persona_imagen_perfil" type="button" class="btn btn-primary" ng-click="makeSnapshot()">
+                                                <i class="fa fa-camera"></i>
+                                            </button>
+                                            <button ng-if="!paciente.persona_imagen_perfil" type="button" class="btn btn-info" onclick="openWindow()">
+                                                <i class="fa fa-image"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger" ng-click="clearImage()">
+                                                <i class="fa fa-close"></i>
+                                            </button>                                            
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Datos de Contacto</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="persona_correo_electronico">Correo Electr&oacute;nico</label>
+                                        <span class="desc">Ej. joseperez@rehabimedic.com, etc.</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required ng-touched" id="persona_correo_electronico" placeholder="ejemplo@example.com" ng-model="paciente.persona_correo_electronico">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="persona_telefono">Tel&eacute;fono <span class="text-danger">*</span></label>
+                                        <span class="desc">Ej. (999) 999-9999, etc.</span>
+                                        <div class="controls">
+                                            <input id="persona_telefono" name="persona_telefono" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="paciente.persona_telefono" model-view-value="true" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="persona_celular">Celular</label>
+                                        <span class="desc">Ej. (999) 999-9999, etc.</span>
+                                        <div class="controls">
+                                            <input id="persona_celular" name="persona_celular" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="paciente.persona_celular" model-view-value="true">
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="paciente_direccion">Dirección <span class="text-danger">*</span></label>
+                                        <span class="desc">Ej. Calle 26, #46, Los Prados, Santiago, etc.</span>
+                                        <div class="controls">
+                                            <textarea class="form-control" cols="3" id="paciente_direccion" name="paciente_direccion" ng-model="paciente.persona_direccion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                      
+                        </div>
+                    </section>
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Datos de Seguro</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Tiene Seguro? <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_seguro" value="1" ng-model="paciente.seguro" required>
+                                                <i></i> Si
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_seguro" value="0" ng-model="paciente.seguro" required>
+                                                <i></i> No
+                                            </label>
+                                        </div>                                
+                                    </div>                                 
+                                </div>                               
+                            </div>
+                            <br>
+                            <div class="row" ng-if="paciente.seguro == 1">                    
+                               <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="paciente_poliza">No. de Poliza</label>
+                                        <span class="desc">Escriba el no. de poliza del paciente</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="No. de Poliza del Paciente" id="paciente_poliza" name="paciente_poliza" ng-model="paciente.paciente_numero_poliza">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                            
+                                        <label class="form-label" for="field-1">Aseguradora</label>
+                                        <span class="desc">Seleccione la aseguradora del paciente</span>
+                                        <div class="controls">
+                                            <select ui-jq="chosen" class="form-control" ng-model="paciente.aseguradora_id" required>
+                                                <option value="">Seleccione la aseguradora</option>
+                                                <option ng-repeat="aseguradora in aseguradoras" value="{{aseguradora.id}}">{{aseguradora.aseguradora_nombre}}</option>
+                                            </select>                                       
+                                        </div>
+                                    </div>
+                                </div>
+                               <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="paciente_poliza">NSS</label>
+                                        <span class="desc">Escriba el N&uacute;mero de Seguro Social</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="NSS del Paciente" id="paciente_poliza" name="paciente_poliza" ng-model="paciente.paciente_nss">
+                                        </div>
+                                    </div>
+                                </div>                                 
+                            </div>
+                        </div>
+                    </section>
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Datos de Empleo</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Trabaja? <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_empleo_estado" value="1" ng-model="paciente.paciente_empleo_estado" required>
+                                                <i></i> Si
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_empleo_estado" value="0" ng-model="paciente.paciente_empleo_estado" required>
+                                                <i></i> No
+                                            </label>
+                                        </div>                                
+                                    </div>                                 
+                                </div>                               
+                            </div>
+                            <br>
+                            <div class="row" ng-if="paciente.paciente_empleo_estado == 1">
+                                <div class="form-group">
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="paciente_empleo_empresa">Nombre de la Empresa/Instituci&oacute;n</label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Nombre de la Empresa" id="paciente_empleo_empresa" name="paciente_empleo_empresa" ng-model="paciente.paciente_empleo_empresa">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="paciente_empleo_empresa_telefono">Tel&eacute;fono</label>
+                                        <span class="desc">Ej. (999) 999-9999</span>
+                                        <div class="controls">
+                                            <input id="paciente_empleo_empresa_telefono" name="paciente_empleo_empresa_telefono" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="paciente.paciente_empleo_empresa_telefono" model-view-value="true">
+                                        </div>
+                                    </div>  
+                                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-1">Tiempo en la empresa</label>
+                                        <div class="controls">
+                                            <input ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="50" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" id="paciente_empleo_empresa_tiempo" name="paciente_empleo_empresa_tiempo" ng-model="paciente.paciente_empleo_empresa_tiempo">
+                                        </div>                                        
+                                    </div>                            
+                                </div>
+                            </div>
+                            <div class="row" ng-if="paciente.paciente_empleo_estado == 1">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="paciente_empleo_direccion">Dirección</label>
+                                        <span class="desc">Ej. Calle 26, #46, Los Prados, Santiago, etc.</span>
+                                        <div class="controls">
+                                            <textarea class="form-control" cols="3" id="paciente_empleo_empresa_direccion" name="paciente_empleo_empresa_direccion" ng-model="paciente.paciente_empleo_empresa_direccion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="row" ng-if="paciente.paciente_empleo_estado == 1">
+                                <div class="form-group">
+                                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                                        <label class="form-label" for="field-5">Tipo de Empleo</label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_tipo_empleo" value="1" ng-model="paciente.tipo_empleado_id">
+                                                <i></i> Empleado Privado
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_tipo_empleo" value="2" ng-model="paciente.tipo_empleado_id">
+                                                <i></i> Empleado P&uacute;blico
+                                            </label>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">                            
+                                        <label class="form-label" for="field-5">Jornada</label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_empleo_jornada" value="completa" ng-model="paciente.paciente_empleo_jornada">
+                                                <i></i> Completa
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_empleo_jornada" value="parcial" ng-model="paciente.paciente_empleo_jornada">
+                                                <i></i> Parcial
+                                            </label>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">                            
+                                        <label class="form-label" for="field-5">Horario</label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_empleo_horario" value="diurno" ng-model="paciente.paciente_empleo_horario">
+                                                <i></i> Diurno
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_empleo_horario" value="nocturno" ng-model="paciente.paciente_empleo_horario">
+                                                <i></i> Nocturno
+                                            </label>
+                                        </div>                                
+                                    </div>                            
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Datos de Referencia</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Tipo de Referencia <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="referencia_tipo" value="doctor" ng-model="paciente.referencia_tipo" required>
+                                                <i></i> Doctor (a)
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="referencia_tipo" value="amigo" ng-model="paciente.referencia_tipo">
+                                                <i></i> Amigo (a)
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="referencia_tipo" value="familiar" ng-model="paciente.referencia_tipo">
+                                                <i></i> Familiar
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="referencia_tipo" value="otro" ng-model="paciente.referencia_tipo">
+                                                <i></i> Otro    
+                                            </label>
+                                        </div>                                        
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="referencia_tipo" value="ninguno" ng-model="paciente.referencia_tipo" checked="checked">
+                                                <i></i> Ninguno (a)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row" ng-if="paciente.referencia_tipo != 'ninguno'">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="persona_referencia">Nombre de la Persona Referente</label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" id="persona_referencia" name="paciente_persona_referencia" ng-model="paciente.persona_referencia">
+                                        </div>
+                                    </div>                            
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </section>
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Datos Clinicos</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
+                                        <label class="form-label" for="field-1">Tipo de sangre <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <select ui-jq="chosen" class="form-control" ng-model="paciente.grupo_sanguineo_id" required>
+                                                <option value="">Seleccione tipo de sangre</option>
+                                                <option ng-repeat="grupo_sanguineo in grupos_sanguineos" value="{{grupo_sanguineo.id}}">{{grupo_sanguineo.grupo_sanguineo_nombre}}</option>
+                                            </select>                                         
+                                        </div>                                
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-7 col-xs-12">
+                                        <label class="form-label" for="field-1">Sufre de alguna enfermedad? <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <select ui-jq="chosen" multiple class="form-control" data-placeholder="Seleccione todas las posibles" ng-model="paciente.enfermedad_id">
+                                                <option ng-repeat="enfermedad in enfermedades" value="{{enfermedad.id}}">{{enfermedad.enfermedad_nombre}}</option>
+                                            </select>                                           
+                                        </div>
+                                    </div>                                 
+                                </div>                               
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-1">Ha sufrido alguna cirug&iacute;a?</label>
+                                        <span class="desc">Escriba todas las posibles</span>
+                                        <div class="controls">
+                                            <input type="text" ui-jq="tagsinput" class="form-control" ng-model="paciente.cirugias">
+                                        </div>
+                                    </div>
+                                </div>                                        
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Ha sufrido alguna fractura? <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_fracturas" value="1" ng-model="paciente.fractura" required>
+                                                <i></i> Si
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_fracturas" value="2" ng-model="paciente.fractura" checked="checked" required>
+                                                <i></i> No
+                                            </label>
+                                        </div>                                
+                                    </div>
+                                    <br>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" ng-if="paciente.fractura == 1">
+                                        <label class="form-label" for="field-1">Fracturas</label>
+                                        <span class="desc"></span>
+                                        <div class="controls">
+                                            <select ui-jq="chosen" multiple class="form-control" data-placeholder="Seleccione todas las posibles" ng-model="paciente.fracturas">
+                                                <option ng-repeat="cuerpo_parte in cuerpo_partes" value="{{cuerpo_parte.id}}">{{cuerpo_parte.cuerpo_parte_nombre}}</option>
+                                            </select>                                         
+                                        </div>
+                                    </div>                              
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Ha estado interno alguna vez? <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_interno" value="1" ng-model="paciente.paciente_interno" required>
+                                                <i></i> Si
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_interno" value="0" ng-model="paciente.paciente_interno" checked="checked" required>
+                                                <i></i> No
+                                            </label>
+                                        </div>                                
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-5">Ha recibido transfusi&oacute;n de sangre? <span class="text-danger">*</span></label>
+                                        <span class="desc"></span>
+                                        <div class="radio">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="paciente_transfusiones" value="1" ng-model="paciente.paciente_transfusiones" required>
+                                                <i></i> Si
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label class="icheck icheck-danger">
+                                                <input type="radio" name="paciente_transfusiones" value="0" ng-model="paciente.paciente_transfusiones" required>
+                                                <i></i> No
+                                            </label>
+                                        </div>                                
+                                    </div>                              
+                                </div>
+                            </div>    
+                            <br>
+                            <div class="row" ng-if="paciente.paciente_interno == 1">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="field-1">Dias que estuvo interno</label>
+                                        <div class="controls">
+                                            <input ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="50" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="paciente.paciente_interno_dias">
+                                        </div>                                        
+                                    </div>  
+                                </div>
+                            </div>                    
+                        </div>
+                    </section>
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Contacto de Emergencia</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="persona_contacto_nombre">Nombre de la persona <span class="text-danger">*</span></label>
+                                        <span class="desc">Persona a contactar en caso de emergencia</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" id="persona_contacto_nombre" placeholder="Nombre de la persona" ng-model="paciente.contacto_nombre" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="persona_contacto_telefono">Tel&eacute;fono de la persona <span class="text-danger">*</span></label>
+                                        <span class="desc">Ej. (999) 999-9999, etc.</span>
+                                        <div class="controls">
+                                            <input id="persona_contacto_telefono" name="persona_contacto_telefono" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="paciente.contacto_telefono" model-view-value="true">                                            
+                                        </div>
+                                    </div>                      
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </section>                    
+                </uib-tab>
+            </uib-tabset>
+            <br>
+            <div class="row text-center">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled='form.$invalid' ng-click="save()"> Guardar </button>
+                        <button type="button" class="btn btn-lg btn-danger" ng-click="back()"> Cancelar </button>
+                    </div>
+                </div>
+            </div>
+        </form>            
+    </div>
+</div>

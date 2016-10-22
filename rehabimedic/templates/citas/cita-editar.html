@@ -1,0 +1,103 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Editar Cita';">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.citas">Citas</a>
+            </li>
+            <li class="active">
+                <strong>Agendar cita</strong>
+            </li>
+        </ol>
+        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Datos de la Cita</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-bottom-0">
+                    <div class="row well">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="field-1">Paciente <span class="text-danger">*</span></label>
+                                <span class="desc">Seleccione el paciente que está agendando la cita</span>
+                                <div class="controls">
+                                    <select ui-jq="chosen" class="form-control" ng-model="cita.paciente_id" required ng-change="updatePaciente(cita.paciente_id)">
+                                        <option value="">Seleccione el paciente</option>
+                                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</option>
+                                    </select>
+                                </div>
+                            </div>                         
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">                        
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="field-1">Doctor <span class="text-danger">*</span></label>
+                                <span class="desc">Seleccione el doctor que realizar&aacute; la consulta</span>
+                                <div class="controls">
+                                    <select ui-jq="chosen" class="form-control" ng-model="cita.doctor_id" required>
+                                        <option value="">Seleccione el doctor</option>
+                                        <option ng-repeat="doctor in doctores" value="{{doctor.id}}">{{doctor.persona.persona_nombres}} {{doctor.persona.persona_apellidos}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">                        
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="cita_descripcion">Motivo de Cita <span class="text-danger">*</span></label>
+                                <span class="desc">Detalle el(los) motivo(s) de la cita</span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" id="cita_descripcion" name="cita_descripcion" ng-model="cita.cita_descripcion" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">                        
+                        <div class="form-group">                    
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-controller="DatepickerDemoCtrl">
+                                <label class="form-label" for="cita_fecha">Fecha de la Cita <span class="text-danger">*</span></label>
+                                <span class="desc">Seleccione la fecha de la cita</span>
+                                <div style="display:inline-block;">
+                                    <uib-datepicker ng-model="cita.cita_fecha" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 padding-top-15">
+                                <label class="form-label" for="cita_hora">Hora de la Cita <span class="text-danger">*</span></label>
+                                <div class="controls">
+                                    <uib-timepicker id="cita_hora" name="cita_hora" ng-model="cita.cita_hora" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian" ng-required="true"></uib-timepicker>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <button class="btn btn-primary btn-sm" ng-click="toggleHora()">12H / 24H</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>                    
+            </section>
+            <br>
+            <div class="row text-center">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled='form.$invalid' ng-click="update()"> Guardar </button>
+                        <button type="button" class="btn btn-lg btn-danger" ng-click="back()"> Cancelar </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

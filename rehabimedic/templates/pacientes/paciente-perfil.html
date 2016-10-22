@@ -1,0 +1,269 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Perfil';">
+    <div class="col-lg-12">
+        <section class="box nobox">
+            <div class="content-body">
+                <div style="text-align: right;">
+                    <div class="btn-group">
+                        <a href="#/pacientes/perfil/print/{{paciente.id}}" class="btn btn-info">
+                            <i class="material-icons icon-md">print</i>
+                        </a>                            
+                        <a href="#" class="btn btn-info">
+                            <i class="material-icons icon-md">healing</i>
+                        </a>
+                        <a href="#" class="btn btn-info">
+                            <i class="material-icons icon-md">assignment_ind</i>
+                        </a>
+                        <a href="#" class="btn btn-info">
+                            <i class="material-icons icon-md">attach_money</i>
+                        </a>
+                        <a href="#/app/pacientes/editar/{{paciente.id}}" class="btn btn-info">
+                            <i class="material-icons icon-md">edit</i>
+                        </a>                            
+                    </div>                          
+                </div>
+                <br>
+                <div class="row" id="printThisElement">
+                    <div class="col-md-3 col-sm-4 col-xs-12 padding-right-0">
+                        <div class=" uprofile-wrapper">
+                            <div class="uprofile-image">
+                                <img src="{{paciente.persona.persona_imagen_perfil}}" class="img-responsive">
+                            </div>
+                            <div class="uprofile-name">
+                                <h3>
+                                <a href="#/app/pacientes/perfil/{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</a>
+                                <!-- Available statuses: online, idle, busy, away and offline -->
+                                <span class="uprofile-status online"></span>
+                                </h3>
+                                <p class="uprofile-title">{{paciente.persona.pais.pais_nombre}}</p>
+                                <div class="margin-left-10" style="text-align: left;">
+                                    <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                                    <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
+                                    <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
+                                    <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
+                                    <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
+                                    <p><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
+                                    <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
+                                    <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
+                                </div>
+                                <!--<div class="margin-top-10">
+                                    <div class="col-xs-4 bg-white">
+                                        <strong class="uprofile-count">760</strong>
+                                        <span>Follower</span>
+                                    </div>
+                                    <div class="col-xs-4 bg-white">
+                                        <strong class="uprofile-count">280</strong>
+                                        <span>Following</span>
+                                    </div>
+                                    <div class="col-xs-4 bg-white">
+                                        <strong class="uprofile-count">4104</strong>
+                                        <span>Tweets</span>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="uprofile-buttons margin-0 padding-top-0 text-center">
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-12 padding-left-0">
+                        <uib-tabset class="tab-container primary">
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">person</i>Datos generales
+                                </uib-tab-heading>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <i class="fa fa-user"></i> <big><b>Contacto de Emergencia</b></big>
+                                            <li>
+                                                {{paciente.persona.persona_contacto_emergencia.contacto_nombre}}
+                                                <br>&nbsp;&nbsp;
+                                                {{paciente.persona.persona_contacto_emergencia.contacto_telefono}}
+                                            </li>
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <i class="fa fa-user-md"></i> <big><b>Cirug&iacute;as</b></big>
+                                            <li ng-if="!paciente.pacientes_cirugias.length > 0">Ninguna</li>
+                                            <li ng-repeat="cirugia in paciente.pacientes_cirugias">
+                                                {{cirugia.cirugia_descripcion}}
+                                            </li>              
+                                        </div>                                        
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <i class="fa fa-stethoscope"></i> <big><b>Enfermedades</b></big>
+                                            <li ng-if="!paciente.pacientes_enfermedades.length > 0">Ninguna</li>
+                                            <li ng-repeat="enfermedad in paciente.pacientes_enfermedades">
+                                                {{enfermedad.enfermedad.enfermedad_nombre}}
+                                            </li>
+                                        </div>
+                                        <br>
+                                        <div>
+                                            <i class="fa fa-wheelchair"></i> <big><b>Fracturas</b></big>
+                                            <li ng-if="!paciente.pacientes_fracturas.length > 0">Ninguna</li>
+                                            <li ng-repeat="fractura in paciente.pacientes_fracturas">
+                                                {{fractura.cuerpo_parte.cuerpo_parte_nombre}}
+                                            </li>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>                                
+                                <br>
+                                <div ng-show="paciente.paciente_empleo_estado == 1">
+                                    <big><b>Datos de Empleo</b></big><hr>                                    
+                                </div>
+                                <table class="table" style="border: none; margin-left: 10px;" ng-show="paciente.paciente_empleo_estado == 1">
+                                    <thead></thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: none;">
+                                                <big><b>Nombre de la Empresa/Instituci&oacute;n</b></big>
+                                                <p>{{paciente.paciente_empleo.paciente_empleo_empresa}}</p>
+                                            </td>
+                                            <td style="border: none;">
+                                                <big><b>Jornada - Horario</b></big>
+                                                <p>{{paciente.paciente_empleo.paciente_empleo_jornada}} -
+                                                {{paciente.paciente_empleo.paciente_empleo_horario}}</p>
+                                            </td>                                
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none;">
+                                                <big><b>Direcci&oacute;n de la Empresa/Instituci&oacute;n</b></big>
+                                                <p>{{paciente.paciente_empleo.paciente_empleo_empresa_direccion}}<br>
+                                                {{paciente.paciente_empleo.paciente_empleo_empresa_telefono}}</p>
+                                            </td>                                                                  
+                                            <td style="border: none;">
+                                                <big><b>Tiempo en la Empresa/Instituci&oacute;n</b></big>
+                                                <p>{{paciente.paciente_empleo.paciente_empleo_empresa_tiempo}} a&ntilde;os</p>
+                                            </td>                                          
+                                        </tr>
+                                    </tbody>
+                                </table>                                
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">folder_open</i> Documentos
+                                </uib-tab-heading>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <big><b>Listado de Documentos del Paciente</b></big>
+                                            <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.paciente_imagenes.length > 0">
+                                                <div>
+                                                    <span class="ng-binding ng-scope">
+                                                        No hay documentos disponibles.
+                                                    </span>
+                                                </div>
+                                            </div>                                
+                                            <ul>
+                                                <li ng-repeat="documento in paciente.paciente_imagenes">
+                                                    <a href="{{documento.imagen_url}}" target="_blank">
+                                                        <big>{{documento.imagen_descripcion}}</big>
+                                                    </a>
+                                                    <!--<a class="text-xs text-danger" ng-click="deleteArchivo(null, null, {{documento.id}})">
+                                                     <i class="fa fa-trash-o"></i>
+                                                    </a>-->
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">healing</i> Terapias                            
+                                </uib-tab-heading>
+                                <div class="transparent accordion ng-scope">
+                                    <uib-accordion close-others="oneAtATime">
+                                        <uib-accordion-group ng-repeat="terapia in paciente.pacientes_terapias">
+                                            <uib-accordion-heading>
+                                                <b>{{terapia.paciente_terapia_fecha}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}} <small class="text-right">Sesiones: {{terapia.terapia_sesiones_total}}</small></b>
+                                            </uib-accordion-heading>
+                                            <div>
+                                                <big><b>Resumen</b></big>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd/MM/yyyy'}} </p>
+                                                    <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd/MM/yyyy'}}</p>
+                                                    <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
+                                                    <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
+                                                    <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
+                                                    <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <big><b>Ejercicios y Actividades Recomendados</b></big><hr>
+                                                    {{terapia.paciente_terapia_programa}}
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <big><b>Detalle de las sesiones realizadas</b></big>
+                                                </div>
+                                            </div>
+                                        </uib-accordion-group>
+                                    </uib-accordion>                                
+                                </div>
+                            </uib-tab>                            
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">assignment_ind</i> Consultas
+                                </uib-tab-heading>
+                                <div class="transparent accordion ng-scope">
+                                    <uib-accordion close-others="oneAtATime">
+                                        <uib-accordion-group ng-repeat="consulta in paciente.consultas">
+                                            <uib-accordion-heading>
+                                                <b>{{consulta.consulta_fecha}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}</b>
+                                            </uib-accordion-heading>
+                                            <h4><b>Motivo de consulta:</b></h4>
+                                            <p>{{consulta.consulta_motivo}}</p>
+                                            <br>
+                                            <h4><b>Historia de la Enfermedad Actual:</b></h4>
+                                            <p>{{consulta.consulta_historia}} </p>
+                                            <br>
+                                            <ul>
+                                                <li><b>App: </b> {{consulta.consulta_app}}.</li>
+                                                <li><b>T&oacute;xicos: </b> {{consulta.consulta_toxicos}}.</li>
+                                                <li><b>Al&eacute;rgicos: </b> {{consulta.consulta_alergicos}}.</li>
+                                                <li><b>Medicamentos: </b> {{consulta.consulta_medicamentos}}.</li>
+                                                <li><b>Qx: </b> {{consulta.consulta_qx}}.</li>
+                                                <li><b>Transfunsionales: </b> .</li>
+                                            </ul>
+                                            <br>
+                                            <h4><b>Examen Físico:</b></h4>
+                                            <ul>
+                                                <li>Extensi&oacute;n: {{consulta.consulta_examen_fisico_extension}}</li>
+                                                <li>Flexi&oacute;n: {{consulta.consulta_examen_fisico_flexion}}</li>
+                                                <li>E.A.D.: {{consulta.consulta_examen_fisico_ead}}</li>
+                                            </ul>
+                                            <br>
+                                            <h4><b>Diagnóstico:</b></h4>
+                                            <p>{{consulta.consulta_diagnostico}}</p>
+                                        </uib-accordion-group>
+                                    </uib-accordion>                                
+                                </div>
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">assignment</i> Notas Especiales
+                                </uib-tab-heading>
+                                <h4>Aqui va las notas.</h4>                                
+                            </uib-tab>
+                        </uib-tabset>
+                        <div class="uprofile-content padding-top-30"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

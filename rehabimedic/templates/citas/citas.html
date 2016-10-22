@@ -1,0 +1,101 @@
+<div class='content-wrapper content-calendar' ng-init="app.settings.pagetitle = 'Calendario de Citas';">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li class="active">
+                <strong>Citas</strong>
+            </li>
+        </ol>        
+        <div ng-controller="CitasCtrl">
+            <div class="row">
+                <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
+                    <div class="clearfix"></div>
+                    <a class="btn btn-success" href="#/app/citas/nuevo"><i class="fa fa-plus"></i>&nbsp;Agendar Cita</a>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-sm btn-primary" ng-click="today()">Hoy</button>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-default" ng-click="changeView('agendaDay')">D&iacute;a</button>
+
+                            <button class="btn btn-sm btn-default" ng-click="changeView('agendaWeek')">Semana</button>
+
+                            <button class="btn btn-sm btn-default" ng-click="changeView('month')">Mes</button>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div><br>
+                    <div class="pos-rlt" style="margin-top: 3px;">
+                        <div class="fc-overlay">
+                            <div class="panel bg-white b-a pos-rlt">
+                                <span class="arrow"></span>
+                                <div class="h4 font-thin-sm"> {{event.title}}</div>
+                                <div class="line b-b b-light"></div>
+                                <div><i class="icon-calendar text-muted m-r-xs"></i> {{event.start | date:'medium'}}</div>
+                                <div class="ng-hide" ng-show='event.end'><i class="icon-clock text-muted m-r-xs"></i> {{event.end | date:'medium'}}</div>
+                                <div class="ng-hide" ng-show='event.location'><i class="icon-pointer text-muted m-r-xs"></i> {{event.location}}</div>
+                                <div class="m-t-sm">{{event.info}}</div>
+                                <div class="m-t-sm">{{event.url}}</div>
+                            </div>
+                        </div>
+
+                        <div class="calendar" ng-model="eventSources" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12 fc-events" id="aside">
+                    <h4>Citas pendientes</h4>
+                    <div class="">
+                        <input type="search" placeholder="Buscar" ng-model="search">                        
+                    </div>
+                    <br>
+                    <perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true"  min-scrollbar-length="20" class='ps-calendar-events'>
+                         <div ng-repeat="cita in citas | orderBy: 'cita_fecha_hora' | filter:search" class="event" id="CitasTable" ng-if="cita.estado_id==1">
+                             <p class="form-control">{{$index+1}}. {{cita.paciente.persona.persona_nombres + " " + cita.paciente.persona.persona_apellidos | limitTo: 20}}</p>
+                             <div class="row" tooltip-class="success animated fadeIn " uib-tooltip="Dr. {{cita.doctor.persona.persona_nombres}} {{cita.doctor.persona.persona_apellidos}}" tooltip-placement="bottom">
+                                 <div class="col-lg-6 text-left text-xs">
+                                     {{cita.cita_fecha_hora | date: 'dd/MMM hh:mma'}}
+                                 </div>
+                                 <div class="col-lg-6 text-xs text-right">
+                                     <a class="text-primary text-xs" ng-click="realizarCita(null, null, {{cita.id}})">
+                                         <i class="fa fa-check"></i>
+                                     </a>                                     
+                                     <a class="text-info text-xs" href="#/app/citas/editar/{{cita.id}}">
+                                         <i class="fa fa-pencil"></i>
+                                     </a>
+                                     <a class="text-xs text-warning" ng-click="cancelCita(null, null, {{cita.id}})">
+                                         <i class="fa fa-times-circle"></i>
+                                     </a>                             
+                                     <a class="text-xs text-danger" ng-click="open(null, null, {{cita.id}})">
+                                         <i class="fa fa-trash-o"></i>
+                                     </a>                                     
+                                 </div>
+                             </div>
+                         </div>
+                    </perfect-scrollbar>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h5><b><u>Leyenda Citas</u></b></h5>
+                            <div class="col-lg-6">
+                                <li>
+                                    <p class="text-primary text-xs"><i class="fa fa-check"></i> Realizar</p>      
+                                </li> 
+                                <li>
+                                    <p class="text-info text-xs"><i class="fa fa-pencil"></i> Editar</p>      
+                                </li>                                
+                            </div>
+                            <div class="col-lg-6">
+                                <li>
+                                    <p class="text-warning text-xs"><i class="fa fa-times-circle"></i> Cancelar</p>      
+                                </li>
+                                <li>
+                                    <p class="text-danger text-xs"><i class="fa fa-trash-o"></i> Eliminar</p>      
+                                </li>  
+                            </div>                                
+                        </div>                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

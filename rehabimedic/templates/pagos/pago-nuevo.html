@@ -1,0 +1,133 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Nuevo Pago';">
+    <div class="col-lg-12">
+        <section class="box ">
+            <header class="panel_header">
+                <h2 class="title pull-left">Datos del Pago</h2>
+                <div class="actions panel_actions pull-right">
+                    <i class="box_toggle material-icons">expand_more</i>
+                    <i class="box_setting material-icons" ng-click="section_modal()">mode_edit</i>
+                    <i class="box_close material-icons">close</i>
+                </div>
+            </header>
+            <div class="content-body">
+                <div class="row text-right">
+                    <h4><b>Recibo No. :</b> {{ pagos[pagos.length-1].id+1 | minLength:8 }}</h4>
+                </div>          
+                <div class="row well">
+                    <div class="form-group" ng-if="pago.paciente_id">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <img src="{{paciente.persona.persona_imagen_perfil}}" width="150px">
+                                </div>                                    
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <h4>
+                                        {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} <br><small>{{paciente.persona.pais.pais_nombre}}</small>
+                                    </h4> 
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-2">&nbsp;</div>
+                                <div class="col-lg-4 text-left">
+                                    <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
+                                    <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
+                                    <p><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
+                                    <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
+                                </div>
+                                <div class="col-lg-4 text-left">
+                                    <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                                    <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
+                                    <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
+                                    <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
+                                </div>
+                                <div class="col-lg-2">&nbsp;</div>
+                            </div>
+                        </div>
+                        <br>                        
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label class="form-label" for="paciente_id">Paciente <span class="text-danger">*</span></label>
+                            <span class="desc">Seleccione el paciente que está realizando la factura</span>
+                            <div class="controls">
+                                <select ui-jq="chosen" class="form-control" ng-model="pago.paciente_id" required ng-change="updatePaciente(pago.paciente_id)" id="paciente_id" name="paciente_id">
+                                    <option value="">Seleccione el paciente</option>
+                                    <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</option>
+                                </select>
+                            </div>
+                        </div>                         
+                    </div>                        
+                </div>
+                <br>
+                <h3>Detalles</h3>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label class="form-label" for="pago_monto">Monto</label>
+                            <span class="desc">Escriba el monto a pagar</span>
+                            <div class="controls">
+                                <input type="text" class="form-control" placeholder="Monto a pagar" id="pago_monto" name="pago_monto " ng-model="pago.pago_monto">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label class="form-label" for="pago_concepto">Concepto</label>
+                            <span class="desc">Escriba el concepto del pago</span>
+                            <div class="controls">
+                                <input type="text" class="form-control" placeholder="Concepto" id="pago_concepto" name="pago_concepto" ng-model="pago.pago_concepto">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row text-center">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" class="btn btn-lg btn-primary" ng-click="save()"> Guardar </button>
+                            <button type="button" class="btn btn-lg btn-danger" ng-click="back()"> Cancelar </button>
+                        </div>
+                    </div>
+                </div>                 
+            </div>
+        </section>
+    </div>
+</div>
+<div class="text-right" ng-hide="1==2">      
+    <a id="printElement" data-ng-click="printDiv('printThisElement')" class="btn btn-info">
+        <i class="material-icons icon-md">print</i>
+    </a>
+</div>
+<div style="width: 7.2 cm; height: 29.7 cm; text-align: center; font-family:Consolas; font-size:6.5pt; line-height: 75%;" id="printThisElement" ng-hide="1==1">
+  <div style="text-align: center;">
+    <img src="img/pipiota.png" width="120"/>
+    <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
+    <p>AVE. JUAN P. DUARTE, PLAZA PALERMO</p>
+    <p>M&Oacute;DULO 110, STGO. R.D.</p>
+    <p>809-825-8595</p>
+    <p>RNC-131341421</p>
+    <p>RECIBO DE PAGO</p>
+  </div>
+  <div class="text-right"><p>No. : {{pago.id | minLength: 8}}&nbsp;</p></div>
+  <div class="text-left">
+    <p>----------------------------------------------------</p>
+    <p>Fecha&nbsp;&nbsp;&nbsp; : {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}} </p>
+    <p>Cajero&nbsp;&nbsp; : {{pago.usuario.persona.persona_nombres}} {{pago.usuario.persona.persona_apellidos}}</p>
+    <p>Paciente&nbsp; : {{pago.paciente.persona.persona_nombres}} {{pago.paciente.persona.persona_apellidos}}</p>
+    <p>Concepto : {{pago.pago_concepto}}</p>
+    <p>Monto&nbsp;&nbsp;&nbsp; : {{pago.pago_monto}}</p>        
+    <p>----------------------------------------------------</p>
+  </div>
+  <div class="text-right">        
+    <p>Balance Pendiente : {{pago.paciente.paciente_balance}}&nbsp;</p>
+    <p>Terapias Pendientes de Pago : &nbsp;&nbsp; 5/12&nbsp;</p>
+  </div>
+  <br>
+  <br>
+  <div class="text-center">
+    <p>_____________________________</p>
+      <p>RECIBIDO CONFORME</p>
+    <p>{{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}</p>
+  </div>
+</div>
