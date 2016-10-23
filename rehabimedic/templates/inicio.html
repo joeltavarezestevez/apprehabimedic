@@ -19,8 +19,8 @@
                             <div class="tile-counter bg-primary">
                                 <div class="content">
                                     <i class='material-icons'>people</i>
-                                    <h2 class="number_counter">1001</h2>
-                                    <span>Pacientes registrados</span>
+                                    <h2 class="number_counter">{{pacientes.length}}</h2>
+                                    <span>Pacientes atendidos</span>
                                 </div>
                             </div>
                         </div>
@@ -29,7 +29,7 @@
                             <div class="tile-counter bg-accent">
                                 <div class="content">
                                     <i class='material-icons'>healing</i>
-                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">1001</h2>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{terapias.length}}</h2>
                                     <div class="clearfix"></div>
                                     <span>Terapias realizadas</span>
                                 </div>
@@ -39,7 +39,7 @@
                             <div class="tile-counter bg-warning">
                                 <div class="content">
                                     <i class='material-icons'>attach_money</i>
-                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">$10000.00</h2>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{ventas | currency}}</h2>
                                     <div class="clearfix"></div>
                                     <span>En ventas</span>
                                 </div>

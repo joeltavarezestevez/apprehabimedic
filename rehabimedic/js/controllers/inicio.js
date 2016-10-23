@@ -15,6 +15,29 @@
         });
     });
     
+    
+    app.controller('InicioCtrl', ['$scope', '$filter', 'pacientes', 'terapias', 'facturas', 'citas', function($scope, $filter, pacientes, terapias, facturas, citas) {
+        //$scope.pacientes = pacientes.data;
+        $scope.terapias = terapias.data;
+        $scope.facturas = facturas.data;
+        $scope.citas = citas.data;
+        for(c=0; c<$scope.citas.length; c++) {
+            $scope.citas[c].cita_fecha_hora = $filter('date')(new Date($scope.citas[c].cita_fecha_hora),'yyyy-MM-dd');
+        }
+        console.log($scope.citas);
+        $scope.hoy = new Date();
+        $scope.hoy = $filter('date')($scope.hoy,'yyyy-MM-dd');
+        console.log($scope.hoy);
+        $scope.pacientes = $filter('filter')($scope.citas, "2016-11-01");
+        
+        
+        var c=0;
+        $scope.ventas = 0;
+        for(c=0; c<$scope.facturas.length; c++) {
+            $scope.ventas = $scope.ventas + parseFloat($scope.facturas[c].factura_total); 
+        }
+        console.log($scope.ventas);
+    }])
     app.controller('MenuCtrl', function($scope) {
         $scope.isCollapsed = true;
         $scope.charts = ['Line', 'Bar', 'Doughnut', 'Pie', 'Polar Area', 'Radar', 'Base'];

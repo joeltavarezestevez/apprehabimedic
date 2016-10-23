@@ -29,6 +29,7 @@ angular.module('app')
                     .state('app.inicio', {
                         url: '/inicio',
                         templateUrl: 'templates/inicio.html',
+                        controller: 'InicioCtrl',
                         resolve: {
                             deps: ['$ocLazyLoad',
                                 function($ocLazyLoad) {
@@ -43,7 +44,19 @@ angular.module('app')
                                         }
                                     );
                                 }
-                            ]
+                            ],
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },
+                            terapias: function(terapiasFac) {
+                                return terapiasFac.all();
+                            },
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            },
+                            citas: function(citasFac) {
+                                return citasFac.all();
+                            }                            
                         }
                     })
                     /***********************************************************************
