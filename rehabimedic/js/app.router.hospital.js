@@ -53,6 +53,9 @@ angular.module('app')
                             },
                             consultas: function(consultasFac) {
                                 return consultasFac.all();
+                            },
+                            pagos: function(pagosFac) {
+                                return pagosFac.all();
                             }                            
                         }
                     })
@@ -515,6 +518,36 @@ angular.module('app')
                     .state('app.reportes-facturas', {
                         url: '/reportes/facturas',
                         templateUrl: 'templates/reportes/facturas/facturasListado.html',
+                        controller: 'FacturasReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            }
+                        }
+                    })
+                    .state('app.reportes-facturas-anuladas', {
+                        url: '/reportes/facturas/anuladas',
+                        templateUrl: 'templates/reportes/facturas/facturasAnuladasListado.html',
+                        controller: 'FacturasReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            }
+                        }
+                    })
+                    .state('app.reportes-facturas-balance', {
+                        url: '/reportes/facturas/balance',
+                        templateUrl: 'templates/reportes/facturas/facturasBalanceListado.html',
+                        controller: 'FacturasReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            }
+                        }
+                    })                
+                    .state('app.reportes-facturas-saldadas', {
+                        url: '/reportes/facturas/saldadas',
+                        templateUrl: 'templates/reportes/facturas/facturasSaldadasListado.html',
                         controller: 'FacturasReportesCtrl',
                         resolve: {
                             facturas: function(facturasFac) {

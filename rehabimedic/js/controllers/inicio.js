@@ -16,26 +16,60 @@
     });
     
     
-    app.controller('InicioCtrl', ['$scope', '$filter', 'terapias', 'facturas', function($scope, $filter, terapias, facturas) {
-        $scope.terapias = terapias.data;
-        $scope.facturas = facturas.data;
-        for(c=0; c<$scope.facturas.length; c++) {
-            $scope.facturas[c].factura_fecha = $filter('date')(new Date($scope.facturas[c].factura_fecha),'yyyy-MM-dd');
-        }       
-        console.log($scope.facturas);
+    app.controller('InicioCtrl', ['$scope', '$filter', 'terapias', 'pagos', 'facturas', 'consultas', function($scope, $filter, terapias, pagos, facturas, consultas) {
+        
         $scope.hoy = $filter('date')(new Date(),'yyyy-MM-dd');
-        console.log($scope.hoy);
-        //$scope.pacientes = $filter('filter')($scope.citas, {cita_fecha_hora: $scope.hoy});
-        //$scope.pacientes = $filter('filter')($scope.citas, {cita_fecha_hora: $scope.hoy});
-        $scope.facturas = $filter('filter')($scope.facturas, {factura_fecha: $scope.hoy});
         
+        $scope.terapias = terapias.data;
+        console.log($scope.terapias);
+        $scope.consultas = consultas.data;
+        $scope.facturas = facturas.data;
+        $scope.pagos = pagos.data;
+        $scope.pacientes_atendidos = 0;
+        console.log($scope.pacientes_atendidos);
         
+        console.log($scope.pagos);
         var c=0;
         $scope.ventas = 0;
+        $scope.pagos_recibidos = 0;
+        
+        //Set terapias Fechas to Date Type
+        /*for(c=0; c<$scope.terapias.length; c++) {
+            $scope.terapias[c].paciente_terapia_fecha = $filter('date')(new Date($scope.terapias[c].paciente_terapia_fecha),'yyyy-MM-dd');
+        }        
+        //Set Consultas Fechas to Date Type
+        for(c=0; c<$scope.consultas.length; c++) {
+            $scope.consultas[c].consulta_fecha = new Date($scope.consultas[c].consulta_fecha);
+        }       
+        //Set Facturas Fechas to Date Type
+        for(c=0; c<$scope.facturas.length; c++) {
+            $scope.facturas[c].factura_fecha = $filter('date')(new Date($scope.facturas[c].factura_fecha),'yyyy-MM-dd');
+        }
+        //Set Pagos Fechas to Date Type
+        for(c=0; c<$scope.facturas.length; c++) {
+            $scope.pagos[c].pago_fecha = $filter('date')(new Date($scope.pagos[c].pago_fecha),'yyyy-MM-dd');
+        }*/
+        $scope.terapias = $filter('filter')($scope.terapias, {paciente_terapia_fecha: $scope.hoy});
+        $scope.consultas = $filter('filter')($scope.consultas, {consulta_fecha: $scope.hoy});        
+        $scope.facturas = $filter('filter')($scope.facturas, {factura_fecha: $scope.hoy});
+        $scope.pagos = $filter('filter')($scope.pagos, {pago_fecha: $scope.hoy});        
+        console.log($scope.consultas);
+        console.log($scope.terapias);
+        
+        //Get All Pacientes Atendidos
+        $scope.pacientes_atendidos = $scope.terapias.length + $scope.consultas.length;
+        
+        //Get All Pagos Recibidos
+        for(c=0; c<$scope.pagos.length; c++) {
+            $scope.pagos_recibidos = $scope.pagos_recibidos + parseFloat($scope.pagos[c].pago_monto); 
+        }
+        //Get All Ventas
         for(c=0; c<$scope.facturas.length; c++) {
             $scope.ventas = $scope.ventas + parseFloat($scope.facturas[c].factura_total); 
         }
+        console.log($scope.pagos_recibidos);
         console.log($scope.ventas);
+        console.log("Ventas");
     }])
     app.controller('MenuCtrl', function($scope) {
         $scope.isCollapsed = true;

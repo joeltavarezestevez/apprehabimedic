@@ -1,4 +1,4 @@
-<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Reporte de Facturas';">
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Facturas Saldadas';">
     <div class="col-lg-12" ng-hide="loading">
         <ol class="breadcrumb well">
             <li>
@@ -8,7 +8,7 @@
                 <a ui-sref="app.reportes">Reportes</a>
             </li>
             <li>
-                <strong class="active">Listado de Facturas</strong>
+                <strong class="active">Listado de Facturas Saldadas</strong>
             </li>            
         </ol>           
         <div class="text-right">
@@ -17,7 +17,7 @@
             </a>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
                 <div class="controls">
                     NCF
                     <select ui-jq="chosen" class="form-control" ng-model="comprobante_tipo" ng-options="o.id as o.nombre for o in comprobantes" required>
@@ -25,6 +25,14 @@
                     </select>
                 </div>                            
             </div>
+            <div class="col-sm-3">
+                <div class="controls">
+                    Tipo de Factura
+                    <select ui-jq="chosen" class="form-control" ng-model="tipo" ng-options="o.id as o.nombre for o in facturas_tipo" required>
+                        <option value="">Seleccione el tipo de factura</option>
+                    </select>
+                </div>                            
+            </div>            
             <div class="col-sm-3">
                 <div class="controls">
                     Desde: 
@@ -40,7 +48,7 @@
         </div>         
         <section class="box">
             <header class="panel_header">
-                <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Facturas</h2>
+                <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Facturas Saldadas</h2>
             </header>
             <div class="content-body padding-bottom-15">
                 <div class="row">
@@ -59,7 +67,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="factura in facturas | dateRange: fechaInicio : fechaFin | filter: {factura_comprobante_tipo: comprobante_tipo}">
+                                <tr ng-repeat="factura in facturas | dateRange: fechaInicio : fechaFin | filter: {factura_comprobante_tipo: comprobante_tipo} |filter: {factura_tipo: tipo}">
                                     <td>
                                         {{$index+1}}
                                     </td>
@@ -79,10 +87,10 @@
                                         {{factura.factura_tipo}}
                                     </td>
                                     <td>
-                                        {{factura.factura_total}}
+                                        {{factura.factura_total | currency}}
                                     </td>
                                     <td>
-                                        {{factura.estado.estado_nombre}}
+                                        {{factura.factura_balance | currency}}
                                     </td>
                                 </tr>
                             </tbody>
@@ -99,7 +107,7 @@
         <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
     </div>
     <br>
-    <h2 class="text-right">Listado de Facturas</h2>
+    <h2 class="text-right">Listado de Facturas Saldadas</h2>
     <hr>
     <table class="table well" style="border: none; font-size: 10px;">
         <thead>

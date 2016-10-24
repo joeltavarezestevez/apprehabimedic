@@ -1,41 +1,60 @@
-app.controller('ModalInstancePacientesCtrl', ['$scope', '$uibModalInstance', 'Id', 'pacientesFac', function($scope, $modalInstance, Id, pacientesFac) {
-      
-    $scope.registro = {};
-
-    pacientesFac.get(parseInt(Id,10))
-    .success(function(data) {
-        $scope.registro = data;
-        $scope.registro.nombres = data.persona.persona_nombres + " " + data.persona.persona_apellidos;
-        console.log($scope.registro);
-    });   
+app.controller('FacturasReportesCtrl', ['$scope', '$state', '$filter', 'facturas', function ($scope, $state, $filter, facturas) {
+    $scope.facturas = [];
+    $scope.current = $state.current.name;
     
-    $scope.ok = function (Id) {
-        $modalInstance.close();
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };    
-}])
-  
-app.controller('FacturasReportesCtrl', ['$scope', '$filter', 'facturas', function ($scope, $filter, facturas) {
+    console.log($scope.current);
     
-        $scope.comprobantes = [
+    $scope.comprobantes = [
       {id:3, nombre:'Credito Fiscal'},
       {id:4, nombre:'Consumidor Final'}
-    ]
-    $scope.loading = true;
-    $scope.fechaInicio = new Date();
-    $scope.fechaFin = new Date();
-    //Get All Pacientes
-        $scope.facturas = facturas.data;
-        for(c=0; c<$scope.facturas.length; c++) {
-            $scope.facturas[c].factura_fecha = new Date($scope.facturas[c].factura_fecha);
-        }     
-        console.log($scope.facturas);
-        $scope.loading = false;
+    ];
     
-$scope.printDiv = function (divName) {
+    $scope.facturas_tipo = [
+      {id:"Contado", nombre:'Contado'},
+      {id:"Credito", nombre:'Credito'}
+    ];    
+    
+    $scope.loading = true;
+    $scope.fechaFin = new Date();
+    $scope.fechaInicio = new Date();
+    $scope.fechaInicio.setDate($scope.fechaFin.getDate() - 30);
+    
+    if($scope.current == "app.reportes-facturas-anuladas") {
+        for(c=0; c<facturas.data.length; c++) {
+            //Get Facturas Anuladas
+            if (facturas.data[c].estado_id == 5) {
+                $scope.facturas.push(facturas.data[c]);
+            }
+        }
+    }
+    else if($scope.current == "app.reportes-facturas-balance") {
+        for(c=0; c<facturas.data.length; c++) {
+            //Get Facturas Anuladas
+            if (facturas.data[c].factura_balance > 0.00) {
+                $scope.facturas.push(facturas.data[c]);
+            }
+        }
+    }
+    else if($scope.current == "app.reportes-facturas-saldadas") {
+        for(c=0; c<facturas.data.length; c++) {
+            //Get Facturas Anuladas
+            if (facturas.data[c].factura_balance == 0.00) {
+                $scope.facturas.push(facturas.data[c]);
+            }
+        }
+    }    
+    else {
+        //Get All Facturas
+        $scope.facturas = facturas.data;        
+    }
+    
+    for(c=0; c<$scope.facturas.length; c++) {
+        $scope.facturas[c].factura_fecha = new Date($scope.facturas[c].factura_fecha);
+    }
+    console.log($scope.facturas);
+    $scope.loading = false;
+    
+    $scope.printDiv = function (divName) {
 
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;      
@@ -61,7 +80,6 @@ $scope.printDiv = function (divName) {
             popupWin.document.close();
         }
         popupWin.document.close();
-
         return true;
     }    
 }]);

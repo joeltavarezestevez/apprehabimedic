@@ -1,4 +1,4 @@
-app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'pacientesFac', 'pagos', function($scope, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, pacientesFac, pagos) {
+app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'pacientesFac', 'pagos', 'pagosFac', function($scope, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, pacientesFac, pagos, pagosFac) {
     
     $scope.pago = {};
     

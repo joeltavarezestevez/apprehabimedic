@@ -15,17 +15,17 @@
            <section class="box nobox">
                 <div class="content-body">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="tile-counter bg-primary">
                                 <div class="content">
                                     <i class='material-icons'>people</i>
-                                    <h2 class="number_counter">{{pacientes.length}}</h2>
+                                    <h2 class="number_counter">{{pacientes_atendidos}}</h2>
                                     <span>Pacientes atendidos</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="tile-counter bg-accent">
                                 <div class="content">
                                     <i class='material-icons'>healing</i>
@@ -35,45 +35,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="tile-counter bg-warning">
+                                <div class="content">
+                                    <i class='material-icons'>receipt</i>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{ventas | currency}}</h2>
+                                    <div class="clearfix"></div>
+                                    <span>Ventas Realizadas</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="tile-counter bg-warning">
                                 <div class="content">
                                     <i class='material-icons'>attach_money</i>
-                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{ventas | currency}}</h2>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{pagos_recibidos | currency}}</h2>
                                     <div class="clearfix"></div>
-                                    <span>En ventas</span>
+                                    <span>Pagos Recibidos</span>
                                 </div>
                             </div>
-                        </div>                
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                            <div class="tile-progress bg-white text-left">
-                                <div class="content">
-                                    <h4><i class='fa fa-h-square icon-sm'></i> 100 OPD Patients</h4>
-                                    <uib-progressbar value="40" class="progress primary"></uib-progressbar>
-                                    <span>40% increase</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                            <div class="tile-progress bg-white text-left">
-                                <div class="content">
-                                    <h4><i class='fa fa-heart icon-sm'></i>150 Heart Surgeries</h4>
-                                    <uib-progressbar value="48" class="progress primary"></uib-progressbar>
-                                    <span>48% increase</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                            <div class="tile-progress bg-white text-left">
-                                <div class="content">
-                                    <h4><i class='fa fa-medkit icon-sm'></i> 130 Lab Reports</h4>
-                                    <uib-progressbar value="60" class="progress primary"></uib-progressbar>
-                                    <span>60% increase</span>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </section>        
@@ -81,7 +62,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <section class="box ">
                 <header class="panel_header">
-                    <h2 class="title pull-left">Hospital Survey</h2>
+                    <h2 class="title pull-left">Pacientes Atendidos por Mes</h2>
                     <div class="actions panel_actions pull-right">
                         <i class="box_toggle material-icons">expand_more</i>
                         <i class="box_setting material-icons" ng-click="section_modal()">mode_edit</i>
@@ -97,111 +78,6 @@
                     </div>
                 </div>
             </section>
-        </div>    
-        <div class="clearfix"></div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <section class="box ">
-                <header class="panel_header">
-                    <h2 class="title pull-left">Hospital Budget</h2>
-                    <div class="actions panel_actions pull-right">
-                        <i class="box_toggle material-icons">expand_more</i>
-                        <i class="box_setting material-icons" ng-click="section_modal()">mode_edit</i>
-                        <i class="box_close material-icons">close</i>
-                    </div>
-                </header>
-                <div class="content-body">
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12" ng-controller="HospitalBudgetCtrl">
-                            <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-click="onClick" chart-colours="colours">
-                            </canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>      
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <section class="box nobox">
-                <div class="content-body">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                            <div class="wid-sparkgraph bg-white">
-                                <span class='bold'>28.95%</span>
-                                <span class='pull-right'><small>New Patients</small></span>
-                                <div class="clearfix"></div><br>
-                                <div class="text-center" ng-init="data21=[10, 8, 5, 7, 4, 4, 7, 5, 2, 8, 3, 4, 5,8, 3, 10, 8, 5, 7, 4, 4, 7]" ui-jq="sparkline" ui-options="{{data21}}, {
-                                    type: 'bar',
-                                    barColor: '{{app.color.accent}}',
-                                    height: '60',
-                                    barWidth: '8',
-                                    barSpacing: 4,
-                                    }" class="sparkline inline">Loading...
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                            <div class="wid-sparkgraph bg-white">
-                                <span class='bold'>1312</span>
-                                <span class='pull-right'><small>Pharmacy Orders</small></span>
-                                <div class="clearfix"></div><br>
-                                <div class="text-center" ng-init="data1=[10, 8, 5, 7, 4, 4, 7, 5, 2, 8, 3, 4, 5]" ui-jq="sparkline" ui-options="{{data1}}, {
-                                    type: 'line',
-                                    width: '100%',
-                                    height: '60',
-                                    lineWidth: 2,
-                                    lineColor: '{{app.color.secondary}}',
-                                    fillColor: '{{app.color.primary}}',
-                                    highlightSpotColor: '#ffffff',
-                                    highlightLineColor: '#ffffff',
-                                    spotRadius: 3,
-                                    }" class="sparkline inline">Loading...
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                            <div class="wid-sparkgraph bg-white">
-                                <span class='bold'>542/115</span>
-                                <span class='pull-right'><small>OPD/IPD visitors</small></span>
-                                <div class="clearfix"></div><br>
-                                <div class="text-center" ng-init="data4=[
-                                    [1, 2],
-                                    [2, 3],
-                                    [4, 2],
-                                    [4, 5],
-                                    [4, 1],
-                                    [6, 4],
-                                    [3, 2],
-                                    [3, 6],
-                                    [2, 2],
-                                    [6, 2],
-                                    [7, 4],
-                                    [3, 4],
-                                    [6, 4],
-                                    [3, 2],
-                                    [3, 6],
-                                    [2, 2],
-                                    [6, 2],
-                                    [2, 2],
-                                    [6, 2],
-                                    [7, 4],
-                                    [3, 4],
-                                    [3, 7]
-                                    ]" ui-jq="sparkline" ui-options="{{data4}}, {
-                                    type: 'bar',
-                                    barColor: '{{app.color.accent}}',
-                                    height: '60',
-                                    barWidth: '8',
-                                    barSpacing: 4,
-                                    zeroAxis: true,
-                                    negBarColor: '{{app.color.primary}}',
-                                    zeroColor: '{{app.color.accent}}',
-                                    stackedBarColor: ['{{app.color.accent}}', '{{app.color.primary}}'],
-                                    }" class="sparkline inline">Loading...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>  
         </div>
     </div>
 </div>

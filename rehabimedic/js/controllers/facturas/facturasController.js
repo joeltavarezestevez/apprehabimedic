@@ -1,4 +1,4 @@
-app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'facturasFac', function($scope, $filter, $modalInstance, Id, facturasFac) {
+app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'Notification', 'facturasFac', function($scope, $filter, $modalInstance, Id, Notification, facturasFac) {
 
     $scope.registro = {};
     

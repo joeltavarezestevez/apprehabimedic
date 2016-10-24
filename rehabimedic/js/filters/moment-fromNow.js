@@ -24,14 +24,15 @@ angular.module('app')
 	return function(input, startDate, endDate) {
 		
 		var retArray = [];
+        retArray.total = 0;
 		
 		angular.forEach(input, function(obj){
 			var receivedDate = obj.factura_fecha;
 			if(receivedDate >= startDate && receivedDate <= endDate) {
 				retArray.push(obj);
+                retArray.total = retArray.total + parseFloat(obj.factura_total);
 			}
-		}); 
-		
+		});
 		return retArray; 
 	};
 });
