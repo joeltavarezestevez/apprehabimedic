@@ -18,4 +18,20 @@ angular.module('app')
       return new Array(1 + len - input.length).join(pad) + input;
     }
   };
+})
+
+.filter('dateRange', function() {
+	return function(input, startDate, endDate) {
+		
+		var retArray = [];
+		
+		angular.forEach(input, function(obj){
+			var receivedDate = obj.factura_fecha;
+			if(receivedDate >= startDate && receivedDate <= endDate) {
+				retArray.push(obj);
+			}
+		}); 
+		
+		return retArray; 
+	};
 });

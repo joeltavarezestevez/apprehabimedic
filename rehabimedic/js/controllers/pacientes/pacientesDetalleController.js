@@ -165,6 +165,7 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$state', '$stateParams', '$fi
     $scope.clearImage = function() {
         angular.element("#trigger").val(null);
         $scope.paciente.persona_imagen_perfil = '';
+        $scope.paciente.foto_editada = 1;
     }
     
     $scope.clearFile = function() {

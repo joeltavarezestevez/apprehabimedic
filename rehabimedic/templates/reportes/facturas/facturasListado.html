@@ -1,0 +1,151 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Listado de Facturas';">
+    <div class="col-lg-12" ng-hide="loading">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.reportes">Reportes</a>
+            </li>
+            <li>
+                <strong class="active">Listado de Facturas</strong>
+            </li>            
+        </ol>           
+        <div class="text-right">
+            <a ng-click="printDiv('printThisElement');" class="btn btn-info">
+                <i class="material-icons icon-md">print</i>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="controls">
+                    NCF
+                    <select ui-jq="chosen" class="form-control" ng-model="comprobante_tipo" ng-options="o.id as o.nombre for o in comprobantes" required>
+                        <option value="">Seleccione el tipo de comprobante</option>
+                    </select>
+                </div>                            
+            </div>
+            <div class="col-sm-3">
+                <div class="controls">
+                    Desde: 
+                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2016-07-27   '" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="fechaInicio">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="controls">
+                    Hasta: 
+                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2016-07-27   '" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="fechaFin">
+                </div>
+            </div>
+        </div>         
+        <section class="box">
+            <header class="panel_header">
+                <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Facturas</h2>
+            </header>
+            <div class="content-body padding-bottom-15">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="FacturasTable">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:10%">No. Fact.</th>
+                                    <th style="width:10%">NCF</th>                                    
+                                    <th style="width:20%">Paciente</th>                                    
+                                    <th style="width:15%">Fecha</th>
+                                    <th style="width:10%">Tipo</th>
+                                    <th style="width:10%">Monto</th>
+                                    <th style="width:10%">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="factura in facturas | dateRange: fechaInicio : fechaFin | filter: {factura_comprobante_tipo: comprobante_tipo}">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        {{factura.factura_numero}}
+                                    </td>
+                                    <td>
+                                        {{factura.factura_ncf}}
+                                    </td>                                    
+                                    <td> 
+                                        {{factura.paciente.persona.persona_nombres + ' '+ factura.paciente.persona.persona_apellidos}}
+                                    </td>
+                                    <td>
+                                        {{factura.factura_fecha | date:'dd-MMM-yyyy'}}
+                                    </td>
+                                    <td>
+                                        {{factura.factura_tipo}}
+                                    </td>
+                                    <td>
+                                        {{factura.factura_total}}
+                                    </td>
+                                    <td>
+                                        {{factura.estado.estado_nombre}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="container" id="printThisElement" ng-hide="1==1">
+    <div style="text-align: center;">
+        <img src="img/pipiota.png" width="160"/>
+        <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
+    </div>
+    <br>
+    <h2 class="text-right">Listado de Facturas</h2>
+    <hr>
+    <table class="table well" style="border: none; font-size: 10px;">
+        <thead>
+            <tr>
+                <th style="width:5%">#</th>
+                <th style="width:10%">No. Fact.</th>
+                <th style="width:10%">NCF</th>                                    
+                <th style="width:20%">Paciente</th>                                    
+                <th style="width:15%">Fecha</th>
+                <th style="width:10%">Tipo</th>
+                <th style="width:10%">Monto</th>
+                <th style="width:10%">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="factura in facturas | dateRange: fechaInicio : fechaFin">
+                <td>
+                    {{$index+1}}
+                </td>
+                <td>
+                    {{factura.factura_numero}}
+                </td>
+                <td>
+                    {{factura.factura_ncf}}
+                </td>                  
+                <td> 
+                    {{factura.paciente.persona.persona_nombres + ' '+ factura.paciente.persona.persona_apellidos}}
+                </td>
+                <td>
+                    {{factura.factura_fecha | date:'dd-MMM-yyyy'}}
+                </td>
+                <td>
+                    {{factura.factura_tipo}}
+                </td>
+                <td>
+                    {{factura.factura_total}}
+                </td>
+                <td>
+                    {{factura.estado.estado_nombre}}
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-right right15" colspan="5" style="border: none;"><b>Total de Facturas:</b> {{facturas.length}}</td>
+            </tr>
+        </tfoot>        
+    </table>
+</div>

@@ -45,17 +45,14 @@ angular.module('app')
                                     );
                                 }
                             ],
-                            pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },
                             terapias: function(terapiasFac) {
                                 return terapiasFac.all();
                             },
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
                             },
-                            citas: function(citasFac) {
-                                return citasFac.all();
+                            consultas: function(consultasFac) {
+                                return consultasFac.all();
                             }                            
                         }
                     })
@@ -460,8 +457,16 @@ angular.module('app')
                     .state('app.terapias', {
                         url: '/terapias',
                         templateUrl: 'templates/terapias/terapias.html',
-                        controller: 'TerapiasCtrl'                
+                        controller: 'TerapiasCtrl',
+                        resolve: {
+                            terapias: function(terapiasFac) {
+                                return terapiasFac.all();
+                            }
+                        }                        
                     })
+                    /***********************************************************************
+                    *                            Pagos States                              *
+                    ***********************************************************************/                
                     .state('pago', {
                         url: '/pagos/:id',
                         templateUrl: 'templates/pagos/recibo.html'
@@ -489,11 +494,35 @@ angular.module('app')
                                 return pagosFac.all();
                             }                            
                         }                    
-                    })                
+                    })    
+                    /***********************************************************************
+                    *                            Reportes States                           *
+                    ***********************************************************************/                
                     .state('app.reportes', {
                         url: '/reportes',
                         templateUrl: 'templates/reportes/reportes.html'
                     })
+                    .state('app.reportes-pacientes', {
+                        url: '/reportes/pacientes',
+                        templateUrl: 'templates/reportes/pacientes/pacientesListado.html',
+                        controller: 'PacientesReportesCtrl',
+                        resolve: {
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }
+                        }
+                    })
+                    .state('app.reportes-facturas', {
+                        url: '/reportes/facturas',
+                        templateUrl: 'templates/reportes/facturas/facturasListado.html',
+                        controller: 'FacturasReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            }
+                        }
+                    })                
+                
                     .state('app.hos-payments', {
                         url: '/hospital/payments',
                         templateUrl: 'partials/hos-payments.html'

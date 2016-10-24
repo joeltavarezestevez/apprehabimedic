@@ -18,7 +18,7 @@ app.controller('ModalInstanceTerapiasCtrl', ['$scope', '$uibModalInstance', 'Id'
     
   }])
   
-app.controller('TerapiasCtrl', ['$rootScope', '$scope', '$uibModal', '$stateParams', '$timeout', '$filter', '$state', 'Notification', 'terapiasFac', 'Auth', function ($rootScope, $scope, $modal, $stateParams, $timeout, $filter, $state, Notification, terapiasFac, Auth) {
+app.controller('TerapiasCtrl', ['$rootScope', '$scope', '$uibModal', '$stateParams', '$timeout', '$filter', '$state', 'Notification', 'terapias', 'terapiasFac','Auth', function ($rootScope, $scope, $modal, $stateParams, $timeout, $filter, $state, Notification, terapias, terapiasFac, Auth) {
     
     $scope.loading = true;
     
@@ -28,34 +28,31 @@ app.controller('TerapiasCtrl', ['$rootScope', '$scope', '$uibModal', '$statePara
     console.log($scope.permiso);
     
     //Get All Pacientes
-    terapiasFac.all()
-    .success(function(data) {
-        $scope.terapias = data;
-        console.log($scope.terapias);
-        $scope.tbOptions = {
-            data: $scope.terapias,
-            aoColumns: [
-                { mData: 'id' },                              
-                {
-                    mData: null,
-                    bSortable: true,
-                    mRender: function (o) { return '<a ng-hide="perfil_usuario!=2 || perfil_usuario!=1" class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.paciente.persona.persona_nombres+' '+ o.paciente.persona.persona_apellidos +'</a>'; }
-                },   
-                {
-                    mData: null,
-                    bSortable: true,
-                    mRender: function (o) { return $filter('date')(o.paciente_terapia_fecha,'dd-MM-yyyy'); }
-                },
-                {
-                    mData: null,
-                    bSortable: false,
-                    mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/terapias/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteTerapias('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
-                }
-            ]
-        }
-        
-        $scope.loading = false;
-    })
+    $scope.terapias = terapias.data;
+    console.log($scope.terapias);
+    $scope.tbOptions = {
+        data: $scope.terapias,
+        aoColumns: [
+            { mData: 'id' },                              
+            {
+                mData: null,
+                bSortable: true,
+                mRender: function (o) { return '<a ng-hide="perfil_usuario!=2 || perfil_usuario!=1" class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.paciente.persona.persona_nombres+' '+ o.paciente.persona.persona_apellidos +'</a>'; }
+            },   
+            {
+                mData: null,
+                bSortable: true,
+                mRender: function (o) { return $filter('date')(o.paciente_terapia_fecha,'dd-MM-yyyy'); }
+            },
+            {
+                mData: null,
+                bSortable: false,
+                mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/terapias/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteTerapias('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
+            }
+        ]
+    }
+
+    $scope.loading = false;
     
     $scope.open = function (size,windowClass,Id) {
       var modalInstance = $modal.open({
@@ -71,7 +68,7 @@ app.controller('TerapiasCtrl', ['$rootScope', '$scope', '$uibModal', '$statePara
       });
 
       modalInstance.result.then(function () {
-          pacientesFac.delete(Id)
+          terapiasFac.delete(Id)
               .success(function(data) {
                 $timeout(function() {
                   $state.reload(); 

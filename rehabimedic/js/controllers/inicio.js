@@ -16,19 +16,18 @@
     });
     
     
-    app.controller('InicioCtrl', ['$scope', '$filter', 'pacientes', 'terapias', 'facturas', 'citas', function($scope, $filter, pacientes, terapias, facturas, citas) {
-        //$scope.pacientes = pacientes.data;
+    app.controller('InicioCtrl', ['$scope', '$filter', 'terapias', 'facturas', function($scope, $filter, terapias, facturas) {
         $scope.terapias = terapias.data;
         $scope.facturas = facturas.data;
-        $scope.citas = citas.data;
-        for(c=0; c<$scope.citas.length; c++) {
-            $scope.citas[c].cita_fecha_hora = $filter('date')(new Date($scope.citas[c].cita_fecha_hora),'yyyy-MM-dd');
-        }
-        console.log($scope.citas);
-        $scope.hoy = new Date();
-        $scope.hoy = $filter('date')($scope.hoy,'yyyy-MM-dd');
+        for(c=0; c<$scope.facturas.length; c++) {
+            $scope.facturas[c].factura_fecha = $filter('date')(new Date($scope.facturas[c].factura_fecha),'yyyy-MM-dd');
+        }       
+        console.log($scope.facturas);
+        $scope.hoy = $filter('date')(new Date(),'yyyy-MM-dd');
         console.log($scope.hoy);
-        $scope.pacientes = $filter('filter')($scope.citas, "2016-11-01");
+        //$scope.pacientes = $filter('filter')($scope.citas, {cita_fecha_hora: $scope.hoy});
+        //$scope.pacientes = $filter('filter')($scope.citas, {cita_fecha_hora: $scope.hoy});
+        $scope.facturas = $filter('filter')($scope.facturas, {factura_fecha: $scope.hoy});
         
         
         var c=0;

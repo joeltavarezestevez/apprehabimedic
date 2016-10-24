@@ -121,7 +121,7 @@
                                         <div ng-if="paciente.persona_imagen_perfil">&nbsp;</div>
                                         <img ng-if="paciente.persona_imagen_perfil" src="{{paciente.persona_imagen_perfil}}" width="320" class="img-responsive">
                                         <canvas style="display: none" id="snapshot"></canvas>
-                                        <input class="ng-hide" type="file" id="trigger" onchange="angular.element(this).scope().setFile(this)" accept="image/*">
+                                        <input class="ng-hide" type="file" id="trigger" onchange="angular.element(this).scope().setImage(this)" accept="image/*">
                                         <div class="row btn-iconic margin-left-30">
                                             <button ng-if="!paciente.persona_imagen_perfil" type="button" class="btn btn-primary" ng-click="makeSnapshot()">
                                                 <i class="fa fa-camera"></i>
