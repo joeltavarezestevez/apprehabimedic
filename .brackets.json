@@ -1,0 +1,6 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/joeltavarezestevez/Desktop/apprehabimedic/bower_components/angular-file-upload/src/services/FileLikeObject.js",
+        "/Users/joeltavarezestevez/Desktop/apprehabimedic/bower_components/angular-smart-table/src/stSort.js"
+    ]
+}

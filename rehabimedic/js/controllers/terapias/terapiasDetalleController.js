@@ -1,12 +1,16 @@
-app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'terapiasFac', 'pacientes', 'pacientesFac', function($scope, $rootScope, $state, $stateParams, $filter, $window, $timeout, Notification, terapiasFac, pacientes, pacientesFac) {
+app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'terapiasFac', 'terapiasDetallesFac', 'pacientes', 'pacientesFac', function($scope, $rootScope, $state, $stateParams, $filter, $window, $timeout, Notification, terapiasFac, terapiasDetallesFac, pacientes, pacientesFac) {
     
     $scope.selected = [];
     $scope.pacientes = pacientes.data;
     $scope.diamayor = 0;
     $scope.terapia = {};
+    $scope.terapia_detalle = {};
     $scope.terapia.citas = [];
+    $scope.terapia.detalles = [];
     $scope.cita = {};
+    $scope.detalle = {};
     console.log($rootScope.user);
+    $scope.terapia_detalle.terapia_sesion_fecha = $filter('date')(new Date(),'yyyy-MM-dd');
     
     $scope.hstep = 1;
     $scope.mstep = 30;
@@ -21,6 +25,7 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     $scope.resumen = function() {
         var c = 1;
         $scope.terapia.citas = [];
+        $scope.terapia.detalles = [];
         y = $scope.terapia.paciente_terapia_fecha.getFullYear(); 
         m = $scope.terapia.paciente_terapia_fecha.getMonth();
         d = $scope.terapia.paciente_terapia_fecha.getDate();
@@ -43,10 +48,13 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
         $scope.fecha_inicial = monday;        
         for(var i = 0; i < $scope.terapia.terapia_semanas; i++) {
             for(var j = 0; j < $scope.terapia.terapia_sesiones_semana; j++) {
+                //citas
+                
                 y = $scope.fecha_inicial.getFullYear();
                 m = $scope.fecha_inicial.getMonth();
                 d = $scope.fecha_inicial.getDate();
                 $scope.cita.cita_fecha = new Date(y, m, d+$scope.selected[j].value-1);
+                $scope.detalle.terapia_sesion_fecha = new Date(y, m, d+$scope.selected[j].value-1);
                 y = $scope.cita.cita_fecha.getFullYear(); 
                 m = $scope.cita.cita_fecha.getMonth();
                 d = $scope.cita.cita_fecha.getDate();
@@ -55,12 +63,17 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
                 min = $scope.cita.cita_hora.getMinutes();
                 $scope.cita.cita_fecha_hora = new Date(y, m, d, h, min);
                 $scope.cita.cita_fecha_hora = $filter('date')($scope.cita.cita_fecha_hora,'yyyy-MM-dd HH:mm:ss');
+                $scope.detalle.terapia_sesion_fecha = $filter('date')($scope.detalle.terapia_sesion_fecha,'yyyy-MM-dd');
                 $scope.cita.cita_descripcion = "Terapia " + c + " de " + $scope.terapia.terapia_sesiones_total;
-                if ($rootScope.user.persona.doctor)
+                $scope.detalle.terapia_sesion_numero = c;
+                if ($rootScope.user.persona.doctor) {
                     $scope.cita.doctor_id = $rootScope.user.persona.doctor.id;
-                console.log($scope.cita);
+                    $scope.detalle.doctor_id = $rootScope.user.persona.doctor.id;
+                }
                 $scope.terapia.citas.push($scope.cita);
+                $scope.terapia.detalles.push($scope.detalle);
                 $scope.cita = {};
+                $scope.detalle = {};
                 c++;
             }
             y = $scope.fecha_inicial.getFullYear();
@@ -190,6 +203,40 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
                 console.log("Error");
                 console.log(response);
                 console.log($scope.terapia);
+            }
+        );
+    }
+    
+    $scope.saveSesion = function() {
+        $scope.terapia_detalle.paciente_terapia_id = $scope.terapia.id;
+        $scope.terapia_detalle.terapia_sesion_numero = $scope.terapia.pacientes_terapias_detalle.length + 1;
+        if ($rootScope.user.persona.doctor) {
+            $scope.terapia_detalle.doctor_id = $rootScope.user.persona.doctor.id;
+        }
+        
+        console.log($scope.terapia_detalle);
+        terapiasDetallesFac.save($scope.terapia_detalle)
+        .then(
+            function(response){
+                console.log("Sesion registrada!");
+                console.log(response);
+                console.log($scope.terapia_detalle);
+                $timeout(function() {
+                    $state.go('app.terapias');
+                    console.log("State Changed");
+                    Notification({
+                        message: 'Sesion registrada correctamente!',
+                        title: 'Registro realizado',
+                        delay: 5000,
+                        positionX: 'center',
+                        positionY: 'top'
+                    }, 'success');                    
+                }, 1000, false);
+            },
+            function(response){
+                console.log("Error");
+                console.log(response);
+                console.log($scope.terapia_detalle);
             }
         );
     }

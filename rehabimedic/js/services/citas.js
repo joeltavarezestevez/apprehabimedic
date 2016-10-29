@@ -43,6 +43,15 @@ app.factory('citasFac', ['$http', 'BASEURL', function($http, BASEURL) {
             });
         },
         
+        realizarCita : function(data, id) {
+            return $http({
+                method: 'PUT',
+                url: urlBase + "/realizarCita/" + id,
+                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+                data: $.param(data)
+            });
+        },        
+        
         delete : function(id) {
             return $http.delete(urlBase + "/" + id);
         }

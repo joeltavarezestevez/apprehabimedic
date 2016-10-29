@@ -2,24 +2,27 @@
     <div class="col-lg-12">
         <section class="box nobox">
             <div class="content-body">
-                <div style="text-align: right;">
+                <div class="row" style="text-align: right;">
                     <div class="btn-group">
-                        <a href="#/pacientes/perfil/print/{{paciente.id}}" class="btn btn-info">
+                        <a href="#/pacientes/perfil/print/{{paciente.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Imprimir Perfil" tooltip-placement="bottom">
                             <i class="material-icons icon-md">print</i>
                         </a>               
-                        <a href="#" class="btn btn-info">
+                        <a href="#/app/terapias/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Terapia" tooltip-placement="bottom">
                             <i class="material-icons icon-md">healing</i>
                         </a>
-                        <a href="#" class="btn btn-info">
+                        <a href="#/app/consultas/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Consulta" tooltip-placement="bottom">
                             <i class="material-icons icon-md">assignment_ind</i>
                         </a>
-                        <a href="#" class="btn btn-info">
+                        <a href="#/app/facturas/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Factura" tooltip-placement="bottom">
+                            <i class="material-icons icon-md">receipt</i>
+                        </a>                        
+                        <a href="#/app/pagos/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nuevo Pago" tooltip-placement="bottom">
                             <i class="material-icons icon-md">attach_money</i>
                         </a>
-                        <a href="#/app/pacientes/editar/{{paciente.id}}" class="btn btn-info">
+                        <a href="#/app/pacientes/editar/{{paciente.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Editar Paciente" tooltip-placement="bottom">
                             <i class="material-icons icon-md">edit</i>
                         </a>                            
-                    </div>                          
+                    </div>
                 </div>
                 <br>
                 <div class="row" id="printThisElement">
@@ -34,16 +37,17 @@
                                 <!-- Available statuses: online, idle, busy, away and offline -->
                                 <span class="uprofile-status online"></span>
                                 </h3>
-                                <p class="uprofile-title">{{paciente.persona.pais.pais_nombre}}</p>
+                                <p class="uprofile-title" tooltip-class="success animated fadeIn " uib-tooltip="Lugar de Nacimiento" tooltip-placement="bottom">{{paciente.persona.pais.pais_nombre}}</p>
                                 <div class="margin-left-10" style="text-align: left;">
-                                    <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
-                                    <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
-                                    <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
-                                    <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
-                                    <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
-                                    <p><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
-                                    <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
-                                    <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Tipo de Sangre" tooltip-placement="bottom"><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Aseguradora" tooltip-placement="bottom"><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Número de Seguridad Social" tooltip-placement="bottom"><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Fecha de Nacimiento (Edad)" tooltip-placement="bottom"><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Residencial" tooltip-placement="bottom" ng-if="paciente.persona_telefono"><i class="fa fa-phone"></i> {{paciente.persona_telefono}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Móvil" tooltip-placement="bottom" ng-if="paciente.persona_celular">&nbsp;<i class="fa fa-mobile"></i> {{paciente.persona_celular}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Correo Electrónico" tooltip-placement="bottom"><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Dirección" tooltip-placement="bottom"><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Balance Pendiente" tooltip-placement="bottom"><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
                                 </div>
                                 <!--<div class="margin-top-10">
                                     <div class="col-xs-4 bg-white">
@@ -69,7 +73,7 @@
                         <uib-tabset class="tab-container primary">
                             <uib-tab>
                                 <uib-tab-heading>
-                                    <i class="material-icons icon-md">person</i>Datos generales
+                                    <i class="material-icons icon-md">person</i>Info
                                 </uib-tab-heading>
                                 <br>
                                 <div class="row">
@@ -179,7 +183,7 @@
                                     <uib-accordion close-others="oneAtATime">
                                         <uib-accordion-group ng-repeat="terapia in paciente.pacientes_terapias">
                                             <uib-accordion-heading>
-                                                <b>{{terapia.paciente_terapia_fecha}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}} <small class="text-right">Sesiones: {{terapia.terapia_sesiones_total}}</small></b>
+                                                <b>{{terapia.paciente_terapia_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{terapia.doctor.persona.persona_nombres}} {{terapia.doctor.persona.persona_apellidos}} | Sesiones: {{terapia.terapia_sesiones_total}}</b>
                                             </uib-accordion-heading>
                                             <div>
                                                 <big><b>Resumen</b></big>
@@ -187,8 +191,8 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd/MM/yyyy'}} </p>
-                                                    <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd/MM/yyyy'}}</p>
+                                                    <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
+                                                    <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
                                                     <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
                                                     <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
                                                 </div>
@@ -202,17 +206,39 @@
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <big><b>Ejercicios y Actividades Recomendados</b></big><hr>
-                                                    {{terapia.paciente_terapia_programa}}
+                                                    <p style="white-space: pre-line">{{terapia.paciente_terapia_programa}}</p>
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <big><b>Detalle de las sesiones realizadas</b></big>
+                                                    <big><b>Detalle de las sesiones</b></big>
                                                 </div>
                                             </div>
+                                            <div class="transparent accordion ng-scope">             
+                                                <uib-accordion close-others="oneAtATime">
+                                                    <uib-accordion-group ng-repeat="detalle in terapia.pacientes_terapias_detalle">
+                                                        <uib-accordion-heading ng-if="detalle.estado_id == 4">
+                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                                        </uib-accordion-heading>
+                                                        <uib-accordion-heading ng-if="detalle.estado_id == 1">
+                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                                        </uib-accordion-heading>                                       <div ng-if="detalle.estado_id == 4">
+                                                            <h4><b>Terapista: </b></h4>
+                                                            <p>
+                                                                Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                                                            </p>
+                                                            <br>
+                                                            <h4><b>Ejercicios y Actividades Realizadas:</b></h4>
+                                                            <p style="white-space: pre-line">
+                                                                {{detalle.paciente_terapia_detalle}}
+                                                            </p>
+                                                        </div>
+                                                    </uib-accordion-group>
+                                                </uib-accordion>
+                                            </div>
                                         </uib-accordion-group>
-                                    </uib-accordion>                                
+                                    </uib-accordion>
                                 </div>
                             </uib-tab>                            
                             <uib-tab>
@@ -223,7 +249,7 @@
                                     <uib-accordion close-others="oneAtATime">
                                         <uib-accordion-group ng-repeat="consulta in paciente.consultas">
                                             <uib-accordion-heading>
-                                                <b>{{consulta.consulta_fecha}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}</b>
+                                                <b>{{consulta.consulta_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}</b>
                                             </uib-accordion-heading>
                                             <h4><b>Motivo de consulta:</b></h4>
                                             <p>{{consulta.consulta_motivo}}</p>
@@ -255,9 +281,21 @@
                             </uib-tab>
                             <uib-tab>
                                 <uib-tab-heading>
-                                    <i class="material-icons icon-md">assignment</i> Notas Especiales
+                                    <i class="material-icons icon-md">assignment</i> Notas
                                 </uib-tab-heading>
-                                <h4>Aqui va las notas.</h4>                                
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <big><b>Notas Especiales del Paciente</b></big>
+                                        <hr>
+                                        <li  ng-repeat="nota in paciente.pacientes_notas_especiales">
+                                            <b>
+                                                {{nota.updated_at}} | {{nota.usuario.persona.persona_nombres}} {{nota.usuario.persona.persona_apellidos}} 
+                                            </b>
+                                            <p><i>&nbsp;&nbsp;&nbsp;{{nota.notas_especiales}}</i></p>
+                                            <br>
+                                        </li>
+                                    </div>
+                                </div>
                             </uib-tab>
                         </uib-tabset>
                         <div class="uprofile-content padding-top-30"></div>

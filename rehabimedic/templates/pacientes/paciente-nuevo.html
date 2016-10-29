@@ -62,8 +62,8 @@
                                         <label class="form-label" for="persona_fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
                                         <span class="desc">Seleccione la fecha de nacimiento</span>
                                         <div class="input-group" inputgroup>
-                                            <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2016-07-27'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" id="persona_fecha_nacimiento" ng-model="paciente.persona_fecha_nacimiento">
-                                            <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #999;"></i></span>
+                                            <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="'1900-01-01'" max-date="dt" datepicker-options="dateOptions" ng-required="true" id="persona_fecha_nacimiento" ng-model="paciente.persona_fecha_nacimiento" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar">
+                                            <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #000;"></i></span>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                            

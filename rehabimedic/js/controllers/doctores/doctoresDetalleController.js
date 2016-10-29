@@ -1,8 +1,9 @@
-app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$timeout', '$filter', '$state', 'Notification', 'doctoresFac', 'especialidades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', function($scope, $stateParams, $window, $timeout, $filter, $state, Notification, doctoresFac, especialidades, estadosCiviles, gruposSanguineos, paises, sexos) {
+app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$timeout', '$filter', '$state', 'Notification', 'doctoresFac', 'especialidades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'perfilesUsuarios', function($scope, $stateParams, $window, $timeout, $filter, $state, Notification, doctoresFac, especialidades, estadosCiviles, gruposSanguineos, paises, sexos, perfilesUsuarios) {
     
     $scope.especialidades = especialidades.data;
     $scope.estados_civiles = estadosCiviles.data;
     $scope.grupos_sanguineos = gruposSanguineos.data;
+    $scope.perfilesUsuarios = perfilesUsuarios.data;
     $scope.paises = paises.data;
     $scope.sexos = sexos.data;
     $scope.doctor = {};
@@ -29,6 +30,7 @@ app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$ti
                 response.data.persona.persona_fecha_nacimiento = d;
                 $scope.doctor = response.data;
                 $scope.doctor.persona_imagen_perfil = $scope.doctor.persona.persona_imagen_perfil;
+                $scope.fecha_nacimiento = $filter('date')($scope.doctor.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
                 console.log($scope.doctor);
                 
                 angular.forEach(response.data.persona.personas_telefonos, function(value, key) {
@@ -63,6 +65,7 @@ app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$ti
     $scope.clearImage = function() {
         angular.element("#trigger").val(null);
         $scope.doctor.persona_imagen_perfil = '';
+        $scope.doctor.foto_editada = 1;
     }    
     
     $scope.save = function() {

@@ -1,4 +1,23 @@
-app.controller('PacientesDetalleCtrl', ['$scope', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', function($scope, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos) {
+app.controller('ModalInstancePacienteCtrl', ['$scope', '$rootScope','$uibModalInstance', 'Id', 'Notification', 'pacientesFac', 'pacientesImagenesFac', function($scope, $rootScope, $modalInstance, Id, Notification, pacientesFac, pacientesImagenesFac) {
+      
+    $scope.registro = {};
+    console.log(Id);
+    pacientesImagenesFac.get(parseInt(Id,10))
+    .success(function(data) {
+        $scope.registro = data;
+        console.log($scope.registro);
+    });   
+    
+    $scope.ok = function (Id) {
+        $modalInstance.close();
+    };
+
+    $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };    
+}])
+
+app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos) {
 
     $scope.alert = false;
     $scope.paciente = {};
@@ -82,6 +101,10 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$state', '$stateParams', '$fi
                     $scope.paciente.fractura = 2;
                 }
                 
+                angular.forEach($scope.paciente.pacientes_notas_especiales, function(value, key) {
+                    value.updated_at = $filter('date')(new Date(value.updated_at),'dd-MMM-yyyy');
+                })
+                
                 angular.forEach(response.data.persona.personas_telefonos, function(value, key) {
                     if (value.tipo_telefono_id == 1) {
                         $scope.paciente.persona_telefono = value.telefono_numero;
@@ -115,6 +138,42 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$state', '$stateParams', '$fi
                 $scope.message = "Error: "+response.status + " " + response.statusText;
             }
         );
+    }
+    
+    $scope.deleteArchivo = function (size,windowClass,Id) {
+      var modalInstance = $modal.open({
+        templateUrl: 'templates/modal-deleteArchivo.html',
+        controller: 'ModalInstancePacienteCtrl',
+        windowClass: windowClass,
+        size: size,
+        resolve: {
+            Id: function () {
+            return Id;
+         }
+       }          
+      });
+
+      modalInstance.result.then(function () {
+          pacientesImagenesFac.delete(Id)
+              .success(function(data) {
+              $timeout(function() {
+                  $state.reload(); 
+              }, 1000, false);  
+              
+              Notification({
+                  message: 'Documento Eliminado Correctamente!',
+                  title: 'Registro Eliminado',
+                  delay: 5000,
+                  positionX: 'center',
+                  positionY: 'top'
+              }, 'error');
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
     }
     
     $scope.calculateAge = function calculateAge() { // birthday is a date

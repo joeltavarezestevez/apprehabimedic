@@ -1,0 +1,376 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Perfiles de Pacientes';">
+    <div class="col-lg-12" ng-hide="loading">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.reportes">Reportes</a>
+            </li>
+            <li>
+                <strong class="active">Perfiles de Pacientes</strong>
+            </li>            
+        </ol>           
+        <div class="text-right">
+            <a ng-click="printDiv('printThisElement');" class="btn btn-info">
+                <i class="material-icons icon-md">print</i>
+            </a>
+        </div>
+        <section class="box ">
+            <header class="panel_header">
+                <h2 class="title pull-left"><i class="fa fa-database"></i> Perfiles de Pacientes</h2>
+            </header>
+            <div class="content-body padding-bottom-15">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="PacientesTable">
+                        <div class="row">
+                            <div class="col-sm-6">&nbsp;</div>
+                            <div class="col-sm-6 text-right">
+                                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                    <label>
+                                        Buscar:
+                                        <input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0" ng-model="search">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>                        
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:5%"><i class="fa fa-image"></i></th>
+                                    <th style="width:25%">Nombre</th>
+                                    <th style="width:15%">Telefono</th>
+                                    <th style="width:25%">Correo Electr&oacute;nico</th>
+                                    <th style="width:10">Balance</th>
+                                    <th style="width:15%">Tipo de Sangre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="paciente in pacientes | filter:search as filtered">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        <a class="text-center preview" href="#/app/pacientes/perfil/{{paciente.id}}">
+                                            <i class="fa fa-image"></i>
+                                            <span>
+                                                <img src="{{paciente.persona.persona_imagen_perfil}}" class="hide-image" height="70" />
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a class="text-center" href="#/app/pacientes/perfil/{{paciente.id}}"> {{paciente.persona.persona_nombres + ' '+ paciente.persona.persona_apellidos}}</a>
+                                    </td>
+                                    <td>
+                                        {{paciente.persona.personas_telefonos[0].telefono_numero}}
+                                    </td>
+                                    <td>
+                                        {{paciente.persona.persona_correo_electronico}}
+                                    </td>
+                                    <td>
+                                        {{paciente.paciente_balance}}
+                                    </td>
+                                    <td>
+                                        {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div id="printThisElement" ng-hide="1==1">
+    <div class="container" ng-repeat="paciente in filtered">
+        <div style="text-align: center;">
+            <img src="img/pipiota.png" width="160"/>
+            <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
+            <p>AVE. JUAN P. DUARTE, PLAZA PALERMO</p>
+            <p>M&Oacute;DULO 110, STGO. R.D.</p>
+            <p>809-825-8595</p>
+            <p>RNC-131341421</p>
+        </div>                    
+        <h2 class="text-right">Perfil del Paciente</h2>
+        <hr>
+        <table class="table well" style="border: none;">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td style="border: none;">
+                        <td style="width: 20%; border: none;">
+                            <img src="{{paciente.persona.persona_imagen_perfil}}" width="150px">
+                        </td>
+                        <td style="width: 40%; border: none;">
+                            <h3>
+                                {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}
+                                <br>
+                                <small>{{paciente.persona.sexo.sexo_nombre}}, {{paciente.persona.persona_edad}} a&ntilde;os</small>
+                                <br>
+                                <small>{{paciente.persona.pais.pais_nombre}}</small>
+                                <br>
+                                <small>{{paciente.paciente_balance | currency}}</small>
+                            </h3>
+                        </td>
+                        <td style="width: 40%; border: none;">
+                            <h3>
+                                Contacto
+                                <br>
+                                <small><i class="fa fa-phone"></i> {{paciente.persona_telefono}} - <i class="fa fa-mobile"></i> {{paciente.persona_celular}}</small>
+                                <br>
+                                <small><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</small>
+                                <br>
+                                <small><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</small>
+                            </h3>
+                        </td>
+                    </td>                                
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <div class="">
+            <div>
+                <h3><i class="material-icons icon-md">person</i>Datos generales</h3>
+            </div>
+        </div>
+        <hr>
+        <table class="table" style="border: none; margin-left: 10px; height: 80%;">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td style="border: none;">
+                        <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}}</p>
+                    </td>
+                    <td style="border: none;">
+                        <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                    </td>                                  
+                </tr>
+                <tr>
+                    <td style="border: none;">
+                        <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
+                    </td>
+                    <td style="border: none;">
+                        <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
+                    </td>                                          
+                </tr>
+                <tr>
+                    <td style="border: none;">
+                        <p>
+                            <i class="fa fa-user"></i> <big><b>Contacto de Emergencia</b></big>
+                            <li>
+                                {{paciente.persona.persona_contacto_emergencia.contacto_nombre}}
+                                <br>&nbsp;&nbsp;
+                                {{paciente.persona.persona_contacto_emergencia.contacto_telefono}}
+                            </li>                                        
+                        </p>
+                    </td>                                
+                    <td style="border: none;">
+                        <p>
+                            <i class="fa fa-stethoscope"></i> <big><b>Enfermedades</b></big>
+                            <li ng-if="!paciente.pacientes_enfermedades.length > 0">Ninguna</li>
+                            <li ng-repeat="enfermedad in paciente.pacientes_enfermedades">
+                                {{enfermedad.enfermedad.enfermedad_nombre}}
+                            </li>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: none;">
+                        <i class="fa fa-user-md"></i> <big><b>Cirug&iacute;as</b></big>
+                        <li ng-if="!paciente.pacientes_cirugias.length > 0">Ninguna</li>
+                        <li ng-repeat="cirugia in paciente.pacientes_cirugias">
+                            {{cirugia.cirugia_descripcion}}
+                        </li>
+                    </td>
+                    <td style="border: none;">
+                        <i class="fa fa-wheelchair"></i> <big><b>Fracturas</b></big>
+                        <li ng-if="!paciente.pacientes_fracturas.length > 0">Ninguna</li>
+                        <li ng-repeat="fractura in paciente.pacientes_fracturas">
+                            {{fractura.cuerpo_parte.cuerpo_parte_nombre}}
+                        </li>
+                    </td>                                          
+                </tr>
+            </tbody>
+        </table>
+        <div ng-show="paciente.paciente_empleo_estado == 1">
+            <div>
+                <h3><i class="material-icons icon-md">person</i>Datos de Empleo</h3>
+            </div>
+        </div>
+        <hr>
+        <table class="table" style="border: none; margin-left: 10px;" ng-show="paciente.paciente_empleo_estado == 1">
+            <thead></thead>
+            <tbody>
+                <tr>
+                    <td style="border: none;">
+                        <big><b>Nombre de la Empresa/Instituci&oacute;n</b></big>
+                        <p>{{paciente.paciente_empleo.paciente_empleo_empresa}}</p>
+                    </td>
+                    <td style="border: none;">
+                        <big><b>Jornada - Horario</b></big>
+                        <p>{{paciente.paciente_empleo.paciente_empleo_jornada}} -
+                        {{paciente.paciente_empleo.paciente_empleo_horario}}</p>
+                    </td>                                
+                </tr>
+                <tr>
+                    <td style="border: none;">
+                        <big><b>Direcci&oacute;n de la Empresa/Instituci&oacute;n</b></big>
+                        <p>{{paciente.paciente_empleo.paciente_empleo_empresa_direccion}}<br>
+                        {{paciente.paciente_empleo.paciente_empleo_empresa_telefono}}</p>
+                    </td>                                                                  
+                    <td style="border: none;">
+                        <big><b>Tiempo en la Empresa/Instituci&oacute;n</b></big>
+                        <p>{{paciente.paciente_empleo.paciente_empleo_empresa_tiempo}} a&ntilde;os</p>
+                    </td>                                          
+                </tr>
+            </tbody>
+        </table>
+        <p style="page-break-after: always"></p>
+        <div ng-show="paciente.pacientes_notas_especiales.length > 0">
+            <div>
+                <h3><i class="material-icons icon-md">assignment</i> Notas Especiales</h3>
+            </div>
+            <hr>
+            <div class="row" ng-repeat="nota in paciente.pacientes_notas_especiales">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <li>
+                        <b>
+                            {{nota.updated_at}} | {{nota.usuario.persona.persona_nombres}} {{nota.usuario.persona.persona_apellidos}} 
+                        </b>
+                        <p><i>&nbsp;&nbsp;&nbsp;{{nota.notas_especiales}}</i></p>
+                    </li>
+                </div>
+            </div>
+        </div>
+        <p style="page-break-after: always"></p>
+        <div ng-show="paciente.pacientes_terapias.length > 0">
+            <div>
+                <h3><i class="material-icons icon-md">healing</i> Terapias</h3>
+            </div>
+        </div>
+        <div ng-repeat="terapia in paciente.pacientes_terapias" ng-show="paciente.pacientes_terapias.length > 0">
+            <div class="text-right">
+                <small>Terapias ({{$index+1}} de {{paciente.pacientes_terapias.length}})</small>
+            </div>
+            <hr>
+            <div class="">
+                <h4 class="text-right">
+                    <b>{{terapia.paciente_terapia_fecha}} | Dr. {{terapia.doctor.persona.persona_nombres}} {{terapia.doctor.persona.persona_apellidos}}</b>
+                </h4>
+            </div>
+            <br>
+            <div>
+                <big><b>Resumen</b></big>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
+                    <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
+                    <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
+                    <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
+                </div>
+                <div class="col-lg-6">
+                    <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
+                    <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
+                    <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
+                </div>
+            </div>
+            <br>
+            <div>
+                <big><b>Ejercicios y Actividades Recomendados</b></big>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-12" style="white-space: pre-line">
+                    {{terapia.paciente_terapia_programa}}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4><b>Detalle de las sesiones</b></h4>
+                </div>
+            </div>
+            <hr>
+            <div class="row">             
+                <div class="col-lg-12" ng-repeat="detalle in terapia.pacientes_terapias_detalle">
+                    <li>
+                        <b ng-if="detalle.estado_id == 4">
+                            Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}} | {{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Estado: {{detalle.estado.estado_nombre}}
+                        </b>
+                        <b ng-if="detalle.estado_id == 1">
+                            {{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de {{terapia.terapia_sesiones_total}} |  Estado: Pendiente
+                        </b>
+                        <div ng-if="detalle.estado_id == 4">
+                            <p>&nbsp;&nbsp;&nbsp;
+                                <b>Terapista: </b>
+                                Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                            </p>
+                            <p>&nbsp;&nbsp;&nbsp;<b>Ejercicios y Actividades Realizadas:</b></p>
+                            <p style="white-space: pre-line">
+                                {{detalle.paciente_terapia_detalle}}
+                            </p>                                        
+                        </div>
+                    </li>
+                </div>
+            </div>                        
+            <p style="page-break-after: always"></p>
+        </div>
+        <div ng-show="paciente.consultas.length > 0">
+            <div>
+                <h3><i class="material-icons icon-md">assignment_ind</i> Historial M&eacute;dico</h3>
+            </div>
+            <div ng-repeat="consulta in paciente.consultas" ng-show="paciente.consultas.length > 0">
+                <div class="text-right">
+                    <small>Historial M&eacute;dico ({{$index+1}} de {{paciente.consultas.length}})</small>
+                </div>
+                <hr>
+                <br>                            
+                <div class="">
+                    <h4 class="text-right">
+                        <b>{{consulta.consulta_fecha}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}</b>
+                    </h4>
+                </div>
+                <br>
+                <div class="">
+                    <h4><b>Motivo de consulta:</b></h4>
+                    <p>{{consulta.consulta_motivo}}</p>
+                </div>
+                <br>
+                <div class="">
+                    <h4><b>Historia de la Enfermedad Actual:</b></h4>
+                    <p>{{consulta.consulta_historia}} </p>
+                </div>
+                <br>
+                <div class="">
+                    <ul>
+                        <li><b>App: </b> {{consulta.consulta_app}}.</li>
+                        <li><b>T&oacute;xicos: </b> {{consulta.consulta_toxicos}}.</li>
+                        <li><b>Al&eacute;rgicos: </b> {{consulta.consulta_alergicos}}.</li>
+                        <li><b>Medicamentos: </b> {{consulta.consulta_medicamentos}}.</li>
+                        <li><b>Qx: </b> {{consulta.consulta_qx}}.</li>
+                        <li><b>Transfunsionales: </b> .</li>
+                    </ul>
+                </div>
+                <br>
+                <div class="">
+                    <h4><b>Examen Físico:</b></h4>
+                    <ul>
+                        <li>Extensi&oacute;n: {{consulta.consulta_examen_fisico_extension}}</li>
+                        <li>Flexi&oacute;n: {{consulta.consulta_examen_fisico_flexion}}</li>
+                        <li>E.A.D.: {{consulta.consulta_examen_fisico_ead}}</li>
+                    </ul>
+                </div>
+                <br>
+                <div class="">
+                    <h4><b>Diagnóstico:</b></h4>
+                    <p>{{consulta.consulta_diagnostico}}</p>
+                </div>
+                <p style="page-break-after: always"></p>
+            </div>
+        </div>
+    </div>
+</div>

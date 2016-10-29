@@ -97,6 +97,7 @@ app.controller('PagosCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$s
                 mRender: function (o) { return $filter('date')(new Date(o.pago_fecha),'dd-MMM-yyyy'); }
             },
             { mData: 'pago_monto' },
+            { mData: 'estado.estado_nombre' },
             {
                 mData: null,
                 bSortable: false,

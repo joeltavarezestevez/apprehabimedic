@@ -129,11 +129,11 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <label class="form-label" for="field-1">Servicio a Facturar</label>
+                            <label class="form-label" for="field-1">Producto a Facturar</label>
                             <span class="desc"></span>
                             <div class="controls">
                                 <select ui-jq="chosen" class="form-control" ng-model="servicio_id" ng-change="updatePrecio(servicio_id)">
-                                    <option value="">Seleccione el servicio</option>
+                                    <option value="">Seleccione el producto</option>
                                     <option ng-repeat="servicio in servicios" value="{{servicio.id}}">{{servicio.servicio_nombre}}</option>                                    
                                 </select>
                             </div>

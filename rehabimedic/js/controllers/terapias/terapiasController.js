@@ -46,8 +46,23 @@ app.controller('TerapiasCtrl', ['$rootScope', '$scope', '$uibModal', '$statePara
             },
             {
                 mData: null,
+                bSortable: true,
+                mRender: function (o) { return $filter('date')(o.terapia_fecha_estimada_inicio,'dd-MM-yyyy'); }
+            },
+            {
+                mData: null,
+                bSortable: true,
+                mRender: function (o) { return $filter('date')(o.terapia_fecha_estimada_fin,'dd-MM-yyyy'); }
+            },
+                        {
+                mData: null,
                 bSortable: false,
-                mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/terapias/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteTerapias('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
+                mRender: function (o) { return '<div class="text-center">' + o.pacientes_terapias_detalle.length + "/" + o.terapia_sesiones_total+ '</div>'; }
+            },
+            {
+                mData: null,
+                bSortable: false,
+                mRender: function (o) { return '<div class="text-left"><a class="btn btn-xs btn-success" href="#/app/terapias/'+ o.id + '/sesion/nueva" alt="Realizar sesion"><i class="fa fa-plus"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteTerapias('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
             }
         ]
     }

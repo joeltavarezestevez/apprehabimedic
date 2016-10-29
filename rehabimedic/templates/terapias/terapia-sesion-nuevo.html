@@ -1,0 +1,135 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Registrar sesi&oacute;n';">
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.terapias">Terapias</a>
+            </li>
+            <li class="active">
+                <strong>Registrar sesi&oacute;n</strong>
+            </li>
+        </ol>
+        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Datos de la Terapia</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-bottom-0">
+                    <div class="row well">
+                        <div class="form-group" ng-if="terapia.paciente_id">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <img src="{{terapia.paciente.persona.persona_imagen_perfil}}" width="150px">
+                                    </div>                                    
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <h4><a href="#/app/pacientes/perfil/{{terapia.paciente.id}}">
+                                            <b>{{terapia.paciente.persona.persona_nombres}} {{terapia.paciente.persona.persona_apellidos}}
+                                            </b></a>
+                                        </h4> 
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label"><br><b>Resumen de Terapia Indicada por el(la) Dr(a). {{terapia.doctor.persona.persona_nombres}} {{terapia.doctor.persona.persona_apellidos}}:</b></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
+                            <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
+                            <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
+                            <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
+                        </div>
+                        <div class="col-lg-6">
+                            <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
+                            <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
+                            <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
+                        </div>
+                        <div class="col-lg-12">
+                            <label class="form-label"><b><br>Ejercicios y Actividades Recomendados</b></label>
+                            <p class="well" style="white-space: pre-line">{{terapia.paciente_terapia_programa}}</p>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="terapia.pacientes_terapias_detalle.length > 0">
+                        <div class="col-lg-12">
+                            <big><b>Detalle de las sesiones anteriores</b></big>
+                        </div>
+                    </div>
+                    <div class="transparent accordion ng-scope" ng-if="terapia.pacientes_terapias_detalle.length > 0"> 
+                        <uib-accordion close-others="oneAtATime">
+                            <uib-accordion-group ng-repeat="detalle in terapia.pacientes_terapias_detalle">
+                                <uib-accordion-heading ng-if="detalle.estado_id == 4">
+                                    <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                </uib-accordion-heading> 
+                                <div ng-if="detalle.estado_id == 4">
+                                    <h4><b>Terapista: </b></h4>
+                                    <p>
+                                        Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                                    </p>
+                                    <br>
+                                    <h4><b>Ejercicios y Actividades Realizados(as):</b></h4>
+                                    <p style="white-space: pre-line">
+                                        {{detalle.paciente_terapia_detalle}}
+                                    </p>
+                                </div>
+                            </uib-accordion-group>
+                        </uib-accordion>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label"><big><b>Nueva Sesi&oacute;n</b></big></label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                <label class="form-label"><big><b>Sesi&oacute;n No.: {{terapia.pacientes_terapias_detalle.length+1}}</b></big></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-right">
+                                <label class="form-label"><big><b>Fecha: {{terapia_detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}}</b></big></label>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12"></div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <label class="form-label" for="paciente_terapia_programa">Ejercicios y Actividades Realizados(as) <span class="text-danger">*</span></label> 
+                                <span class="desc">Describa los ejercicios y actividades realizados(as) durante la terapia</span>
+                                <div class="controls">
+                                    <textarea class="form-control" cols="5" rows="20" id="paciente_terapia_detalle" name="paciente_terapia_detalle" ng-model="terapia_detalle.paciente_terapia_detalle"></textarea>
+                                </div>
+                            </div>
+                        </div>                      
+                    </div>                    
+                </div>
+            </section>
+            <div class="row text-center">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-lg btn-primary" ng-click="saveSesion()"> Guardar </button>
+                        <button type="button" class="btn btn-lg btn-danger" ng-click="back()"> Cancelar </button>
+                    </div>
+                </div>
+            </div>
+        </form>            
+    </div>
+</div>

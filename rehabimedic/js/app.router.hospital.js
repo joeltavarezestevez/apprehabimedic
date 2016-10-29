@@ -45,8 +45,8 @@ angular.module('app')
                                     );
                                 }
                             ],
-                            terapias: function(terapiasFac) {
-                                return terapiasFac.all();
+                            terapias: function(terapiasDetallesFac) {
+                                return terapiasDetallesFac.all();
                             },
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
@@ -146,7 +146,10 @@ angular.module('app')
                             },
                             sexos: function(sexosFac) {
                                 return sexosFac.all();
-                            }                    
+                            },
+                            perfilesUsuarios: function(perfilesUsuariosFac) {
+                                return perfilesUsuariosFac.all();
+                            }                            
                         }
                     })    
                     .state('app.doctor-editar', {
@@ -168,12 +171,16 @@ angular.module('app')
                             },
                             sexos: function(sexosFac) {
                                 return sexosFac.all();
-                            }                    
+                            },
+                            perfilesUsuarios: function(perfilesUsuariosFac) {
+                                return perfilesUsuariosFac.all();
+                            }                            
                         }                    
                     })
                     .state('app.doctor-perfil', {
                         url: '/doctores/perfil/:id',
                         templateUrl: 'templates/doctores/doctor-perfil.html',
+                        controller: 'DoctoresDetalleCtrl',
                         resolve: {
                             deps: ['uiLoad',
                                 function(uiLoad) {
@@ -194,7 +201,10 @@ angular.module('app')
                             },
                             sexos: function(sexosFac) {
                                 return sexosFac.all();
-                            }
+                            },
+                            perfilesUsuarios: function(perfilesUsuariosFac) {
+                                return perfilesUsuariosFac.all();
+                            }                            
                         }
                     })
                 
@@ -235,7 +245,12 @@ angular.module('app')
                     .state('app.pacientes', {
                         url: '/pacientes',
                         templateUrl: 'templates/pacientes/pacientes.html',
-                        controller: 'PacientesCtrl'
+                        controller: 'PacientesCtrl',
+                        resolve: {                        
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }
+                        }
                     })
                     .state('app.paciente-nuevo', {
                         url: '/pacientes/nuevo',
@@ -447,9 +462,9 @@ angular.module('app')
                             }
                         }
                     })
-                    .state('app.terapia-editar', {
-                        url: '/terapias/editar/:id',
-                        templateUrl: 'templates/terapias/terapia-editar.html',
+                    .state('app.terapia-sesion-nuevo', {
+                        url: '/terapias/:id/sesion/nueva',
+                        templateUrl: 'templates/terapias/terapia-sesion-nuevo.html',
                         controller: 'TerapiasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
@@ -505,6 +520,98 @@ angular.module('app')
                         url: '/reportes',
                         templateUrl: 'templates/reportes/reportes.html'
                     })
+                    .state('app.reportes-citas', {
+                        url: '/reportes/citas',
+                        templateUrl: 'templates/reportes/citas/citasListado.html',
+                        controller: 'CitasReportesCtrl',
+                        resolve: {
+                            citas: function(citasFac) {
+                                return citasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-citas-realizadas', {
+                        url: '/reportes/citas/realizadas',
+                        templateUrl: 'templates/reportes/citas/citasRealizadasListado.html',
+                        controller: 'CitasReportesCtrl',
+                        resolve: {
+                            citas: function(citasFac) {
+                                return citasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-citas-pendientes', {
+                        url: '/reportes/citas/pendientes',
+                        templateUrl: 'templates/reportes/citas/citasPendientesListado.html',
+                        controller: 'CitasReportesCtrl',
+                        resolve: {
+                            citas: function(citasFac) {
+                                return citasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })                
+                    .state('app.reportes-citas-canceladas', {
+                        url: '/reportes/citas/canceladas',
+                        templateUrl: 'templates/reportes/citas/citasCanceladasListado.html',
+                        controller: 'CitasReportesCtrl',
+                        resolve: {
+                            citas: function(citasFac) {
+                                return citasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-citas-pacientes', {
+                        url: '/reportes/citas/citasporpaciente',
+                        templateUrl: 'templates/reportes/citas/citasPorPacienteListado.html',
+                        controller: 'CitasReportesCtrl',
+                        resolve: {
+                            citas: function(citasFac) {
+                                return citasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }
+                            
+                        }
+                    })                
+                    .state('app.reportes-consultas', {
+                        url: '/reportes/consultas',
+                        templateUrl: 'templates/reportes/consultas/consultasListado.html',
+                        controller: 'ConsultasReportesCtrl',
+                        resolve: {
+                            consultas: function(consultasFac) {
+                                return consultasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-consultas-pacientes', {
+                        url: '/reportes/consultas/consultasporpaciente',
+                        templateUrl: 'templates/reportes/consultas/consultasPorPacienteListado.html',
+                        controller: 'ConsultasReportesCtrl',
+                        resolve: {
+                            consultas: function(consultasFac) {
+                                return consultasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })                
                     .state('app.reportes-pacientes', {
                         url: '/reportes/pacientes',
                         templateUrl: 'templates/reportes/pacientes/pacientesListado.html',
@@ -515,6 +622,16 @@ angular.module('app')
                             }
                         }
                     })
+                    .state('app.reportes-pacientes-perfiles', {
+                        url: '/reportes/pacientes/perfiles',
+                        templateUrl: 'templates/reportes/pacientes/pacientesPerfilesListado.html',
+                        controller: 'PacientesReportesCtrl',
+                        resolve: {
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }
+                        }
+                    })                
                     .state('app.reportes-facturas', {
                         url: '/reportes/facturas',
                         templateUrl: 'templates/reportes/facturas/facturasListado.html',
@@ -522,7 +639,10 @@ angular.module('app')
                         resolve: {
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
-                            }
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
                         }
                     })
                     .state('app.reportes-facturas-anuladas', {
@@ -532,7 +652,10 @@ angular.module('app')
                         resolve: {
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
-                            }
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
                         }
                     })
                     .state('app.reportes-facturas-balance', {
@@ -542,7 +665,10 @@ angular.module('app')
                         resolve: {
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
-                            }
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
                         }
                     })                
                     .state('app.reportes-facturas-saldadas', {
@@ -552,8 +678,153 @@ angular.module('app')
                         resolve: {
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
-                            }
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
                         }
+                    })
+                    .state('app.reportes-facturas-pacientes', {
+                        url: '/reportes/facturas/facturasporpaciente',
+                        templateUrl: 'templates/reportes/facturas/facturasPorPacienteListado.html',
+                        controller: 'FacturasReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }
+                            
+                        }
+                    })
+                    .state('app.reportes-pagos', {
+                        url: '/reportes/pagos',
+                        templateUrl: 'templates/reportes/pagos/pagosListado.html',
+                        controller: 'PagosReportesCtrl',
+                        resolve: {
+                            pagos: function(pagosFac) {
+                                return pagosFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-pagos-anulados', {
+                        url: '/reportes/pagos/anulados',
+                        templateUrl: 'templates/reportes/pagos/pagosAnuladosListado.html',
+                        controller: 'PagosReportesCtrl',
+                        resolve: {
+                            pagos: function(pagosFac) {
+                                return pagosFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-pagos-pacientes', {
+                        url: '/reportes/pagos/pagosporpaciente',
+                        templateUrl: 'templates/reportes/pagos/pagosPorPacienteListado.html',
+                        controller: 'PagosReportesCtrl',
+                        resolve: {
+                            pagos: function(pagosFac) {
+                                return pagosFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }
+                            
+                        }
+                    })
+                    .state('app.reportes-terapias', {
+                        url: '/reportes/terapias',
+                        templateUrl: 'templates/reportes/terapias/terapiasListado.html',
+                        controller: 'TerapiasReportesCtrl',
+                        resolve: {
+                            terapias: function(terapiasFac) {
+                                return terapiasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-terapias-pendientes', {
+                        url: '/reportes/terapias/pendientes',
+                        templateUrl: 'templates/reportes/terapias/terapiasPendientesListado.html',
+                        controller: 'TerapiasReportesCtrl',
+                        resolve: {
+                            terapias: function(terapiasFac) {
+                                return terapiasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })
+                    .state('app.reportes-terapias-completadas', {
+                        url: '/reportes/terapias/completadas',
+                        templateUrl: 'templates/reportes/terapias/terapiasCompletadasListado.html',
+                        controller: 'TerapiasReportesCtrl',
+                        resolve: {
+                            terapias: function(terapiasFac) {
+                                return terapiasFac.all();
+                            },
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            }                            
+                        }
+                    })                
+                    /***********************************************************************
+                    *                            Configuracion States                      *
+                    ***********************************************************************/                
+                    .state('app.configuracion', {
+                        url: '/configuracion',
+                        templateUrl: 'templates/configuracion/configuracion.html'
+                    })
+                
+                    .state('app.configuracion-secuencias', {
+                        url: '/configuracion/secuencias',
+                        templateUrl: 'templates/configuracion/secuencias/secuencias.html',
+                        controller: 'SecuenciasCtrl',
+                        resolve: {
+                            secuencias: function(secuenciasFac) {
+                                return secuenciasFac.all();
+                            }
+                        }                    
+                    })
+                    .state('app.configuracion-secuencias-editar', {
+                        url: '/configuracion/secuencias/editar/:id',
+                        templateUrl: 'templates/configuracion/secuencias/secuencias-editar.html',
+                        controller: 'SecuenciasDetalleCtrl'                
+                    })
+                    .state('app.configuracion-secuencias-nuevo', {
+                        url: '/configuracion/secuencias/nuevo',
+                        templateUrl: 'templates/configuracion/secuencias/secuencias-nuevo.html',
+                        controller: 'SecuenciasDetalleCtrl'                
+                    })
+                
+                    .state('app.configuracion-servicios', {
+                        url: '/configuracion/servicios',
+                        templateUrl: 'templates/configuracion/servicios/servicios.html',
+                        controller: 'ServiciosCtrl',
+                        resolve: {
+                            servicios: function(serviciosFac) {
+                                return serviciosFac.all();
+                            }
+                        }                    
+                    })
+                    .state('app.configuracion-servicios-editar', {
+                        url: '/configuracion/servicios/editar/:id',
+                        templateUrl: 'templates/configuracion/servicios/servicios-editar.html',
+                        controller: 'ServiciosDetalleCtrl'                
+                    })
+                    .state('app.configuracion-servicios-nuevo', {
+                        url: '/configuracion/servicios/nuevo',
+                        templateUrl: 'templates/configuracion/servicios/servicios-nuevo.html',
+                        controller: 'ServiciosDetalleCtrl'                
                     })                
                 
                     .state('app.hos-payments', {

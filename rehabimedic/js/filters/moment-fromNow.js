@@ -25,12 +25,76 @@ angular.module('app')
 		
 		var retArray = [];
         retArray.total = 0;
+        retArray.balance = 0;
 		
 		angular.forEach(input, function(obj){
 			var receivedDate = obj.factura_fecha;
 			if(receivedDate >= startDate && receivedDate <= endDate) {
 				retArray.push(obj);
                 retArray.total = retArray.total + parseFloat(obj.factura_total);
+                retArray.balance = retArray.balance + parseFloat(obj.factura_balance);
+			}
+		});
+		return retArray; 
+	};
+})
+
+.filter('dateRangeCitas', function() {
+	return function(input, startDate, endDate) {
+		
+		var retArray = [];
+		
+		angular.forEach(input, function(obj){
+			var receivedDate = obj.cita_fecha_hora;
+			if(receivedDate >= startDate && receivedDate <= endDate) {
+				retArray.push(obj);
+			}
+		});
+		return retArray; 
+	};
+})
+
+.filter('dateRangeConsultas', function() {
+	return function(input, startDate, endDate) {
+		
+		var retArray = [];
+		
+		angular.forEach(input, function(obj){
+			var receivedDate = obj.consulta_fecha;
+			if(receivedDate >= startDate && receivedDate <= endDate) {
+				retArray.push(obj);
+			}
+		});
+		return retArray; 
+	};
+})
+
+.filter('dateRangePagos', function() {
+	return function(input, startDate, endDate) {
+		
+		var retArray = [];
+        retArray.total = 0;
+		
+		angular.forEach(input, function(obj){
+			var receivedDate = obj.pago_fecha;
+			if(receivedDate >= startDate && receivedDate <= endDate) {
+				retArray.push(obj);
+                retArray.total = retArray.total + parseFloat(obj.pago_monto);
+			}
+		});
+		return retArray; 
+	};
+})
+
+.filter('dateRangeTerapias', function() {
+	return function(input, startDate, endDate) {
+		
+		var retArray = [];
+		
+		angular.forEach(input, function(obj){
+			var receivedDate = obj.paciente_terapia_fecha;
+			if(receivedDate >= startDate && receivedDate <= endDate) {
+				retArray.push(obj);
 			}
 		});
 		return retArray; 

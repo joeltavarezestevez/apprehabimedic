@@ -12,22 +12,61 @@
                     <a ui-sref="app.inicio"><i class="fa fa-home"></i><strong class="active">Inicio</strong></a>
                 </li>
             </ol>
-           <section class="box nobox">
+            
+            <div style="text-align: right;">
+                <big><b>Opciones:</b></big>
+                <br>
+                <div class="btn-group">
+                    <a href="#/pacientes/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nuevo Paciente" tooltip-placement="bottom">
+                        <i class="material-icons icon-md">people</i>
+                    </a>               
+                    <a href="#/app/terapias/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Terapia" tooltip-placement="bottom">
+                        <i class="material-icons icon-md">healing</i>
+                    </a>
+                    <a href="#/app/consultas/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Consulta" tooltip-placement="bottom">
+                        <i class="material-icons icon-md">assignment_ind</i>
+                    </a>
+                    <a href="#/app/facturas/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Factura" tooltip-placement="bottom">
+                        <i class="material-icons icon-md">receipt</i>
+                    </a>                        
+                    <a href="#/app/pagos/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nuevo Pago" tooltip-placement="bottom">
+                        <i class="material-icons icon-md">attach_money</i>
+                    </a>
+                </div>
+            </div>
+           <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Resumen del {{fechaActual | date:'dd/MMM/yyyy'}}</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>               
                 <div class="content-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <!--<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"></div>-->
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-left">
+                                <label class="form-label" for="fecha_reporte">Elegir Fecha:</label>
+                                <div class="input-group" inputgroup>
+                                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="'1920-01-01'" max-date="hoy" datepicker-options="dateOptions" ng-required="true" id="fecha_reporte" ng-model="fecha" ng-change="resumen()" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar">
+                                    <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #000;"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="tile-counter bg-primary">
-                                <div class="content">
+                                <div class="content" tooltip-class="success animated fadeIn " uib-tooltip="Consultas y Terapias realizadas en el día" tooltip-placement="top">
                                     <i class='material-icons'>people</i>
                                     <h2 class="number_counter">{{pacientes_atendidos}}</h2>
                                     <span>Pacientes atendidos</span>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="tile-counter bg-accent">
-                                <div class="content">
+                            <div class="tile-counter bg-warning">
+                                <div class="content" tooltip-class="info animated fadeIn " uib-tooltip="Total de Terapias realizadas en el día" tooltip-placement="top">
                                     <i class='material-icons'>healing</i>
                                     <h2 count-to="1001" value="0" duration="5" class="number_counter">{{terapias.length}}</h2>
                                     <div class="clearfix"></div>
@@ -36,8 +75,8 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="tile-counter bg-warning">
-                                <div class="content">
+                            <div class="tile-counter bg-success">
+                                <div class="content" tooltip-class="primary animated fadeIn " uib-tooltip="Total de Facturas realizadas en el día" tooltip-placement="bottom">
                                     <i class='material-icons'>receipt</i>
                                     <h2 count-to="1001" value="0" duration="5" class="number_counter">{{ventas | currency}}</h2>
                                     <div class="clearfix"></div>
@@ -46,8 +85,8 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="tile-counter bg-warning">
-                                <div class="content">
+                            <div class="tile-counter bg-info">
+                                <div class="content" tooltip-class="warning animated fadeIn " uib-tooltip="Total de pagos realizados por los clientes en el día" tooltip-placement="bottom">
                                     <i class='material-icons'>attach_money</i>
                                     <h2 count-to="1001" value="0" duration="5" class="number_counter">{{pagos_recibidos | currency}}</h2>
                                     <div class="clearfix"></div>
@@ -65,13 +104,11 @@
                     <h2 class="title pull-left">Pacientes Atendidos por Mes</h2>
                     <div class="actions panel_actions pull-right">
                         <i class="box_toggle material-icons">expand_more</i>
-                        <i class="box_setting material-icons" ng-click="section_modal()">mode_edit</i>
-                        <i class="box_close material-icons">close</i>
                     </div>
                 </header>
                 <div class="content-body">
                     <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12" ng-controller="HospitalSurveyCtrl">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
                             <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" chart-click="onClick" chart-colours="colours">
                             </canvas>
                         </div>
@@ -79,5 +116,39 @@
                 </div>
             </section>
         </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Ventas / Pagos por Mes</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-top-45">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-left-0 padding-right-0">
+                            <div class="r1_maingraph db_box" ng-init="chartjs={show:'bar'}">
+                                <span class='pull-right switch'>
+                                  <i class=" {{chartjs.show == 'line' ? 'icon-default': 'icon-secondary'}} fa fa-line-chart icon-sm" ng-click="chartjs.show = 'line'"></i>&nbsp; &nbsp;
+                                  <i class=" {{chartjs.show == 'bar' ? 'icon-default': 'icon-secondary'}} fa fa-bar-chart icon-sm" ng-click="chartjs.show = 'bar'"></i>&nbsp; &nbsp;
+                            </span>
+                                <div class='graph-wrapper'>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-0 {{chartjs.show == 'bar' ? 'showit': 'hideit'}}" style="overflow:hidden;">
+                                        <canvas id="bar" class="chart chart-bar" chart-legend="true" chart-data="data_facturas_pagos" chart-labels="labels_facturas_pagos" chart-options="options_facturas_pagos" chart-colours="colours_facturas_pagos" chart-series="series_facturas_pagos" chart-click="onClick" style="width: 100% !important;height: 230px"></canvas>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-0 {{chartjs.show == 'line' ? 'showit': 'hideit'}}" style="overflow:hidden;">
+                                        <canvas id="line" class="chart chart-line" chart-legend="true" chart-data="data_facturas_pagos" chart-labels="labels_facturas_pagos" chart-options="options_facturas_pagos" chart-colours="colours_facturas_pagos" chart-series="series_facturas_pagos" chart-click="onClick" style="width: 100% !important;height: 230px">
+                                        </canvas>
+                                    </div>
+                                    <!-- <div class="col-md-12 col-sm-12 col-xs-12 {{chartjs.show == 'radar' ? 'showit': 'hideit'}}" ng-controller="DashboardRadarCtrl">
+                                        <canvas id="radar" class="chart chart-radar" chart-data="data" chart-labels="labels" chart-colours="colours"></canvas>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>        
     </div>
 </div>

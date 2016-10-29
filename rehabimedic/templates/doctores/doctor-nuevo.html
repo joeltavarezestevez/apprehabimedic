@@ -57,8 +57,8 @@
                                 <label class="form-label" for="persona_fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
                                 <span class="desc">Seleccione la fecha de nacimiento</span>
                                 <div class="input-group" inputgroup>
-                                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2018-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" id="doctor_fecha_nacimiento" ng-model="doctor.persona_fecha_nacimiento">
-                                    <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #999;"></i></span>
+                                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="'1900-01-01'" max-date="dt" datepicker-options="dateOptions" ng-required="true" id="doctor_fecha_nacimiento" ng-model="doctor.persona_fecha_nacimiento" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar">
+                                    <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #000;"></i></span>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                            
@@ -70,7 +70,7 @@
                                         <option ng-repeat="pais in paises" value="{{pais.id}}">{{pais.pais_nombre}}</option>
                                     </select>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -271,7 +271,7 @@
                     <div class="row" ng-if="doctor.usuario == 1">
                         <div class="form-group">
                             <div class="col-lg-8 col-md-8 col-sm-9 col-xs-12">
-                                <label class="form-label" for="doctor_nombre_usuario">Usuario</label>
+                                <label class="form-label" for="doctor_nombre_usuario">Usuario <span class="text-danger">*</span></label>
                                 <span class="desc">Escriba el nombre de usuario</span>
                                 <div class="controls">
                                     <input type="text" class="form-control" id="doctor_nombre_usuario" name="doctor_nombre_usuario" ng-model="doctor.usuario_nombre">
@@ -283,7 +283,7 @@
                     <div class="row" ng-if="doctor.usuario == 1">
                         <div class="form-group">
                             <div class="col-lg-8 col-md-8 col-sm-9 col-xs-12">
-                                <label class="form-label" for="doctor_contrasena">Contrase&ntilde;a</label>
+                                <label class="form-label" for="doctor_contrasena">Contrase&ntilde;a <span class="text-danger">*</span></label>
                                 <span class="desc">Escriba su contrase&ntilde;a</span>
                                 <div class="controls">
                                     <input type="password" class="form-control" id="doctor_contrasena" name="doctor_contrasena" ng-model="doctor.usuario_contrasena">
@@ -295,7 +295,7 @@
                     <div class="row" ng-if="doctor.usuario == 1">
                         <div class="form-group">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label class="form-label" for="doctor_confirmar_contrasena">Confirmar Contrase&ntilde;a</label>
+                                <label class="form-label" for="doctor_confirmar_contrasena">Confirmar Contrase&ntilde;a <span class="text-danger">*</span></label>
                                 <span class="desc">Escriba de nuevo su contrase&ntilde;a</span>
                                 <div class="controls">
                                     <input type="password" class="form-control" id="doctor_confirmar_contrasena" name="doctor_confirmar_contrasena" placeholder="Confirme su contrase&ntilde;a" ng-model="doctor.usuario_confirmar_contrasena">
@@ -303,6 +303,22 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <div class="row" ng-if="doctor.usuario == 1">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="field-1">Perfil de Usuario <span class="text-danger">*</span></label>
+                                <span class="desc">Seleccione el tipo de usuario</span>
+                                <div class="controls">
+                                    <select ui-jq="chosen" class="form-control" ng-model="doctor.perfil_usuario_id">
+                                        <option value="">Seleccione el perfil del usuario</option>
+                                        <option ng-repeat="perfilUsuario in perfilesUsuarios" value="{{perfilUsuario.id}}">{{perfilUsuario.perfil_usuario_nombre}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                 </div>
             </section>
             <div class="row text-center">

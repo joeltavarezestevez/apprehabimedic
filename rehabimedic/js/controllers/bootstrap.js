@@ -3,6 +3,76 @@
 /* Controllers */
 
   // bootstrap controller
+  app.controller('ModalDemoCtrl', ['$scope', '$rootScope', '$uibModal', '$log', 'menu', function($scope, $rootScope, $modal, $log, menu) {
+      
+    $scope.items = ['item1', 'item2', 'item3'];
+    $scope.opciones = [];
+    $scope.opciones = menu;
+    $scope.notifications = 2;
+    
+    
+    $scope.viewNotification = function(){
+ 		$scope.notifications = 0;
+    };
+      
+    $scope.open = function (size,windowClass) {
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/ui-modal-list.html',
+        controller: 'ModalInstanceCtrl',
+        windowClass: windowClass,
+        size: size,
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
+
+    $scope.openform = function (type) {
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/ui-modal-form'+type+'.html',
+        controller: 'ModalInstanceCtrl',
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
+    $scope.section_modal = function () {
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/ui-modal-section.html',
+        controller: 'ModalInstanceCtrl',
+        resolve: {
+          items: function () {
+            return $scope.items;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (selectedItem) {
+        $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+  }])
+  ; 
   app.controller('AccordionDemoCtrl', ['$scope', function($scope) {
     $scope.oneAtATime = true;
 
@@ -114,80 +184,6 @@
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
-  }])
-  ; 
-  app.controller('ModalDemoCtrl', ['$scope', '$rootScope', '$uibModal', '$log', 'menu', function($scope, $rootScope, $modal, $log, menu) {
-    $scope.items = ['item1', 'item2', 'item3'];
-    $scope.opciones = [];
-    $scope.opciones = menu;
-    $scope.notifications = 2;
-    
-    
-    $scope.viewNotification = function(){
- 		$scope.notifications = 0;
-        console.log("hey");
-    };
-      
-    $scope.open = function (size,windowClass) {
-      var modalInstance = $modal.open({
-        templateUrl: 'partials/ui-modal-list.html',
-        controller: 'ModalInstanceCtrl',
-        windowClass: windowClass,
-        size: size,
-        resolve: {
-          items: function () {
-            return $scope.items;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-    };
-
-
-    $scope.openform = function (type) {
-      var modalInstance = $modal.open({
-        templateUrl: 'partials/ui-modal-form'+type+'.html',
-        controller: 'ModalInstanceCtrl',
-        resolve: {
-          items: function () {
-            return $scope.items;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-    };
-
-    $scope.section_modal = function () {
-      var modalInstance = $modal.open({
-        templateUrl: 'partials/ui-modal-section.html',
-        controller: 'ModalInstanceCtrl',
-        resolve: {
-          items: function () {
-            return $scope.items;
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selected = selectedItem;
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-    };
-
-
-
-
   }])
   ; 
   app.controller('PaginationDemoCtrl', ['$scope', '$log', function($scope, $log) {
@@ -310,6 +306,7 @@ app.controller('DatepickerDemoCtrl', ['$scope', function($scope) {
   $scope.today = function() {
     $scope.dt = new Date();
   };
+    
   $scope.today();
 
   $scope.clear = function () {
@@ -318,12 +315,13 @@ app.controller('DatepickerDemoCtrl', ['$scope', function($scope) {
 
   // Disable weekend selection
   $scope.disabled = function(date, mode) {
-    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    return ( mode === 'day' && ( date.getDay() === 0) );
   };
 
   $scope.toggleMin = function() {
     $scope.minDate = $scope.minDate ? null : new Date();
   };
+    
   $scope.toggleMin();
 
 $scope.dtpick = {

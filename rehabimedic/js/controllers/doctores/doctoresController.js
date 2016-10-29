@@ -33,13 +33,16 @@ app.controller('DoctoresCtrl', ['$scope', '$uibModal', '$stateParams', '$timeout
             {
                 mData: null,
                 bSortable: false,
-                mRender: function (o) { return '<a class="text-center preview" href="#/app/doctores/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="100" /></span></div>'; }
+                mRender: function (o) { return '<a class="text-center preview" href="#/app/doctores/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
             },                    
             {
                 mData: null,
                 bSortable: true,
                 mRender: function (o) { return '<a class="text-center" href="#/app/doctores/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+o.persona.persona_apellidos+'</a>'; }
-            },                                   
+            },
+            { mData: 'persona.personas_telefonos.0.telefono_numero' },
+            { mData: 'persona.personas_telefonos.1.telefono_numero' },
+            { mData: 'persona.persona_correo_electronico' },            
             { mData: 'especialidad.especialidad_nombre' },
             {
                 mData: null,

@@ -17,7 +17,16 @@
             </a>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-3">
+                <div class="controls">
+                    Paciente:
+                    <select ui-jq="chosen" class="form-control" ng-model="paciente">
+                        <option value="">Seleccione el paciente</option>
+                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</option>
+                    </select>                   
+                </div>                            
+            </div>            
+            <div class="col-sm-3">
                 <div class="controls">
                     NCF
                     <select ui-jq="chosen" class="form-control" ng-model="comprobante_tipo" ng-options="o.id as o.nombre for o in comprobantes" required>
@@ -59,7 +68,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="factura in facturas | dateRange: fechaInicio : fechaFin | filter: {factura_comprobante_tipo: comprobante_tipo}">
+                                <tr ng-repeat="factura in facturas | filter: {paciente_id: paciente} | filter: {factura_comprobante_tipo: comprobante_tipo} | dateRange: fechaInicio : fechaFin as facturasFiltradas">
                                     <td>
                                         {{$index+1}}
                                     </td>
@@ -86,6 +95,20 @@
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="5" class="text-right"><b>Totales</b></td>
+                                    <td>
+                                        <b>{{facturasFiltradas.length}}</b>
+                                    </td>
+                                    <td>
+                                        <b>{{facturasFiltradas.total | currency}}</b>
+                                    </td>
+                                    <td>
+                                        <b>{{facturasFiltradas.balance | currency}}</b>
+                                    </td>                
+                                </tr>
+                            </tfoot>                            
                         </table>    
                     </div>
                 </div>
@@ -115,7 +138,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="factura in facturas | dateRange: fechaInicio : fechaFin as facturasFiltradas">
+            <tr ng-repeat="factura in facturas | filter: {paciente_id: paciente} | filter: {factura_comprobante_tipo: comprobante_tipo} | dateRange: fechaInicio : fechaFin as facturasFiltradas">
                 <td>
                     {{$index+1}}
                 </td>
@@ -141,19 +164,23 @@
                     {{factura.factura_balance}}
                 </td>
             </tr>
-        </tbody>
-        <tfoot>
-            <tr>&nbsp;</tr>
-            <tr>
-                <td class="" colspan="8">
-                    <b>Cantidad de Facturas:</b> {{facturasFiltradas.length}}
-                </td>
-            </tr>
-            <tr>
-                <td class="" colspan="8" style="border: none;">
-                    <b>Total de Facturas:</b> {{facturasFiltradas.total | currency}}                    
-                </td>
-            </tr>
-        </tfoot>        
+        </tbody>       
     </table>
+    <hr style="border-top: dotted 1px;">
+    <table  class="table well" style="border: none; font-size: 10px;">
+        <tbody>
+            <tr>
+                <td style="border: none;"><b><h4>Totales Generales</h4></b></td>
+            </tr>
+            <tr>
+                <td><b>Cantidad de Facturas: {{facturasFiltradas.length}}</b></td>
+            </tr>
+            <tr>
+                <td style="border: none;"><b>Total General: {{facturasFiltradas.total | currency}}</b></td>
+            </tr>
+            <tr>
+                <td style="border: none;"><b>Balance General: {{facturasFiltradas.balance | currency}}</b></td>
+            </tr>            
+        </tbody>
+    </table>    
 </div>

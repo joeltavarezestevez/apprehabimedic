@@ -76,6 +76,17 @@
                                     </td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="text-right"><b>Totales</b></td>
+                                    <td>
+                                        <b>{{pacientesFiltrados.length}}</b>
+                                    </td>
+                                    <td colspan="2">
+                                        <b>{{pacientesTotal(pacientesFiltrados) | currency}}</b>
+                                    </td>
+                                </tr>
+                            </tfoot>                            
                         </table>
                     </div>
                 </div>
@@ -103,7 +114,7 @@
             </tr>
         </thead>        
         <tbody>
-            <tr ng-repeat="paciente in pacientes | filter:search">
+            <tr ng-repeat="paciente in pacientes | filter:search as pacientesFiltrados">
                 <td>
                     {{$index+1}}
                 </td>
@@ -123,11 +134,20 @@
                     {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}
                 </td>                
             </tr>
-        </tbody>
-        <tfoot>
+        </tbody>       
+    </table>
+    <hr style="border-top: dotted 1px;">
+    <table  class="table well" style="border: none; font-size: 10px;">
+        <tbody>
             <tr>
-                <td class="text-right right15" colspan="5" style="border: none;"><b>Total de Pacientes:</b> {{pacientes.length}}</td>
+                <td style="border: none;"><b><h4>Totales Generales</h4></b></td>
             </tr>
-        </tfoot>        
+            <tr>
+                <td><b>Cantidad de Pacientes: {{pacientesFiltrados.length}}</b></td>
+            </tr>
+            <tr>
+                <td style="border: none;"><b>Balance General: {{pacientesTotal(pacientesFiltrados) | currency}}</b></td>
+            </tr>            
+        </tbody>
     </table>
 </div>

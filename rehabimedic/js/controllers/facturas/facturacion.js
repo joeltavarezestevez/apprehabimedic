@@ -3,7 +3,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.comprobantes = [
       {id:3, nombre:'Credito Fiscal'},
       {id:4, nombre:'Consumidor Final'}
-    ]    
+    ]
     $scope.factura = {};
     $scope.factura.factura_metodo_pago = "1";
     $scope.factura.factura_subtotal = 0.00;

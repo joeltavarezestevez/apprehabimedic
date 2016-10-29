@@ -1,0 +1,70 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Secuencias';">
+    <ol class="breadcrumb well">
+        <li>
+            <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+        </li>
+        <li>
+            <a ui-sref="app.configuracion">Configuraci&oacute;n</a>
+        </li>
+        <li class="active">
+            <strong>Secuencias</strong>
+        </li>
+    </ol>    
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
+            <section class="box">
+                <header class="panel_header">
+                    <h2 class="title pull-left">Datos</h2>
+                    <div class="actions panel_actions pull-right">
+                        <i class="box_toggle material-icons">expand_more</i>
+                    </div>
+                </header>
+                <div class="content-body padding-bottom-0">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="form-label" for="secuencia_descripcion">Descripci&oacute;n <span class="text-danger">*</span></label>
+                                <span class="desc">Escriba la descripci&oacute;n de la secuencia</span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" placeholder="Descripci&oacute;n" id="secuencia_descripcion" name="secuencia_descripcion" ng-model="secuencia.secuencia_descripcion" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="form-label" for="secuencia_prefijo">Prefijo</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" placeholder="Prefijo" id="secuencia_prefijo" name="secuencia_prefijo" ng-model="secuencia.secuencia_prefijo" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="form-label" for="secuencia_actual">Secuencia Actual</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" placeholder="Prefijo" id="secuencia_actual" name="secuencia_actual" ng-model="secuencia.secuencia_actual" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <label class="form-label" for="secuencia_limite">Secuencia Limite <span class="text-danger">*</span></label>
+                                <span class="desc">Escriba el limite de la secuencia</span>
+                                <div class="controls">
+                                    <input type="text" class="form-control" placeholder="Prefijo" id="secuencia_limite" name="secuencia_limite" ng-model="secuencia.secuencia_limite" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </section>
+            <div class="row text-center">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled='form.$invalid' ng-click="save()"> Guardar </button>
+                        <button type="button" class="btn btn-lg btn-danger" ng-click="back()"> Cancelar </button>
+                    </div>
+                </div>
+            </div>
+        </form>            
+    </div>
+</div>

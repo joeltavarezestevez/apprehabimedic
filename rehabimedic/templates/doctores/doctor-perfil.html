@@ -1,109 +1,182 @@
-<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Doctor Profile';">
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Perfil del Doctor';">
     <div class="col-lg-12">
         <section class="box nobox">
             <div class="content-body">
+                <div class="row" style="text-align: right;">
+                    <div class="btn-group">
+                        <!--<a href="#/pacientes/perfil/print/{{paciente.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Imprimir Perfil" tooltip-placement="bottom">
+                            <i class="material-icons icon-md">print</i>
+                        </a>-->
+                        <a href="#/app/terapias/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Terapia" tooltip-placement="bottom">
+                            <i class="material-icons icon-md">healing</i>
+                        </a>
+                        <a href="#/app/consultas/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Consulta" tooltip-placement="bottom">
+                            <i class="material-icons icon-md">assignment_ind</i>
+                        </a>
+                        <a href="#/app/doctores/editar/{{doctor.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Editar Doctor" tooltip-placement="bottom">
+                            <i class="material-icons icon-md">edit</i>
+                        </a>                            
+                    </div>
+                </div>
+                <br>                
                 <div class="row">
                     <div class="col-md-3 col-sm-4 col-xs-12 padding-right-0">
                         <div class=" uprofile-wrapper">
                             <div class="uprofile-image">
-                                <img src="data/doctors/doctor-1.jpg" class="img-responsive">
+                                <img src="{{doctor.persona.persona_imagen_perfil}}" class="img-responsive">
                             </div>
                             <div class="uprofile-name">
                                 <h3>
-                                <a href="#">Dr. Clarine Vassar</a>
+                                <a href="#/app/doctores/editar/{{doctor.id}}" ng-if="doctor.persona.sexo_id == 1">Dr. {{doctor.persona.persona_nombres}} {{doctor.persona.persona_apellidos}}</a>
+                                <a href="#/app/doctores/editar/{{doctor.id}}" ng-if="doctor.persona.sexo_id == 2">Dra. {{doctor.persona.persona_nombres}} {{doctor.persona.persona_apellidos}}</a>
                                 <!-- Available statuses: online, idle, busy, away and offline -->
                                 <span class="uprofile-status online"></span>
                                 </h3>
-                                <p class="uprofile-title">Physician</p>
-                                <p class="text-light profile-text">The surgical specialties are the specialties in which an important part of diagnosis and treatmentby surgery.</p>
-                                <p class="margin-top-30">
-                                <a href="#" class="btn btn-default btn-md text-light"><i class="fa fa-google-plus icon-xs"></i></a>
-                                <a href="#" class="btn btn-default btn-md text-light"><i class="fa fa-twitter icon-xs"></i></a>
-                                <a href="#" class="btn btn-default btn-md text-light"><i class="fa fa-facebook icon-xs"></i></a>
-                                </p>
-                                <br>
-                                <a class="btn btn-md btn-default" style='width:150px;'>Follow</a>
-                                <div class="margin-top-30">
-                                    <div class="col-xs-4 bg-white">
-                                        <strong class="uprofile-count">760</strong>
-                                        <span>Follower</span>
-                                    </div>
-                                    <div class="col-xs-4 bg-white">
-                                        <strong class="uprofile-count">280</strong>
-                                        <span>Following</span>
-                                    </div>
-                                    <div class="col-xs-4 bg-white">
-                                        <strong class="uprofile-count">4104</strong>
-                                        <span>Tweets</span>
-                                    </div>
+                                <p class="uprofile-title">{{doctor.especialidad.especialidad_nombre}}</p>
+                                <p class="uprofile-title" tooltip-class="success animated fadeIn " uib-tooltip="Lugar de Nacimiento" tooltip-placement="bottom">{{doctor.persona.pais.pais_nombre}}</p>
+                                <div class="margin-left-10" style="text-align: left;">
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Tipo de Sangre" tooltip-placement="bottom"><i class="fa fa-tint"></i> {{doctor .persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Fecha de Nacimiento (Edad)" tooltip-placement="bottom"><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{doctor.persona.persona_edad}} años)</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Residencial" tooltip-placement="bottom" ng-if="doctor.persona_telefono"><i class="fa fa-phone"></i> {{doctor.persona_telefono}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Móvil" tooltip-placement="bottom" ng-if="doctor.persona_celular">&nbsp;<i class="fa fa-mobile"></i> {{doctor.persona_celular}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Correo Electrónico" tooltip-placement="bottom"><i class="fa fa-envelope"></i> {{doctor.persona.persona_correo_electronico}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Dirección" tooltip-placement="bottom"><i class="fa fa-map-marker"></i> {{doctor.persona.persona_direccion}}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="uprofile-buttons margin-0 padding-top-0 text-center">
-                            <div class="clearfix"></div>
+                            <div class="uprofile-buttons margin-0 padding-top-0 text-center">
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-9 col-sm-8 col-xs-12 padding-left-0">
-                        <div class="uprofile-content padding-top-30">
-
-                            <h4>Biography:</h4>
-                            <p>In the United States, the Ed.D. tends to be granted by the school of education of universities and is a terminal degree in education. Majors within the Ed.D. may include: counseling, curriculum and instruction/curriculum and teaching, educational administration, education policy, educational psychology, educational technology, higher education, human resource development, language/linguistics or leadership. </p>
-                            <p>In the United States, the Ed.D. tends to be granted by the school of education of universities and is a terminal degree in education. Majors within the Ed.D. may include: counseling, curriculum and instruction/curriculum and teaching, educational administration, education policy, educational psychology, educational technology, higher education, human resource development, language/linguistics or leadership. </p>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <h4>Education:</h4>
-                            <ul>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>M.D from Ski University</li>
-                                <li>D.N.B from Ski University</li>
-                                <li>M.D from Ski University</li>
-                                <li>D.N.B from Ski University</li>
-                            </ul>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <h4>Experience:</h4>
-                            <ul>
-                                <li>Integer tincidunt.</li>
-                                <li>Praesent vestibulum dapibus nibh.</li>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>Praesent vestibulum dapibus nibh.</li>
-                                <li>Proin pretium, leo ac pellentesque mollis justo.</li>
-                                <li>unc ultrices eros, sed gravida augue augue</li>
-                            </ul>
-
-                            <div class="clearfix"></div>
-                            <hr>
-                            <h4>Accomplishments:</h4>
-                            <ul>
-                                <li>Integer tincidunt.</li>
-                                <li>Praesent vestibulum dapibus nibh.</li>
-                                <li> Phasellus consectetuer vestibulum elit.</li>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>Praesent vestibulum dapibus nibh.</li>
-                                <li>Proin pretium, leo ac pellentesque mollis justo.</li>
-                                <li>unc ultrices eros, sed gravida augue augue</li>
-                            </ul>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <h4>Membership:</h4>
-                            <ul>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>M.D from Ski University</li>
-                                <li>D.N.B from Ski University</li>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>M.D from Ski University</li>
-                                <li>D.N.B from Ski University</li>
-                                <li>M.B.B.S from Ski University</li>
-                                <li>M.D from Ski University</li>
-                                <li>D.N.B from Ski University</li>
-                            </ul>
-                            <div class="clearfix"></div>
-                            <hr>
-                            <div class="clearfix"></div>
-
-                        </div>
-                    </div>
+                        <uib-tabset class="tab-container primary">
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">person</i>Info
+                                </uib-tab-heading>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div>
+                                            <i class="fa fa-user"></i> <big><b>Contacto de Emergencia</b></big>
+                                            <li>
+                                                {{doctor.persona.persona_contacto_emergencia.contacto_nombre}}
+                                                <br>&nbsp;&nbsp;
+                                                {{doctor.persona.persona_contacto_emergencia.contacto_telefono}}
+                                            </li>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                                <hr>                                
+                                <br>                             
+                            </uib-tab>
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">healing</i> Terapias                            
+                                </uib-tab-heading>
+                                <div class="transparent accordion ng-scope">
+                                    <uib-accordion close-others="oneAtATime">
+                                        <uib-accordion-group ng-repeat="terapia in doctor.terapias">
+                                            <uib-accordion-heading>
+                                                <b>{{terapia.paciente_terapia_fecha | date: 'dd-MMM-yyyy'}} | {{terapia.paciente.persona.persona_nombres}} {{terapia.paciente.persona.persona_apellidos}} | Sesiones: {{terapia.terapia_sesiones_total}}</b>
+                                            </uib-accordion-heading>
+                                            <div>
+                                                <big><b>Resumen</b></big>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
+                                                    <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
+                                                    <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
+                                                    <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
+                                                    <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
+                                                    <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <big><b>Ejercicios y Actividades Recomendados</b></big><hr>
+                                                    <p style="white-space: pre-line">{{terapia.paciente_terapia_programa}}</p>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <big><b>Detalle de las sesiones</b></big>
+                                                </div>
+                                            </div>
+                                            <div class="transparent accordion ng-scope">             
+                                                <uib-accordion close-others="oneAtATime">
+                                                    <uib-accordion-group ng-repeat="detalle in terapia.pacientes_terapias_detalle">
+                                                        <uib-accordion-heading ng-if="detalle.estado_id == 4">
+                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                                        </uib-accordion-heading>
+                                                        <uib-accordion-heading ng-if="detalle.estado_id == 1">
+                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}} | Estado: Pendiente</b>
+                                                        </uib-accordion-heading>                                       <div ng-if="detalle.estado_id == 4">
+                                                            <h4><b>Terapista: </b></h4>
+                                                            <p>
+                                                                Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                                                            </p>
+                                                            <br>
+                                                            <h4><b>Ejercicios y Actividades Realizadas:</b></h4>
+                                                            <p style="white-space: pre-line">
+                                                                {{detalle.paciente_terapia_detalle}}
+                                                            </p>
+                                                        </div>
+                                                    </uib-accordion-group>
+                                                </uib-accordion>
+                                            </div>
+                                        </uib-accordion-group>
+                                    </uib-accordion>
+                                </div>
+                            </uib-tab>                            
+                            <uib-tab>
+                                <uib-tab-heading>
+                                    <i class="material-icons icon-md">assignment_ind</i> Consultas
+                                </uib-tab-heading>
+                                <div class="transparent accordion ng-scope">
+                                    <uib-accordion close-others="oneAtATime">
+                                        <uib-accordion-group ng-repeat="consulta in doctor.consultas">
+                                            <uib-accordion-heading>
+                                                <b>{{consulta.consulta_fecha | date: 'dd-MMM-yyyy'}} | {{consulta.paciente.persona.persona_nombres}} {{consulta.paciente.persona.persona_apellidos}}</b>
+                                            </uib-accordion-heading>
+                                            <h4><b>Motivo de consulta:</b></h4>
+                                            <p>{{consulta.consulta_motivo}}</p>
+                                            <br>
+                                            <h4><b>Historia de la Enfermedad Actual:</b></h4>
+                                            <p>{{consulta.consulta_historia}} </p>
+                                            <br>
+                                            <ul>
+                                                <li><b>App: </b> {{consulta.consulta_app}}.</li>
+                                                <li><b>T&oacute;xicos: </b> {{consulta.consulta_toxicos}}.</li>
+                                                <li><b>Al&eacute;rgicos: </b> {{consulta.consulta_alergicos}}.</li>
+                                                <li><b>Medicamentos: </b> {{consulta.consulta_medicamentos}}.</li>
+                                                <li><b>Qx: </b> {{consulta.consulta_qx}}.</li>
+                                                <li><b>Transfunsionales: </b> .</li>
+                                            </ul>
+                                            <br>
+                                            <h4><b>Examen Físico:</b></h4>
+                                            <ul>
+                                                <li>Extensi&oacute;n: {{consulta.consulta_examen_fisico_extension}}</li>
+                                                <li>Flexi&oacute;n: {{consulta.consulta_examen_fisico_flexion}}</li>
+                                                <li>E.A.D.: {{consulta.consulta_examen_fisico_ead}}</li>
+                                            </ul>
+                                            <br>
+                                            <h4><b>Diagnóstico:</b></h4>
+                                            <p>{{consulta.consulta_diagnostico}}</p>
+                                        </uib-accordion-group>
+                                    </uib-accordion>                                
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                        <div class="uprofile-content padding-top-30"></div>
+                    </div>                    
                 </div>
             </div>
         </section>

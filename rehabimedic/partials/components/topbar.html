@@ -54,42 +54,49 @@
                     </li>
                 </ul>
             </li> -->            
-            <li class="dropdown tab " ng-hide="perfil_usuario==3 || perfil_usuario == 4" uib-dropdown ng-click="viewNotification()">
+            <li class="dropdown tab " uib-dropdown ng-controller="NotificationsDropDownCtrl">
                 <a href class="dropdown-toggle toggle" uib-dropdown-toggle>
                     <i class="material-icons">notifications</i>
-                    <span ng-show="notifications>0"class="badge badge-accent">{{notifications}}</span>
+                    <span ng-show="notifications>0"class="badge badge-accent">{{citas.length}}</span>
                 </a>
-                <ul class="dropdown-menu  notifications animated fadeIn">
+                <ul class="dropdown-menu  notifications animated fadeIn" >
                     <li class="total">
                         <span class="small">
-                            Usted tiene <strong>3</strong> nuevas notificaciones.
+                            Hay <strong>{{citas.length}}</strong> pacientes con citas pendientes.
                         </span>
                     </li>
-                    <li ng-controller="NotificationsDropDownCtrl" class="list">
+                    <li class="list">
                         <perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true" min-scrollbar-length="20" class='ps-scrollbar'>
                             <ul class="dropdown-menu-list list-unstyled">
-                                <li class="{{notification.read ? 'read' : 'unread'}} {{notification.status}}" ng-repeat="notification in notifications">
+                                <li class="busy" ng-repeat="cita in citas | orderBy: '-cita_fecha_hora'">
                                     <!-- available: success, warning, info, error -->
-                                    <a href="javascript:;">
+                                    <a href="#/app/citas/editar/{{cita.id}}">
                                         <div class="notice-icon">
-                                            <i class="material-icons">{{notification.statusicon}}</i>
-                                        </div>
+                                            <i class="material-icons">event_available</i>
+                                        </div>                                        
                                         <div>
-                                            <a ng-click="deleteNotification(notification)"><i class="fa fa-close" style="float: right;"></i></a>
                                             <span class="name">
-                                                    <h4>{{notification.message}}</h4>
-                                                    <span class="time small">{{notification.time}}</span>
+                                                <h5><a href="#/app/pacientes/perfil/{{cita.paciente.id}}">{{$index+1}}. {{cita.paciente.persona.persona_nombres + " " + cita.paciente.persona.persona_apellidos}}</a></h5>
+                                                <small>Dr. {{cita.doctor.persona.persona_nombres}} {{cita.doctor.persona.persona_apellidos}}</small>
+                                                <span class="time small text-right">{{cita.cita_fecha_hora | date: 'dd/MMM hh:mma'}}
+                                                 </span>
+                                        <div class="text-right">
+                                             <a class="text-primary text-xs" ng-click="doCita(null, null, {{cita.id}})">
+                                                 <i class="fa fa-check"></i>
+                                             </a>
+                                             <a class="text-primary text-xs" href="#/app/citas/editar/{{cita.id}}">
+                                                 <i class="fa fa-pencil"></i>
+                                             </a>                                            
+                                             <a class="text-xs text-warning" ng-click="cancelCita(null, null, {{cita.id}})">
+                                                 <i class="fa fa-times-circle"></i>
+                                             </a>
+                                        </div>                                                
                                             </span>
                                         </div>
                                     </a>
                                 </li>
                             </ul>
                         </perfect-scrollbar>
-                    </li>
-                    <li class="external">
-                        <a href="javascript:;">
-                            <span>Read All Notifications</span>
-                        </a>
                     </li>
                 </ul>
             </li>

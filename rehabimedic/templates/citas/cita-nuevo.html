@@ -129,7 +129,7 @@
                                 <label class="form-label" for="cita_fecha">Fecha de la Cita <span class="text-danger">*</span></label>
                                 <span class="desc">Seleccione la fecha de la cita</span>
                                 <div style="display:inline-block;">
-                                    <uib-datepicker ng-model="cita.cita_fecha" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></uib-datepicker>
+                                    <uib-datepicker ng-model="cita.cita_fecha" min-date="minDate" show-weeks="true" class="well well-sm" date-disabled="disabled(date, mode)" custom-class="getDayClass(date, mode)"></uib-datepicker>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 padding-top-15">

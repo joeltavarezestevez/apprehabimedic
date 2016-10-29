@@ -98,9 +98,7 @@
                 pointDotRadius : 5,
                 pointHitDetectionRadius : 10,
 
-            };
-
-
+         };
     }]);
 
     app.controller('DashboardPolarAreaCtrl', function($scope) {

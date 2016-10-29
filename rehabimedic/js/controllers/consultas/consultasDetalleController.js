@@ -79,7 +79,12 @@ app.controller('ConsultasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stat
     }
     $scope.print();
     $scope.save = function() {
-        $scope.consulta.doctor_id = $rootScope.user.persona.doctor.id;
+        if ($rootScope.user.persona.doctor != null) {
+         $scope.consulta.doctor_id = $rootScope.user.persona.doctor.id;   
+        }
+        else {
+            $scope.consulta.doctor_id = 1;
+        }
         $scope.consulta.consulta_fecha = new Date();
         $scope.consulta_fecha = $scope.consulta.consulta_fecha;  
         $scope.consulta.consulta_fecha = $filter('date')($scope.consulta.consulta_fecha,'yyyy-MM-dd');

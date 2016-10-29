@@ -7,7 +7,7 @@ app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstanc
         d = new Date(data.cita_fecha_hora);
         data.cita_fecha_hora = d;
         $scope.fecha = $filter('date')(data.cita_fecha_hora, 'dd/MMM hh:mma');
-        $scope.registro.nombres = 'la cita de '+ data.paciente.persona.persona_nombres + ' ' + data.paciente.persona.persona_apellidos + ' en fecha: ' + $scope.fecha;
+        $scope.registro.nombres = 'de '+ data.paciente.persona.persona_nombres + ' ' + data.paciente.persona.persona_apellidos + ' en fecha: ' + $scope.fecha;
         console.log(data);
         $scope.cita = data;
     });
@@ -18,7 +18,7 @@ app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstanc
     
     $scope.realizarCita = function() {
         $scope.cita.estado_id = 4;
-        citasFac.update($scope.cita, Id)
+        citasFac.realizarCita($scope.cita, Id)
             .then(
             function(data) {
                 $modalInstance.close();

@@ -1,33 +1,85 @@
-app.controller('ModalInstancePacientesCtrl', ['$scope', '$uibModalInstance', 'Id', 'pacientesFac', function($scope, $modalInstance, Id, pacientesFac) {
-      
-    $scope.registro = {};
-
-    pacientesFac.get(parseInt(Id,10))
-    .success(function(data) {
-        $scope.registro = data;
-        $scope.registro.nombres = data.persona.persona_nombres + " " + data.persona.persona_apellidos;
-        console.log($scope.registro);
-    });   
-    
-    $scope.ok = function (Id) {
-        $modalInstance.close();
-    };
-
-    $scope.cancel = function () {
-      $modalInstance.dismiss('cancel');
-    };    
-}])
-  
-app.controller('PacientesReportesCtrl', ['$scope', 'pacientes', function ($scope, pacientes) {
+app.controller('PacientesReportesCtrl', ['$scope', '$filter', 'pacientes', function ($scope, $filter, pacientes) {
     
     $scope.loading = true;
    
     //Get All Pacientes
-        $scope.pacientes = pacientes.data;
-        console.log($scope.pacientes);
-        $scope.loading = false;
+    $scope.pacientes = pacientes.data;
+    console.log($scope.pacientes);
     
-$scope.printDiv = function (divName) {
+    $scope.loading = false;
+    
+    $scope.pacientesTotal = function(obj) {
+        var total = 0;
+        
+        for(c =0; c< obj.length; c++) {
+         total = total + parseFloat(obj[c].paciente_balance);
+        }
+        
+        return total;
+    }    
+    
+    var c = 0;
+    
+    for(c=0; c< $scope.pacientes.length; c++) {
+        
+        d = new Date($scope.pacientes[c].persona.persona_fecha_nacimiento);
+        d.setDate(d.getDate() + 1);
+        $scope.pacientes[c].persona.persona_fecha_nacimiento = d;
+        $scope.pacientes[c].persona_imagen_perfil = $scope.pacientes[c].persona.persona_imagen_perfil;
+        $scope.fecha_nacimiento = $filter('date')($scope.pacientes[c].persona.persona_fecha_nacimiento,'dd-MM-yyyy');
+
+        $scope.pacientes[c].enfermedad_id = [];
+        angular.forEach($scope.pacientes[c].pacientes_enfermedades, function(value, key) {
+            $scope.pacientes[c].enfermedad_id.push(value.enfermedad_id.toString());
+        });
+
+        $scope.pacientes[c].cirugias = [];
+        angular.forEach($scope.pacientes[c].pacientes_cirugias, function(value, key) {
+            $scope.pacientes[c].cirugias.push(value.cirugia_descripcion.toString());
+        });
+
+        if($scope.pacientes[c].pacientes_fracturas.length > 0){
+            $scope.pacientes[c].fractura = 1;
+            $scope.pacientes[c].fracturas = [];
+            angular.forEach($scope.pacientes[c].pacientes_fracturas, function(value, key) {
+                $scope.pacientes[c].fracturas.push(value.cuerpo_parte_id.toString());
+            });                    
+        }
+        else {
+            $scope.pacientes[c].fractura = 2;
+        }
+
+        angular.forEach($scope.pacientes[c].persona.personas_telefonos, function(value, key) {
+            if (value.tipo_telefono_id == 1) {
+                $scope.pacientes[c].persona_telefono = value.telefono_numero;
+            }
+            else {
+                $scope.pacientes[c].persona_celular = value.telefono_numero;
+            }
+        });
+
+        if($scope.pacientes[c].aseguradora_id != 1) {
+            $scope.pacientes[c].seguro = 1;
+        }
+        else {
+            $scope.pacientes[c].seguro = 0;
+        }
+
+        if($scope.pacientes[c].paciente_referencia == null) {
+            $scope.pacientes[c].referencia_tipo = "ninguno";
+        }
+        else {
+            $scope.pacientes[c].referencia_tipo = $scope.pacientes[c].paciente_referencia.referencia_tipo;
+            $scope.pacientes[c].persona_referencia = $scope.pacientes[c].paciente_referencia.persona_referencia;
+        }
+
+        if($scope.pacientes[c].pacientes_fracturas.length == 0){
+            $scope.pacientes[c].fractura = 2;
+        }
+    }
+    
+    
+    $scope.printDiv = function (divName) {
 
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;      

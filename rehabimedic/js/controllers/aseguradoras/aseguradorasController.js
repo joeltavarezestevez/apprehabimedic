@@ -62,7 +62,7 @@ app.controller('AseguradorasCtrl', ['$scope', '$uibModal', '$stateParams', '$tim
               .success(function(data) {
                 $timeout(function() {
                   $state.reload(); 
-                }, 1000, false);  
+                }, 1000, false);
 
                 Notification({
                     message: 'Aseguradora Eliminada Correctamente!',

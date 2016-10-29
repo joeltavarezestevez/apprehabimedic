@@ -1,0 +1,163 @@
+<div class='content-wrapper' ng-init="app.settings.pagetitle = 'Terapias';">
+    <div class="col-lg-12" ng-hide="loading">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.reportes">Reportes</a>
+            </li>
+            <li>
+                <strong class="active">Listado de Terapias</strong>
+            </li>            
+        </ol>           
+        <div class="text-right">
+            <a ng-click="printDiv('printThisElement');" class="btn btn-info">
+                <i class="material-icons icon-md">print</i>
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="controls">
+                    Paciente:
+                    <select ui-jq="chosen" class="form-control" ng-model="paciente">
+                        <option value="">Seleccione el paciente</option>
+                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</option>
+                    </select>                   
+                </div>                            
+            </div>
+            <div class="col-sm-3">
+                <div class="controls">
+                    Desde: 
+                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2016-07-27   '" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="fechaInicio">
+                </div>
+            </div>
+            <div class="col-sm-3">  
+                <div class="controls">
+                    Hasta: 
+                    <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="1900-01-01" max-date="'2016-07-27   '" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-model="fechaFin">
+                </div>
+            </div>
+        </div>         
+        <section class="box">
+            <header class="panel_header">
+                <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Terapias</h2>
+            </header>
+            <div class="content-body padding-bottom-15">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="TerapiasTable">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:25%">Paciente</th>
+                                    <th style="width:12%">Fecha</th>
+                                    <th style="width:12%">Fecha Inicio</th>
+                                    <th style="width:12%">Fecha Fin</th>
+                                    <th style="width:10% text-align: center;">Sesiones</th>
+                                    <th style="width:24%">Doctor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="terapia in terapias | filter: {paciente_id: paciente} | dateRangeTerapias: fechaInicio : fechaFin as terapiasFiltradas">
+                                    <td>
+                                        {{$index+1}}
+                                    </td>
+                                    <td> 
+                                        {{terapia.paciente.persona.persona_nombres + ' '+ terapia.paciente.persona.persona_apellidos}}
+                                    </td>
+                                    <td>
+                                        {{terapia.paciente_terapia_fecha | date:'dd-MMM-yyyy'}}
+                                    </td>
+                                    <td>
+                                        {{terapia.terapia_fecha_estimada_inicio | date:'dd-MMM-yyyy'}}
+                                    </td>
+                                    <td>
+                                        {{terapia.terapia_fecha_estimada_fin | date:'dd-MMM-yyyy'}}
+                                    </td>                                    
+                                    <td class="text-center"> 
+                                        {{terapia.pacientes_terapias_detalle.length}} / {{terapia.terapia_sesiones_total}}
+                                    </td>                                    
+                                    <td>
+                                        {{terapia.doctor.persona.persona_nombres + ' '+ terapia.doctor.persona.persona_apellidos}}  
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="1" class="text-right"><b>Totales</b></td>
+                                    <td>
+                                        <b>{{terapiasFiltradas.length}}</b>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tfoot>                            
+                        </table>    
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div class="container" id="printThisElement" ng-hide="1==1">
+    <div style="text-align: center;">
+        <img src="img/pipiota.png" width="160"/>
+        <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
+    </div>
+    <br>
+    <h2 class="text-right">Listado de Terapias</h2>
+    <hr>
+    <table class="table well" style="border: none; font-size: 10px;">
+        <thead>
+            <tr>
+                <th style="width:5%">#</th>
+                <th style="width:25%">Paciente</th>
+                <th style="width:12%">Fecha</th>
+                <th style="width:12%">Fecha Inicio</th>
+                <th style="width:12%">Fecha Fin</th>
+                <th style="width:10% text-align: center;">Sesiones</th>
+                <th style="width:24%">Doctor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="terapia in terapias | filter: {paciente_id: paciente} | dateRangeTerapias: fechaInicio : fechaFin as terapiasFiltradas">
+                <td>
+                    {{$index+1}}
+                </td>
+                <td> 
+                    {{terapia.paciente.persona.persona_nombres + ' '+ terapia.paciente.persona.persona_apellidos}}
+                </td>
+                <td>
+                    {{terapia.paciente_terapia_fecha | date:'dd-MMM-yyyy'}}
+                </td>
+                <td>
+                    {{terapia.terapia_fecha_estimada_inicio | date:'dd-MMM-yyyy'}}
+                </td>
+                <td>
+                    {{terapia.terapia_fecha_estimada_fin | date:'dd-MMM-yyyy'}}
+                </td>                                    
+                <td class="text-center">
+                    {{terapia.pacientes_terapias_detalle.length}} / {{terapia.terapia_sesiones_total}}
+                </td>
+                <td>
+                    {{terapia.doctor.persona.persona_nombres + ' '+ terapia.doctor.persona.persona_apellidos}}  
+                </td>
+            </tr>
+        </tbody>       
+    </table>
+    <hr style="border-top: dotted 1px;">
+    <table  class="table well" style="border: none; font-size: 10px;">
+        <tbody>
+            <tr>
+                <td style="border: none;"><b><h4>Totales Generales</h4></b></td>
+            </tr>
+            <tr>
+                <td><b>Cantidad de Terapias: {{terapiasFiltradas.length}}</b></td>
+            </tr>       
+        </tbody>
+    </table>    
+</div>

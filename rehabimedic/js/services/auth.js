@@ -1,6 +1,12 @@
 app.factory('Auth', function ($rootScope, $window, $http, BASEURL) {
     
     var urlBase = BASEURL + '/api/authenticate';
+  
+    angular.element($window).on('storage', function(event) {
+        if (event.key === 'my-storage') {
+          $rootScope.$apply();
+        }
+    });    
     
   return {
     login: function (user) {
@@ -18,7 +24,7 @@ app.factory('Auth', function ($rootScope, $window, $http, BASEURL) {
     },
     getLoggedInUser: function () {
       if ($rootScope.user === undefined || $rootScope.user == null) {
-        var userStr = $window.sessionStorage.getItem('user');
+        var userStr = $window.localStorage.getItem('user');
         if (userStr) {
           $rootScope.user = angular.fromJson(userStr);
         }
@@ -31,9 +37,9 @@ app.factory('Auth', function ($rootScope, $window, $http, BASEURL) {
     setLoggedInUser: function (user) {
       $rootScope.user = user;
       if (user == null) {
-        $window.sessionStorage.removeItem('user');
+        $window.localStorage.removeItem('user');
       } else {
-        $window.sessionStorage.setItem('user', angular.toJson($rootScope.user));
+        $window.localStorage.setItem('user', angular.toJson($rootScope.user));
       }
     }
   };
