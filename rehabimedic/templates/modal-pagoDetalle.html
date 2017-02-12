@@ -50,35 +50,43 @@
 <div class="modal-footer text-center">                  
     <button class="btn btn-success" ng-click="cancel()">OK</button>
 </div>
-<div style="width: 7.2 cm; height: 29.7 cm; text-align: center; font-family:Consolas; font-size:6.5pt; line-height: 75%;" id="printThisElement" ng-hide="1==1">
+<div style="width: 7.2 cm; height: 29.7 cm; text-align: center; font-family:Consolas; line-height: 75%;" id="printThisElement" ng-hide="1==1">
   <div style="text-align: center;">
-    <img src="img/pipiota.png" width="120"/>
-    <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
-    <p>AVE. JUAN P. DUARTE, PLAZA PALERMO</p>
-    <p>M&Oacute;DULO 110, STGO. R.D.</p>
-    <p>809-825-8595</p>
-    <p>RNC-131341421</p>
-    <p>RECIBO DE PAGO</p>
+      <br>
+      <br>
+      <img src="img/pipiota.png" width="120"/>
+      <p style="font-size: 11px;">
+        CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N <br>
+        AVE. JUAN P. DUARTE, PLAZA PALERMO <br>
+        M&Oacute;DULO 110, STGO. R.D. <br>
+        809-825-8595 <br>
+        RNC-131341421 <br>
+        RECIBO DE PAGO <br>
+      </p>
   </div>
-  <div class="text-right"><p>No. : {{pago.id | minLength: 8}}&nbsp;</p></div>
+  <div class="text-right"><p style="font-size: 11px;">NO. : {{pago.id | minLength: 8}}&nbsp;</p></div>
   <div class="text-left">
-    <p>----------------------------------------------------</p>
-    <p>Fecha&nbsp;&nbsp;&nbsp; : {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}} </p>
-    <p>Cajero&nbsp;&nbsp; : {{pago.usuario.persona.persona_nombres}} {{pago.usuario.persona.persona_apellidos}}</p>
-    <p>Paciente&nbsp; : {{pago.paciente.persona.persona_nombres}} {{pago.paciente.persona.persona_apellidos}}</p>
-    <p>Concepto : {{pago.pago_concepto}}</p>
-    <p>Monto&nbsp;&nbsp;&nbsp; : {{pago.pago_monto}}</p>        
-    <p>----------------------------------------------------</p>
+      <p style="font-size: 11px;"> ------------------------------------------------------------ <br>
+        FECHA&nbsp;&nbsp;&nbsp; : {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}} <br>
+        CAJERO&nbsp;&nbsp; : {{pago.usuario.persona.persona_nombres + ' ' + pago.usuario.persona.persona_apellidos | uppercase | limitTo: 25}} <br>
+        PACIENTE&nbsp; : {{pago.paciente.persona.persona_nombres + ' ' + pago.paciente.persona.persona_apellidos | uppercase | limitTo: 25}} <br>
+        CONCEPTO : {{pago.pago_concepto | uppercase | limitTo: 20}} <br>
+        MONTO&nbsp;&nbsp;&nbsp; : {{pago.pago_monto | currency}} <br>
+        ------------------------------------------------------------ <br>
+      </p>
   </div>
-  <div class="text-right">        
-    <p>Balance Pendiente : {{pago.paciente.paciente_balance}}&nbsp;</p>
-    <p>Terapias Pendientes de Pago : &nbsp;&nbsp; 5/12&nbsp;</p>
+  <div class="text-right">
+      <p style="font-size: 11px;">TERAPIAS PENDIENTES : &nbsp;&nbsp; 5/12</p>
   </div>
   <br>
   <br>
   <div class="text-center">
-    <p>_____________________________</p>
-      <p>RECIBIDO CONFORME</p>
-    <p>{{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}</p>
+      <p style="font-size: 11px;">
+          ---------------------------------------- 
+          <br>
+          RECIBIDO CONFORME
+          <br>
+          {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}
+      </p>
   </div>
 </div>

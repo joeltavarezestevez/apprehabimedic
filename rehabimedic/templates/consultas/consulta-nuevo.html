@@ -31,45 +31,10 @@
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
                                         <h4>
-                                            {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} <br><small>{{paciente.persona.pais.pais_nombre}}</small>
-                                        </h4> 
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-4 text-left">
-                                        <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
-                                        <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
-                                        <p><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
-                                        <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
-                                    </div>
-                                    <div class="col-lg-3 text-left">
-                                        <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
-                                        <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
-                                        <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
-                                        <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
-                                    </div>
-                                    <div class="col-lg-3 text-left">
-                                        <p ng-if="paciente.pacientes_enfermedades.length > 0">
-                                            <i class="fa fa-stethoscope"></i> <b>Enfermedades:</b>
-                                            <li ng-repeat="enfermedad in paciente.pacientes_enfermedades">
-                                                {{enfermedad.enfermedad.enfermedad_nombre}}
-                                            </li>
-                                        </p>
-                                        <p ng-if="paciente.pacientes_cirugias.length > 0">
-                                            <i class="fa fa-user-md"></i> <b>Cirug&iacute;as:</b>
-                                            <li ng-repeat="cirugia in paciente.pacientes_cirugias">
-                                                {{cirugia.cirugia_descripcion}}
-                                            </li>              
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-2 text-left">
-                                        <p ng-if="paciente.pacientes_fracturas.length > 0">
-                                            <i class="fa fa-wheelchair"></i> <b>Fracturas:</b>
-                                            <li ng-repeat="fractura in paciente.pacientes_fracturas">
-                                                {{fractura.cuerpo_parte.cuerpo_parte_nombre}}
-                                            </li>                                            
-                                        </p>
+                                            <a href="#/app/pacientes/perfil/{{paciente.id}}">
+                                                {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} 
+                                            </a>
+                                        </h4>
                                     </div>
                                 </div>
                                 <br>
@@ -164,52 +129,22 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="box">
-                <header class="panel_header">
-                    <h2 class="title pull-left">Examen f&iacute;sico</h2>
-                    <div class="actions panel_actions pull-right">
-                        <i class="box_toggle material-icons">expand_more</i>
-                    </div>
-                </header>
-                <div class="content-body padding-bottom-0">
+                    <br>
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <label class="form-label" for="consulta_examen_fisico_extension">Extensi&oacute;n <span class="text-danger">*</span></label>
-                                <span class="desc"></span>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="form-label" for="consulta_examen_fisico">Examen F&iacute;sico <span class="text-danger">*</span></label>
+                                <span class="desc">Describa el examen f&iacute;sico realizado al paciente</span>
                                 <div class="controls">
-                                    <input type="text" class="form-control" id="consulta_examen_fisico_extension" name="consulta_examen_fisico_extension" ng-model="consulta.consulta_examen_fisico_extension" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <label class="form-label" for="consulta_examen_fisico_flexion">Flexi&oacute;n <span class="text-danger">*</span></label>
-                                <span class="desc"></span>
                                 <div class="controls">
-                                    <input type="text" class="form-control" id="consulta_examen_fisico_flexion" name="consulta_examen_fisico_flexion" ng-model="consulta.consulta_examen_fisico_flexion">
-                                </div>
+                                    <textarea class="form-control" cols="2" rows="5" id="consulta_examen_fisico" name="consulta_examen_fisico" ng-model="consulta.consulta_examen_fisico"></textarea>
+                                </div>                                
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <label class="form-label" for="consulta_examen_fisico_ead">E.A.D. <span class="text-danger">*</span></label>
-                                <span class="desc"></span>
-                                <div class="controls">
-                                    <input type="text" class="form-control" id="consulta_examen_fisico_ead" name="consulta_examen_fisico_ead" ng-model="consulta.consulta_examen_fisico_ead">
-                                </div>
                             </div>
-                        </div>
-                    </div>                                       
-                </div>
-            </section>
-            <section class="box">
-                <header class="panel_header">
-                    <h2 class="title pull-left"></h2>
-                    <div class="actions panel_actions pull-right">
-                        <i class="box_toggle material-icons">expand_more</i>
+                        </div>                      
                     </div>
-                </header>
-                <div class="content-body padding-bottom-0">
-                  <div class="row">
+                    <br>
+                    <div class="row">
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <label class="form-label" for="consulta_diagnostico">Diagn&oacute;stico <span class="text-danger">*</span></label>

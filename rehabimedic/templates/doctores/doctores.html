@@ -8,7 +8,7 @@
                 <strong class="active">Doctores</strong>
             </li>
         </ol>
-        <a class="btn btn-lg btn-success" href="#/app/doctores/nuevo"><i class="fa fa-plus"></i>&nbsp;Nuevo Doctor</a>        
+        <a ng-hide="perfil_usuario == 4 || perfil_usuario == 3" class="btn btn-lg btn-success" href="#/app/doctores/nuevo"><i class="fa fa-plus"></i>&nbsp;Nuevo Doctor</a>        
         <section class="box ">
             <header class="panel_header">
                 <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Doctores</h2>
@@ -19,14 +19,13 @@
                         <table class="table table-striped" ui-jq="dataTable" ui-options="tbOptions" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th style="width:1%">#</th>                                    
-                                    <th style="width:1%"><i class="fa fa-image"></i></th>
+                                    <th style="width:2%">#</th>                                    
+                                    <th style="width:3%"><i class="fa fa-image"></i></th>
                                     <th style="width:30%">Nombre</th>
-                                    <th style="width:20%">Teléfono</th>
-                                    <th style="width:20%">Celular</th>
-                                    <th style="width:15%">Correo Electrónico</th>
-                                    <th style="width:8%">Especialidad</th>
-                                    <th style="width:5%">Opciones</th>
+                                    <th style="width:15%">Tel&eacute;fono</th>
+                                    <th style="width:25%">Correo Electr&oacute;nico</th>
+                                    <th style="width:15%">Especialidad</th>
+                                    <th style="width:10%">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>

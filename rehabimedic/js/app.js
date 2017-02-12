@@ -20,5 +20,6 @@ angular.module('app', [
     'perfect_scrollbar',
     'angular-inview',
     'angular-loading-bar',
-    'webcam'
+    'webcam',
+    'xeditable'
 ]);

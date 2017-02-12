@@ -18,7 +18,7 @@
                 <strong>Terapias</strong>
             </li>
         </ol>          
-        <a class="btn btn-lg btn-success" href="#/app/terapias/nuevo"><i class="fa fa-plus"></i>&nbsp;Nueva Terapia</a>
+        <a ng-hide="perfil_usuario==4 || perfil_usuario == 2" class="btn btn-lg btn-success" href="#/app/terapias/nuevo"><i class="fa fa-plus"></i>&nbsp;Nueva Terapia</a>
         <section class="box">
             <header class="panel_header">
                 <h2 class="title pull-left"><i class="fa fa-database"></i> Listado de Terapias</h2>
@@ -27,7 +27,18 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="TerapiasTable">
                         <table class="table table-striped" ui-jq="dataTable" ui-options="tbOptions" class="table table-striped">
-                            <thead>
+                            <thead ng-hide="perfil_usuario !=4">
+                                <tr>
+                                    <th style="width:5%">#</th>
+                                    <th style="width:30%">Paciente</th>
+                                    <th style="width:13%">Fecha</th>
+                                    <th style="width:13%">Fecha Inicio</th>
+                                    <th style="width:13%">Fecha Fin</th>
+                                    <th style="width:10% text-align: center;">Sesiones</th>
+                                    <th style="width:16% text-align: center;">Nueva Sesi&oacute;n</th>
+                                </tr>
+                            </thead>
+                            <thead ng-hide="perfil_usuario ==4">
                                 <tr>
                                     <th style="width:5%">#</th>
                                     <th style="width:30%">Paciente</th>
@@ -37,7 +48,7 @@
                                     <th style="width:10% text-align: center;">Sesiones</th>
                                     <th style="width:10%">Opciones</th>
                                 </tr>
-                            </thead>
+                            </thead>                            
                             <tbody>
                             </tbody>
                         </table>

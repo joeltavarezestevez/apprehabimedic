@@ -17,13 +17,18 @@ app.controller('ModalInstancePacienteCtrl', ['$scope', '$rootScope','$uibModalIn
     };    
 }])
 
-app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos) {
+app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
 
     $scope.alert = false;
     $scope.paciente = {};
     $scope.paciente.referencia_tipo = "ninguno";
     $scope.paciente.paciente_empleo_estado = 0;
     $scope.paciente.seguro = 0;
+    $scope.monto_pagado = 0;
+    $scope.monto_pendiente = 0;
+    $scope.citas_pagadas = [];
+    $scope.citas_pendientes = [];    
+    
     
     //loading data
     $scope.aseguradoras = aseguradoras.data;
@@ -33,11 +38,79 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.grupos_sanguineos = gruposSanguineos.data;
     $scope.paises = paises.data;
     $scope.sexos = sexos.data;
+    $scope.pacientes = pacientes.data;
     
     $scope.closeAlert = function() {
         $scope.alert = false;
         console.log($scope.alert);
     }
+    
+    $scope.updatePaciente = function(index) {
+        $scope.monto_pagado = 0;
+        $scope.monto_pendiente = 0;
+        $scope.citas_pagadas = [];
+        $scope.citas_pendientes = [];
+        
+        pacientesFac.get(index).success(function(response){
+            d = new Date(response.persona.persona_fecha_nacimiento);
+            d.setDate(d.getDate() + 1);
+            response.persona.persona_fecha_nacimiento = d;
+            var i = 0;
+            for(i = 0; i<response.citas.length; i++) {
+                response.citas[i].cita_fecha_hora = new Date(response.citas[i].cita_fecha_hora);
+            }
+            
+            $scope.paciente = response;
+            $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
+
+            angular.forEach(response.persona.personas_telefonos, function(value, key) {
+                if (value.tipo_telefono_id == 1) {
+                    $scope.paciente.persona_telefono = value.telefono_numero;
+                }
+                else {
+                    $scope.paciente.persona_celular = value.telefono_numero;
+                }
+            });
+
+            if($scope.paciente.aseguradora_id != 1) {
+                $scope.paciente.seguro = 1;
+            }
+            else {
+                $scope.paciente.seguro = 0;
+            }
+
+            if($scope.paciente.paciente_referencia == null) {
+                $scope.paciente.referencia_tipo = "ninguno";
+            }
+            else {
+                $scope.paciente.referencia_tipo = $scope.paciente.paciente_referencia.referencia_tipo;
+                $scope.paciente.persona_referencia = $scope.paciente.paciente_referencia.persona_referencia;
+            }
+            for(i=0; i< $scope.paciente.citas.length; i++) {
+                if(parseFloat($scope.paciente.citas[i].cita_monto_pendiente) == 0) {
+                    $scope.monto_pagado = $scope.monto_pagado + parseFloat($scope.paciente.citas[i].cita_monto); 
+                    $scope.citas_pagadas.push($scope.paciente.citas[i]);
+                }
+                else {
+                    $scope.monto_pendiente = $scope.monto_pendiente + parseFloat($scope.paciente.citas[i].cita_monto_pendiente);
+                    $scope.citas_pendientes.push($scope.paciente.citas[i]);
+                }
+            }
+            console.log($scope.paciente);
+            console.log($scope.citas_pendientes);
+            console.log($scope.citas_pagadas);
+            console.log($scope.monto_pagado);
+            console.log($scope.monto_pendiente);
+        })
+    }
+    
+    $scope.filterPagadas = function(obj) {
+        return parseFloat(obj.cita_monto_pendiente) == 0;
+    }
+
+    $scope.filterPendientes = function(obj) {
+        return parseFloat(obj.cita_monto_pendiente) > 0;
+    }    
     
     $scope.printDiv = function (divName) {
 
@@ -335,8 +408,10 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
         $scope.paciente.pais_id = $scope.paciente.persona.pais_id;
         $scope.paciente.grupo_sanguineo_id = $scope.paciente.persona.grupo_sanguineo_id;
         //$scope.paciente.persona_imagen_perfil = $scope.paciente.persona.persona_imagen_perfil;
+	if($scope.paciente.persona.persona_contacto_emergencia != null) { 
         $scope.paciente.contacto_nombre = $scope.paciente.persona.persona_contacto_emergencia.contacto_nombre;
         $scope.paciente.contacto_telefono = $scope.paciente.persona.persona_contacto_emergencia.contacto_telefono;
+	}
         if ($scope.paciente.paciente_empleo != null) {
             $scope.paciente.tipo_empleado_id = $scope.paciente.paciente_empleo.tipo_empleado_id;
             $scope.paciente.paciente_empleo_empresa = $scope.paciente.paciente_empleo.paciente_empleo_empresa;

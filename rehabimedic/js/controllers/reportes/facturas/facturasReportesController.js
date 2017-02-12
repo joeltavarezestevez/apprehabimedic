@@ -114,6 +114,15 @@ app.controller('FacturasReportesCtrl', ['$scope', '$state', '$filter', 'facturas
         return cantPacientes;
     }    
     
+    $scope.exportarExcel = function (divName) {
+        var blob = new Blob([document.getElementById(divName).innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        var date = new Date();
+        date = $filter('date')(date,'yyyyMMddmmss');
+        var fileName = "Reporte_Facturas_" + date +".xls";
+        saveAs(blob, fileName);
+    }    
     
     console.log($scope.facturas);
     $scope.loading = false;

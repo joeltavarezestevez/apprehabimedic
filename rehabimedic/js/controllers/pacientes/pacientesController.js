@@ -35,37 +35,119 @@ app.controller('ModalInstancePacientesCtrl', ['$scope', '$rootScope','$uibModalI
     };    
 }])
   
-app.controller('PacientesCtrl', ['$scope', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'pacientes', 'pacientesFac', function ($scope, $modal, $stateParams, $timeout, $state, Notification, pacientes, pacientesFac) {
+app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'pacientes', 'pacientesFac', function ($scope, $rootScope, $modal, $stateParams, $timeout, $state, Notification, pacientes, pacientesFac) {
     
     $scope.loading = true;
+    $scope.perfil_usuario == $rootScope.user.perfil_usuario_id;
+    console.log($scope.perfil_usuario);
    
     //Get All Pacientes
     $scope.pacientes = pacientes.data;
     console.log($scope.pacientes);
-    $scope.tbOptions = {
-        data: $scope.pacientes,
-        aoColumns: [
-            { mData: 'id' },                
-            {
-                mData: null,
-                bSortable: false,
-                mRender: function (o) { return '<a ng-hide="perfil_usuario!=2 || perfil_usuario!=1" class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
-            },
-            {
-                mData: null,
-                bSortable: true,
-                mRender: function (o) { return '<a ng-hide="perfil_usuario!=2 || perfil_usuario!=1" class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
-            },
-            { mData: 'persona.personas_telefonos.0.telefono_numero' },
-            { mData: 'persona.persona_correo_electronico' },
-            { mData: 'paciente_balance' },
-            {   
-                mData: null,
-                bSortable: false,
-                mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" onclick="openModalAgregarNota('+ o.id + ')"><i class="fa fa-comments-o"></i></button>&nbsp;<a class="btn btn-xs btn-info" href="#/app/pacientes/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeletePacientes('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
-            }
-        ]
+    if($scope.perfil_usuario == 1) {
+        $scope.tbOptions = {
+            data: $scope.pacientes,
+            aoColumns: [
+                { mData: 'id' },                
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                },
+                { mData: 'persona.personas_telefonos.0.telefono_numero' },
+                { mData: 'persona.persona_correo_electronico' },
+                { mData: 'paciente_balance' },
+                {   
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" title="Agregar Nota" onclick="openModalAgregarNota('+ o.id + ')"><i class="fa fa-comments-o"></i></button>&nbsp;<a class="btn btn-xs btn-info" href="#/app/pacientes/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeletePacientes('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
+                }
+            ]
+        }        
     }
+    else if ($scope.perfil_usuario == 2) {
+        $scope.tbOptions = {
+            data: $scope.pacientes,
+            aoColumns: [
+                { mData: 'id' },                
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                },
+                { mData: 'persona.personas_telefonos.0.telefono_numero' },
+                { mData: 'persona.persona_correo_electronico' },
+                { mData: 'paciente_balance' },
+                {   
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" title="Agregar Nota" onclick="openModalAgregarNota('+ o.id + ')"><i class="fa fa-comments-o"></i></button>&nbsp;<a class="btn btn-xs btn-info" href="#/app/pacientes/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a></div>'; }
+                }
+            ]
+        }          
+    }
+    else if ($scope.perfil_usuario == 3) {
+        $scope.tbOptions = {
+            data: $scope.pacientes,
+            aoColumns: [
+                { mData: 'id' },                
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                },
+                { mData: 'persona.grupo_sanguineo.grupo_sanguineo_nombre' },
+                { mData: 'persona.persona_edad' },
+                { mData: 'persona.sexo.sexo_nombre' },
+                {   
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" title="Agregar Nota" onclick="openModalAgregarNota('+ o.id + ')"><i class="fa fa-comments-o"></i></button>&nbsp;<a class="btn btn-xs btn-info" href="#/app/pacientes/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a></div>'; }
+                }
+            ]
+        }
+    }
+    else {
+        $scope.tbOptions = {
+            data: $scope.pacientes,
+            aoColumns: [
+                { mData: 'id' },                
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                },
+                { mData: 'persona.grupo_sanguineo.grupo_sanguineo_nombre' },
+                { mData: 'persona.persona_edad' },
+                { mData: 'persona.sexo.sexo_nombre' },
+                {   
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" title="Agregar Nota" onclick="openModalAgregarNota('+ o.id + ')"><i class="fa fa-comments-o"></i></button></div>'; }
+                }
+            ]
+        }
+    }               
 
     $scope.loading = false;
     
@@ -85,6 +167,7 @@ app.controller('PacientesCtrl', ['$scope', '$uibModal', '$stateParams', '$timeou
       modalInstance.result.then(function () {
           pacientesFac.delete(Id)
               .success(function(data) {
+		console.log(data);
                 $timeout(function() {
                   $state.reload(); 
                 }, 1000, false);  

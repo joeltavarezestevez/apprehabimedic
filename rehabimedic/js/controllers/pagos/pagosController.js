@@ -68,44 +68,80 @@ app.controller('PagosCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$s
     $scope.loading = true;
     
     Auth.getLoggedInUser();
-    $scope.permiso = $rootScope.user.perfil_usuario_id;
+    $scope.perfil_usuario = $rootScope.user.perfil_usuario_id;
     console.log(pagos);
     $scope.pagos = pagos.data;
     console.log($scope.pagos);
     var a = 1;
-    $scope.tbOptions = {
-        data: $scope.pagos,
-        aoColumns: [
-            {
-                mData: null,
-                bSortable: true,
-                mRender: function (o) { return a++; }
-            },
-            {
-                mData: null,
-                bSortable: true,
-                mRender: function (o) { return '<a class="text-center" onclick="openModalPagoDetalle('+ o.id + ')">'+ $filter('minLength')(o.id, 8) +'</a>'; }
-            },                
-            {
-                mData: null,
-                bSortable: true,
-                mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente.id + '">'+o.paciente.persona.persona_nombres+' '+ o.paciente.persona.persona_apellidos +'</a>'; }
-            },
-            {
-                mData: null,
-                bSortable: true,
-                mRender: function (o) { return $filter('date')(new Date(o.pago_fecha),'dd-MMM-yyyy'); }
-            },
-            { mData: 'pago_monto' },
-            { mData: 'estado.estado_nombre' },
-            {
-                mData: null,
-                bSortable: false,
-                mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" onclick="openModalPagoDetalle('+ o.id + ')"><i class="fa fa-print"></i></button>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalAnularPago('+ o.id + ')"><i class="fa fa-times-circle"></i></button></div>'; }
-            }
-        ]
+    if($scope.perfil_usuario == 1) {
+        $scope.tbOptions = {
+            data: $scope.pagos,
+            aoColumns: [
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return a++; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" onclick="openModalPagoDetalle('+ o.id + ')">'+ $filter('minLength')(o.id, 8) +'</a>'; }
+                },                
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente.id + '">'+o.paciente.persona.persona_nombres+' '+ o.paciente.persona.persona_apellidos +'</a>'; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return $filter('date')(new Date(o.pago_fecha),'dd-MMM-yyyy'); }
+                },
+                { mData: 'pago_monto' },
+                { mData: 'estado.estado_nombre' },
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" onclick="openModalPagoDetalle('+ o.id + ')"><i class="fa fa-print"></i></button>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalAnularPago('+ o.id + ')"><i class="fa fa-times-circle"></i></button></div>'; }
+                }
+            ]
+        }        
     }
-
+    else {
+        $scope.tbOptions = {
+            data: $scope.pagos,
+            aoColumns: [
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return a++; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" onclick="openModalPagoDetalle('+ o.id + ')">'+ $filter('minLength')(o.id, 8) +'</a>'; }
+                },                
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente.id + '">'+o.paciente.persona.persona_nombres+' '+ o.paciente.persona.persona_apellidos +'</a>'; }
+                },
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return $filter('date')(new Date(o.pago_fecha),'dd-MMM-yyyy'); }
+                },
+                { mData: 'pago_monto' },
+                { mData: 'estado.estado_nombre' },
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" onclick="openModalPagoDetalle('+ o.id + ')"><i class="fa fa-print"></i></button></div>'; }
+                }
+            ]
+        }        
+    }
+    
     $scope.loading = false;
     
     $scope.anularPago = function (size,windowClass,Id) {

@@ -17,7 +17,7 @@
                 <big><b>Opciones:</b></big>
                 <br>
                 <div class="btn-group">
-                    <a href="#/pacientes/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nuevo Paciente" tooltip-placement="bottom">
+                    <a href="#/app/pacientes/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nuevo Paciente" tooltip-placement="bottom">
                         <i class="material-icons icon-md">people</i>
                     </a>               
                     <a href="#/app/terapias/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nueva Terapia" tooltip-placement="bottom">
@@ -55,28 +55,19 @@
                         </div>
                     </div>                    
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="tile-counter bg-primary">
-                                <div class="content" tooltip-class="success animated fadeIn " uib-tooltip="Consultas y Terapias realizadas en el día" tooltip-placement="top">
-                                    <i class='material-icons'>people</i>
-                                    <h2 class="number_counter">{{pacientes_atendidos}}</h2>
-                                    <span>Pacientes atendidos</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="tile-counter bg-warning">
-                                <div class="content" tooltip-class="info animated fadeIn " uib-tooltip="Total de Terapias realizadas en el día" tooltip-placement="top">
-                                    <i class='material-icons'>healing</i>
-                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{terapias.length}}</h2>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="tile-counter bg-danger">
+                                <div class="content" tooltip-class="accent animated fadeIn " uib-tooltip="Total de pagos recibidos y facturas al contado realizadas en el día" tooltip-placement="bottom">
+                                    <i class='material-icons'>attach_money</i>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{ingresos_recibidos | currency}}</h2>
                                     <div class="clearfix"></div>
-                                    <span>Terapias realizadas</span>
+                                    <span>Ingresos Recibidos</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="tile-counter bg-success">
-                                <div class="content" tooltip-class="primary animated fadeIn " uib-tooltip="Total de Facturas realizadas en el día" tooltip-placement="bottom">
+                                <div class="content" tooltip-class="primary animated fadeIn " uib-tooltip="Total de facturas a crédito y al contado realizadas en el día" tooltip-placement="bottom">
                                     <i class='material-icons'>receipt</i>
                                     <h2 count-to="1001" value="0" duration="5" class="number_counter">{{ventas | currency}}</h2>
                                     <div class="clearfix"></div>
@@ -91,6 +82,34 @@
                                     <h2 count-to="1001" value="0" duration="5" class="number_counter">{{pagos_recibidos | currency}}</h2>
                                     <div class="clearfix"></div>
                                     <span>Pagos Recibidos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="tile-counter bg-accent">
+                                <div class="content" tooltip-class="danger animated fadeIn " uib-tooltip="Consultas y terapias realizadas en el día" tooltip-placement="top">
+                                    <i class='material-icons'>people</i>
+                                    <h2 class="number_counter">{{pacientes_atendidos}}</h2>
+                                    <span>Pacientes atendidos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="tile-counter bg-primary">
+                                <div class="content" tooltip-class="success animated fadeIn " uib-tooltip="Total de consultas realizadas en el día" tooltip-placement="top">
+                                    <i class='material-icons'>people</i>
+                                    <h2 class="number_counter">{{consultas.length}}</h2>
+                                    <span>Consultas realizadas</span>
+                                </div>
+                            </div>
+                        </div>                        
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="tile-counter bg-warning">
+                                <div class="content" tooltip-class="info animated fadeIn " uib-tooltip="Total de terapias realizadas en el día" tooltip-placement="top">
+                                    <i class='material-icons'>healing</i>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{terapias.length}}</h2>
+                                    <div class="clearfix"></div>
+                                    <span>Terapias realizadas</span>
                                 </div>
                             </div>
                         </div>                        

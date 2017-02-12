@@ -1,45 +1,104 @@
 app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'pacientesFac', 'pagos', 'pagosFac', function($scope, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, pacientesFac, pagos, pagosFac) {
     
     $scope.pago = {};
-    
+    $scope.monto_pagado = 0;
+    $scope.monto_pendiente = 0;    
     $scope.pacientes = pacientes.data;
+    $scope.citas_pagadas = [];
+    $scope.citas_pendientes = [];
     $scope.pagos = pagos.data;
     console.log($scope.pagos);
-    console.log($scope.pagos[$scope.pagos.length-1].id);
+    $scope.paciente = {};
+    $scope.today = new Date();
+    
+    $scope.calcular = function(index) {
+        console.log($scope.paciente.paciente_servicios[0].servicio_precio);
+        var precio = $scope.paciente.paciente_servicios[0].servicio_precio;
+        if (index == 1) {
+            if($scope.pago.pago_cantidad.length > 0) {
+                $scope.pago.pago_monto = $scope.pago.pago_cantidad * precio;
+            }
+            else {
+                $scope.pago.pago_monto = "";
+            }
+            console.log($scope.pago.pago_monto);            
+        }
+        else {
+            if($scope.pago.pago_monto.length > 0) {
+                $scope.pago.pago_cantidad = parseFloat($scope.pago.pago_monto / precio);
+            }
+            else {
+                $scope.pago.pago_cantidad = "";
+            }
+            console.log($scope.pago.pago_cantidad);                        
+        }
+    }
     
     $scope.updatePaciente = function(index) {
+        $scope.monto_pagado = 0;
+        $scope.monto_pendiente = 0;
+        $scope.citas_pagadas = [];
+        $scope.citas_pendientes = [];
+        
         pacientesFac.get(index).success(function(response){
-                d = new Date(response.persona.persona_fecha_nacimiento);
-                d.setDate(d.getDate() + 1);
-                response.persona.persona_fecha_nacimiento = d;
-                $scope.paciente = response;
-                $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
-                
-                angular.forEach(response.persona.personas_telefonos, function(value, key) {
-                    if (value.tipo_telefono_id == 1) {
-                        $scope.paciente.persona_telefono = value.telefono_numero;
-                    }
-                    else {
-                        $scope.paciente.persona_celular = value.telefono_numero;
-                    }
-                });
+            d = new Date(response.persona.persona_fecha_nacimiento);
+            d.setDate(d.getDate() + 1);
+            response.persona.persona_fecha_nacimiento = d;
+            var i = 0;
+            for(i = 0; i<response.citas.length; i++) {
+                response.citas[i].cita_fecha_hora = new Date(response.citas[i].cita_fecha_hora);
+            }
+            
+            $scope.paciente = response;
+            $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
 
-                if($scope.paciente.aseguradora_id != 1) {
-                    $scope.paciente.seguro = 1;
+            angular.forEach(response.persona.personas_telefonos, function(value, key) {
+                if (value.tipo_telefono_id == 1) {
+                    $scope.paciente.persona_telefono = value.telefono_numero;
                 }
                 else {
-                    $scope.paciente.seguro = 0;
+                    $scope.paciente.persona_celular = value.telefono_numero;
                 }
-                
-                if($scope.paciente.paciente_referencia == null) {
-                    $scope.paciente.referencia_tipo = "ninguno";
+            });
+
+            if($scope.paciente.aseguradora_id != 1) {
+                $scope.paciente.seguro = 1;
+            }
+            else {
+                $scope.paciente.seguro = 0;
+            }
+
+            if($scope.paciente.paciente_referencia == null) {
+                $scope.paciente.referencia_tipo = "ninguno";
+            }
+            else {
+                $scope.paciente.referencia_tipo = $scope.paciente.paciente_referencia.referencia_tipo;
+                $scope.paciente.persona_referencia = $scope.paciente.paciente_referencia.persona_referencia;
+            }
+            for(i=0; i< $scope.paciente.citas.length; i++) {
+                if(parseFloat($scope.paciente.citas[i].cita_monto_pendiente) == 0) {
+                    $scope.monto_pagado = $scope.monto_pagado + parseFloat($scope.paciente.citas[i].cita_monto); 
+                    $scope.citas_pagadas.push($scope.paciente.citas[i]);
                 }
                 else {
-                    $scope.paciente.referencia_tipo = $scope.paciente.paciente_referencia.referencia_tipo;
-                    $scope.paciente.persona_referencia = $scope.paciente.paciente_referencia.persona_referencia;
+                    $scope.monto_pendiente = $scope.monto_pendiente + parseFloat($scope.paciente.citas[i].cita_monto_pendiente);
+                    $scope.citas_pendientes.push($scope.paciente.citas[i]);
                 }
+            }
             console.log($scope.paciente);
+            console.log($scope.citas_pendientes);
+            console.log($scope.citas_pagadas);
+            console.log($scope.monto_pagado);
+            console.log($scope.monto_pendiente);
         })
+    }
+    
+    $scope.filterPagadas = function(obj) {
+        return parseFloat(obj.cita_monto_pendiente) == 0;
+    }
+
+    $scope.filterPendientes = function(obj) {
+        return parseFloat(obj.cita_monto_pendiente) > 0;
     }
       
     $scope.save = function(data, id) {
@@ -59,6 +118,7 @@ app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http'
                     data.pago_fecha = d;
                     console.log(data);
                     $scope.pago = data;
+                    $scope.updatePaciente($scope.pago.paciente_id);
                     $timeout(function() {
                         var el = document.getElementById('printElement');
                         angular.element(el).triggerHandler('click');                    

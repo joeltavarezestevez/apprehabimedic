@@ -24,7 +24,7 @@ app.factory('Auth', function ($rootScope, $window, $http, BASEURL) {
     },
     getLoggedInUser: function () {
       if ($rootScope.user === undefined || $rootScope.user == null) {
-        var userStr = $window.localStorage.getItem('user');
+        var userStr = $window.sessionStorage.getItem('user');
         if (userStr) {
           $rootScope.user = angular.fromJson(userStr);
         }
@@ -37,9 +37,9 @@ app.factory('Auth', function ($rootScope, $window, $http, BASEURL) {
     setLoggedInUser: function (user) {
       $rootScope.user = user;
       if (user == null) {
-        $window.localStorage.removeItem('user');
+        $window.sessionStorage.removeItem('user');
       } else {
-        $window.localStorage.setItem('user', angular.toJson($rootScope.user));
+        $window.sessionStorage.setItem('user', angular.toJson($rootScope.user));
       }
     }
   };

@@ -20,6 +20,7 @@
     <link href="../bower_components/animate.css/animate.min.css" rel="stylesheet" type="text/css" />
     <link href="../bower_components/ngprint/ngPrint.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../bower_components/angular-ui-notification/dist/angular-ui-notification.min.css">
+    <link rel="stylesheet" href="../bower_components/angular-xeditable/dist/css/xeditable.css" />
     <!-- CSS FRAMEWORK - END -->
     <link rel="stylesheet" href="css/app.style2.css">
 </head>
@@ -32,6 +33,7 @@
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular/angular-locale_es-do.js"></script>
     <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
     <!--<script src="../bower_components/angular-cookies/angular-cookies.js"></script> -->
         <script src="../bower_components/angular-resource/angular-resource.js"></script>
         <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
@@ -52,7 +54,8 @@
     <script src="../bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="../bower_components/ngprint/ngPrint.js"></script>
     <script src='../bower_components/Chart.js/Chart.min.js'></script>
-    <script src="../bower_components/webcam/dist/webcam.min.js"></script>    
+    <script src="../bower_components/webcam/dist/webcam.min.js"></script>
+    <script src="js/FileSaver.js"></script>
     <!-- JS FRAMEWORK - END -->
     <!-- App JS - Start -->
     <script src="js/app.js"></script>
@@ -75,6 +78,7 @@
     <!--<script src="js/controllers/chat.js"></script>-->
     
     <!-- Controllers -->
+    <script src="js/controllers/form-xeditable.js"></script>
     <script src="js/controllers/aseguradoras/aseguradorasController.js"></script>
     <script src="js/controllers/aseguradoras/aseguradorasDetalleController.js"></script>
     <script src="js/controllers/citas/citasController.js"></script>
@@ -92,6 +96,10 @@
     <script src="js/controllers/pagos/pagosController.js"></script>
     <script src="js/controllers/pagos/pagoDetalleController.js"></script>
     <script src="js/controllers/reportes/pacientes/pacientesReportesController.js"></script>
+    <script src="js/controllers/configuracion/enfermedades/enfermedadesController.js"></script>
+    <script src="js/controllers/configuracion/enfermedades/enfermedadesDetalleController.js"></script>
+    <script src="js/controllers/configuracion/especialidades/especialidadesController.js"></script>
+    <script src="js/controllers/configuracion/especialidades/especialidadesDetalleController.js"></script>
     <script src="js/controllers/configuracion/secuencias/secuenciasController.js"></script>
     <script src="js/controllers/configuracion/secuencias/secuenciasDetalleController.js"></script>
     <script src="js/controllers/configuracion/servicios/serviciosController.js"></script>
@@ -99,6 +107,7 @@
     <script src="js/controllers/reportes/citas/citasReportesController.js"></script>
     <script src="js/controllers/reportes/consultas/consultasReportesController.js"></script>
     <script src="js/controllers/reportes/facturas/facturasReportesController.js"></script>
+    <script src="js/controllers/reportes/ingresos/ingresosReportesController.js"></script>
     <script src="js/controllers/reportes/pacientes/pacientesReportesController.js"></script>
     <script src="js/controllers/reportes/pagos/pagosReportesController.js"></script>
     <script src="js/controllers/reportes/terapias/terapiasReportesController.js"></script>

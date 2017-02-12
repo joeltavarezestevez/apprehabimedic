@@ -5,6 +5,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
       {id:4, nombre:'Consumidor Final'}
     ]
     $scope.factura = {};
+    $scope.servicio = {};
     $scope.factura.factura_metodo_pago = "1";
     $scope.factura.factura_subtotal = 0.00;
     $scope.factura.factura_itbis = 0.00;
@@ -12,7 +13,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.factura.factura_total = 0.00;
     $scope.pacientes = pacientes.data;
     $scope.servicios = servicios.data;
-    console.log($scope.servicios);
+    console.log($scope.pacientes);
     
     $scope.factura.factura_tipo = "Contado";
     $scope.factura.factura_comprobante_tipo = 4;    
@@ -20,33 +21,20 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.factura.detalles = [];
     
     $scope.updatePaciente = function(index) {
+        
+        $scope.factura.factura_subtotal = 0.00;
+        $scope.factura.factura_itbis = 0.00;
+        $scope.factura.factura_descuento = 0.00;
+        $scope.factura.factura_total = 0.00;        
+        $scope.factura.detalles = [];
+        $scope.servicio = {};
+        
         pacientesFac.get(index).success(function(response){
                 d = new Date(response.persona.persona_fecha_nacimiento);
                 d.setDate(d.getDate() + 1);
                 response.persona.persona_fecha_nacimiento = d;
                 $scope.paciente = response;
                 $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
-                
-                $scope.paciente.enfermedad_id = [];
-                angular.forEach(response.pacientes_enfermedades, function(value, key) {
-                    $scope.paciente.enfermedad_id.push(value.enfermedad_id.toString());
-                });
-                
-                $scope.paciente.cirugias = [];
-                angular.forEach(response.pacientes_cirugias, function(value, key) {
-                    $scope.paciente.cirugias.push(value.cirugia_descripcion.toString());
-                });
-                
-                if(response.pacientes_fracturas.length > 0){
-                    $scope.paciente.fractura = 1;
-                    $scope.paciente.fracturas = [];
-                    angular.forEach(response.pacientes_fracturas, function(value, key) {
-                        $scope.paciente.fracturas.push(value.cuerpo_parte_id.toString());
-                    });                    
-                }
-                else {
-                    $scope.paciente.fractura = 2;
-                }
                 
                 angular.forEach(response.persona.personas_telefonos, function(value, key) {
                     if (value.tipo_telefono_id == 1) {
@@ -111,11 +99,16 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     };
 
     $scope.updatePrecio = function(id) {
-        console.log(id);
-        $scope.servicio = {};
-        $scope.servicio.servicio_id = $scope.servicios[id-1].id;
-        $scope.servicio.servicio_precio = $scope.servicios[id-1].servicio_precio;
-        $scope.servicio.servicio_nombre = $scope.servicios[id-1].servicio_nombre;
+        var i = 0;
+        console.log($scope.paciente);
+        for (i= 0; i<$scope.paciente.paciente_servicios.length; i++) {
+            if ($scope.paciente.paciente_servicios[i].servicio_id == id) {
+                $scope.servicio.servicio_id = id;
+                $scope.servicio.servicio_precio = $scope.paciente.paciente_servicios[i].servicio_precio;
+                $scope.servicio.servicio_nombre = $scope.paciente.paciente_servicios[i].servicio.servicio_nombre;
+            }            
+        }
+        console.log($scope.servicio);
     }
     // add Detalle
     $scope.addDetalle = function() {
@@ -173,6 +166,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
         $scope.factura.usuario_id = $rootScope.user.id;
         if ($scope.factura.factura_tipo != "Contado") {
             $scope.factura.factura_balance = $scope.factura.factura_total;
+            $scope.factura.factura_metodo_pago = 0;
         }
         else {
             $scope.factura.factura_balance = 0.00;
@@ -193,7 +187,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
                     $timeout(function() {
                         var el = document.getElementById('printElement');
                         angular.element(el).triggerHandler('click');                    
-                        $state.go('app.facturas');
+                        $state.reload();
                         console.log("State Changed");
                         Notification({
                             message: 'Factura registrada correctamente!',

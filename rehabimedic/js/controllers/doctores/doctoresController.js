@@ -40,8 +40,7 @@ app.controller('DoctoresCtrl', ['$scope', '$uibModal', '$stateParams', '$timeout
                 bSortable: true,
                 mRender: function (o) { return '<a class="text-center" href="#/app/doctores/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+o.persona.persona_apellidos+'</a>'; }
             },
-            { mData: 'persona.personas_telefonos.0.telefono_numero' },
-            { mData: 'persona.personas_telefonos.1.telefono_numero' },
+            { mData: 'persona.personas_telefonos.0.telefono_numero' },   
             { mData: 'persona.persona_correo_electronico' },            
             { mData: 'especialidad.especialidad_nombre' },
             {

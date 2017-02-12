@@ -1,5 +1,28 @@
 <div class='content-wrapper' ng-init="app.settings.pagetitle = 'Nuevo Pago';">
     <div class="col-lg-12">
+        <ol class="breadcrumb well">
+            <li>
+                <a ui-sref="app.inicio"><i class="fa fa-home"></i>Inicio</a>
+            </li>
+            <li>
+                <a ui-sref="app.pagos">Pagos</a>
+            </li>
+            <li class="active">
+                <strong>Nuevo pago</strong>
+            </li>
+        </ol>
+        <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-hide="!alert">
+            <button type="button" class="close" ng-click="closeAlert()">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div>
+                <span class="ng-binding ng-scope">
+                    Errores al crear el registro:
+                    <li class="danger"> {{mensajes}}.</li>
+                </span>
+            </div>
+        </div>        
         <section class="box ">
             <header class="panel_header">
                 <h2 class="title pull-left">Datos del Pago</h2>
@@ -51,7 +74,7 @@
                     <div class="form-group">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label class="form-label" for="paciente_id">Paciente <span class="text-danger">*</span></label>
-                            <span class="desc">Seleccione el paciente que está realizando la factura</span>
+                            <span class="desc">Seleccione el paciente que está realizando el pago</span>
                             <div class="controls">
                                 <select ui-jq="chosen" class="form-control" ng-model="pago.paciente_id" required ng-change="updatePaciente(pago.paciente_id)" id="paciente_id" name="paciente_id">
                                     <option value="">Seleccione el paciente</option>
@@ -62,17 +85,124 @@
                     </div>                        
                 </div>
                 <br>
+                <!--<h3 ng-if="paciente && citas_pagadas.length > 0">Terapias Pagadas</h3>
+                <div class="row" ng-if="paciente && citas_pagadas.length > 0">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="IngresosTable">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">#</th>
+                                    <th style="width: 25%">Descripcion</th>
+                                    <th style="width: 30%">Fecha Vencimiento</th>
+                                    <th style="width: 25%">Monto</th>
+                                    <th style="width: 10%">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cita in citas_pagadas">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{cita.cita_descripcion}}</td>
+                                    <td>{{cita.cita_fecha_hora | date: 'dd-MMM-yyyy'}}</td>
+                                    <td>{{cita.cita_monto | currency}}</td>
+                                    <td ng-if="cita.estado_id == 1">Pendiente</td>
+                                    <td ng-if="cita.estado_id != 1">{{cita.estado.estado_nombre}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-right"><b>Totales</b></td>
+                                    <td>
+                                        <b>{{citas_pagadas.length}}</b>
+                                    </td>
+                                    <td>
+                                        <b>{{monto_pagado | currency}}</b>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>-->               
+                <h3 ng-if="paciente  && citas_pendientes.length > 0">Terapias Pendientes de Pago</h3>
+                <div class="row" ng-if="paciente && citas_pendientes.length > 0">
+                    <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="IngresosTable">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">#</th>
+                                    <th style="width: 25%">Descripcion</th>
+                                    <th style="width: 30%">Fecha Vencimiento</th>
+                                    <th style="width: 25%">Monto Pendiente</th>
+                                    <th style="width: 10%">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cita in citas_pendientes">
+                                    <td ng-if="cita.cita_fecha_hora < today" class="text-danger">{{$index+1}}</td>
+                                    <td ng-if="cita.cita_fecha_hora > today">{{$index+1}}</td>
+                                    <td ng-if="cita.cita_fecha_hora < today" class="text-danger">{{cita.cita_descripcion}}</td>
+                                    <td ng-if="cita.cita_fecha_hora > today">{{cita.cita_descripcion}}</td>
+                                    <td ng-if="cita.cita_fecha_hora < today" class="text-danger">{{cita.cita_fecha_hora | date: 'dd-MMM-yyyy'}}</td>
+                                    <td ng-if="cita.cita_fecha_hora > today">{{cita.cita_fecha_hora | date: 'dd-MMM-yyyy'}}</td>
+                                    <td ng-if="cita.cita_fecha_hora < today" class="text-danger">{{cita.cita_monto_pendiente | currency}}</td>
+                                    <td ng-if="cita.cita_fecha_hora > today">{{cita.cita_monto_pendiente | currency}}</td>
+                                    <td ng-if="cita.cita_fecha_hora < today && cita.estado_id == 1" class="text-danger">Pendiente</td>
+                                    <td ng-if="cita.cita_fecha_hora > today && cita.estado_id == 1">Pendiente</td>
+                                    <td ng-if="cita.cita_fecha_hora < today && cita.estado_id != 1" class="text-danger">{{cita.estado.estado_nombre}}</td>
+                                    <td ng-if="cita.cita_fecha_hora > today && cita.estado_id != 1">{{cita.estado.estado_nombre}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" class="text-right"><b>Totales</b></td>
+                                    <td><b>{{citas_pendientes.length}}</b></td>
+                                    <td>
+                                        <b>{{monto_pendiente | currency}}</b>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            </tfoot>                            
+                        </table>
+                    </div>
+                </div>
+                <br>                
                 <h3>Detalles</h3>
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="form-label" for="pago_cantidad">Cantidad</label>
+                            <span class="desc">Escriba la cantidad de terapias a pagar</span>
+                            <div class="controls">
+                                <input type="text" class="form-control" placeholder="Cantidad de terapias a pagar" id="pago_cantidad" name="pago_cantidad " ng-model="pago.pago_cantidad" ng-change="calcular(1)">
+                            </div>
+                        </div>                        
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <label class="form-label" for="pago_monto">Monto</label>
                             <span class="desc">Escriba el monto a pagar</span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Monto a pagar" id="pago_monto" name="pago_monto " ng-model="pago.pago_monto">
+                                <input type="text" class="form-control" placeholder="Monto a pagar" id="pago_monto" name="pago_monto " ng-model="pago.pago_monto" ng-change="calcular(2)">
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <label class="form-label" for="field-1">M&eacute;todo de pago <span class="text-danger">*</span></label>
+                            <span class="desc">Elija la forma de pago</span>
+                            <div class="input-group" inputgroup>
+                                <select ui-jq="chosen" class="form-control" ng-model="pago.pago_metodo_pago" required>
+                                    <option value="">Seleccione el m&eacute;todo de pago</option>
+                                    <option value="1">Efectivo</option>
+                                    <option value="2">Cheque</option>
+                                    <option value="3">Tarjeta de Credito</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label class="form-label" for="pago_concepto">Concepto</label>
                             <span class="desc">Escriba el concepto del pago</span>
                             <div class="controls">
@@ -94,40 +224,46 @@
         </section>
     </div>
 </div>
-<div class="text-right" ng-hide="1==2">      
+<div class="text-right" ng-hide="1==1">      
     <a id="printElement" data-ng-click="printDiv('printThisElement')" class="btn btn-info">
         <i class="material-icons icon-md">print</i>
     </a>
 </div>
-<div style="width: 7.2 cm; height: 29.7 cm; text-align: center; font-family:Consolas; font-size:6.5pt; line-height: 75%;" id="printThisElement" ng-hide="1==1">
+<div style="width: 7.2 cm; height: 200 cm; text-align: center; font-family:Consolas; line-height: 75%;" id="printThisElement" ng-hide="1==1">
   <div style="text-align: center;">
-    <img src="img/pipiota.png" width="120"/>
-    <p>CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N</p>
-    <p>AVE. JUAN P. DUARTE, PLAZA PALERMO</p>
-    <p>M&Oacute;DULO 110, STGO. R.D.</p>
-    <p>809-825-8595</p>
-    <p>RNC-131341421</p>
-    <p>RECIBO DE PAGO</p>
+      <img src="img/pipiota.png" width="120"/>
+      <p style="font-size: 6px;">
+        CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N <br>
+        AVE. JUAN P. DUARTE, PLAZA PALERMO <br>
+        M&Oacute;DULO 110, STGO. R.D. <br>
+        809-825-8595 <br>
+        RNC-131341421 <br>
+        RECIBO DE PAGO <br>
+      </p>
   </div>
   <div class="text-right"><p>No. : {{pago.id | minLength: 8}}&nbsp;</p></div>
   <div class="text-left">
-    <p>----------------------------------------------------</p>
-    <p>Fecha&nbsp;&nbsp;&nbsp; : {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}} </p>
-    <p>Cajero&nbsp;&nbsp; : {{pago.usuario.persona.persona_nombres}} {{pago.usuario.persona.persona_apellidos}}</p>
-    <p>Paciente&nbsp; : {{pago.paciente.persona.persona_nombres}} {{pago.paciente.persona.persona_apellidos}}</p>
-    <p>Concepto : {{pago.pago_concepto}}</p>
-    <p>Monto&nbsp;&nbsp;&nbsp; : {{pago.pago_monto}}</p>        
-    <p>----------------------------------------------------</p>
+      <p>------------------------------------------------ <br>
+        FECHA&nbsp;&nbsp;&nbsp; : {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}} <br>
+        CAJERO&nbsp;&nbsp; : {{pago.usuario.persona.persona_nombres | uppercase}} {{pago.usuario.persona.persona_apellidos | uppercase}} <br>
+        PACIENTE&nbsp; : {{pago.paciente.persona.persona_nombres | uppercase}} {{pago.paciente.persona.persona_apellidos | uppercase}} <br>
+        CONCEPTO : {{pago.pago_concepto | uppercase}} <br>
+        MONTO&nbsp;&nbsp;&nbsp; : {{pago.pago_monto | currency}} <br>
+        ------------------------------------------------ <br>
+      </p>
   </div>
-  <div class="text-right">        
-    <p>Balance Pendiente : {{pago.paciente.paciente_balance}}&nbsp;</p>
-    <p>Terapias Pendientes de Pago : &nbsp;&nbsp; 5/12&nbsp;</p>
+  <div class="text-right">
+      <p>TERAPIAS PENDIENTES : &nbsp;&nbsp; 5/12</p>
   </div>
   <br>
   <br>
   <div class="text-center">
-    <p>_____________________________</p>
-      <p>RECIBIDO CONFORME</p>
-    <p>{{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}</p>
+      <p>
+          _____________________________ 
+          <br>
+          RECIBIDO CONFORME
+          <br>
+          {{pago.pago_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}
+      </p>
   </div>
 </div>

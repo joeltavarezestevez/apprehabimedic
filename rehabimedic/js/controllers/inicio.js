@@ -27,6 +27,7 @@
         $scope.facturas_all = facturas.data;
         $scope.pagos_all = pagos.data;
         $scope.pacientes_atendidos = 0;
+        $scope.ingresos_recibidos = 0;
         $scope.consultas_enero = 0;
         $scope.consultas_febrero = 0;
         $scope.consultas_marzo = 0;
@@ -140,6 +141,11 @@
         $scope.resumen = function() {
             $scope.ventas = 0;
             $scope.pagos_recibidos = 0;
+            $scope.ingresos_recibidos = 0;
+            $scope.terapias = [];
+            $scope.consultas = [];
+            $scope.facturas = [];
+            $scope.pagos = [];
             $scope.terapias = terapias.data;
             $scope.consultas = consultas.data;
             $scope.facturas = facturas.data;
@@ -154,19 +160,15 @@
             //Get All Consultas
             for(c=0; c<$scope.consultas.length; c++) {
                 $scope.consultas[c].consulta_fecha = new Date($scope.consultas[c].consulta_fecha);
-               $scope.consultas[c].consulta_fecha.setDate($scope.consultas[c].consulta_fecha.getDate()+1);
+                $scope.consultas[c].consulta_fecha.setDate($scope.consultas[c].consulta_fecha.getDate()+1);
                 $scope.consultas[c].consulta_fecha = $filter('date')($scope.consultas[c].consulta_fecha,'yyyy-MM-dd');
             }
             //Get All Facturas
             for(c=0; c<$scope.facturas.length; c++) {
-                $scope.facturas[c].factura_fecha = new Date($scope.facturas[c].factura_fecha);
-               $scope.facturas[c].factura_fecha.setDate($scope.facturas[c].factura_fecha.getDate()+1);
                 $scope.facturas[c].factura_fecha = $filter('date')($scope.facturas[c].factura_fecha,'yyyy-MM-dd');
             }
             //Get All Pagos
             for(c=0; c<$scope.pagos.length; c++) {
-                $scope.pagos[c].pago_fecha = new Date($scope.pagos[c].pago_fecha);
-               $scope.pagos[c].pago_fecha.setDate($scope.pagos[c].pago_fecha.getDate()+1);
                 $scope.pagos[c].pago_fecha = $filter('date')($scope.pagos[c].pago_fecha,'yyyy-MM-dd');
             }
             
@@ -180,18 +182,26 @@
             $scope.consultas = $filter('filter')($scope.consultas, {consulta_fecha: $scope.fechita});        
             $scope.facturas = $filter('filter')($scope.facturas, {factura_fecha: $scope.fechita});
             $scope.pagos = $filter('filter')($scope.pagos, {pago_fecha: $scope.fechita});
+            $scope.facturas_contado = $filter('filter')($scope.facturas, {factura_tipo: "Contado"});
             
             //Get All Pacientes Atendidos
             $scope.pacientes_atendidos = $scope.terapias.length + $scope.consultas.length;
 
             //Get All Pagos Recibidos
             for(c=0; c<$scope.pagos.length; c++) {
-                $scope.pagos_recibidos = $scope.pagos_recibidos + parseFloat($scope.pagos[c].pago_monto); 
+                $scope.pagos_recibidos = $scope.pagos_recibidos + parseFloat($scope.pagos[c].pago_monto);
+                $scope.ingresos_recibidos = $scope.ingresos_recibidos + parseFloat($scope.pagos[c].pago_monto);
             }
             //Get All Ventas
             for(c=0; c<$scope.facturas.length; c++) {
                 $scope.ventas = $scope.ventas + parseFloat($scope.facturas[c].factura_total); 
             }
+            
+            //Get All Ventas al Contado
+            for(c=0; c<$scope.facturas_contado.length; c++) {
+                $scope.ingresos_recibidos = $scope.ingresos_recibidos + parseFloat($scope.facturas_contado[c].factura_total); 
+            }
+            
             console.log("Resumen");
             console.log($scope.fechita);
             console.log($scope.terapias);

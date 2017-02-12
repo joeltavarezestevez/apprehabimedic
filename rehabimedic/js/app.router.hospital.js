@@ -252,11 +252,14 @@ angular.module('app')
                             }
                         }
                     })
-                    .state('app.paciente-nuevo', {
-                        url: '/pacientes/nuevo',
-                        templateUrl: 'templates/pacientes/paciente-nuevo.html',
+                    .state('app.pacientes-estado-cuenta', {
+                        url: '/pacientes/estadocuenta',
+                        templateUrl: 'templates/pacientes/paciente-estado-cuenta.html',
                         controller: 'PacientesDetalleCtrl',
-                        resolve: {
+                        resolve: {                        
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -277,7 +280,38 @@ angular.module('app')
                             },
                             sexos: function(sexosFac) {
                                 return sexosFac.all();
-                            }                    
+                            }                            
+                        }
+                    })
+                    .state('app.paciente-nuevo', {
+                        url: '/pacientes/nuevo',
+                        templateUrl: 'templates/pacientes/paciente-nuevo.html',
+                        controller: 'PacientesDetalleCtrl',
+                        resolve: {    
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },                            
+                            aseguradoras: function(aseguradorasFac) {
+                                return aseguradorasFac.all();
+                            },
+                            cuerpoPartes: function(cuerpoPartesFac) {
+                                return cuerpoPartesFac.all();
+                            },
+                            enfermedades: function(enfermedadesFac) {
+                                return enfermedadesFac.all();
+                            },
+                            estadosCiviles: function(estadosCivilesFac) {
+                                return estadosCivilesFac.all();
+                            },
+                            gruposSanguineos: function(gruposSanguineosFac) {
+                                return gruposSanguineosFac.all();
+                            },
+                            paises: function(paisesFac) {
+                                return paisesFac.all();
+                            },
+                            sexos: function(sexosFac) {
+                                return sexosFac.all();
+                            }
                         }
                     })    
                     .state('app.paciente-editar', {
@@ -285,6 +319,9 @@ angular.module('app')
                         templateUrl: 'templates/pacientes/paciente-editar.html',
                         controller: 'PacientesDetalleCtrl',
                         resolve: {
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },                            
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -318,6 +355,9 @@ angular.module('app')
                                     return uiLoad.load(['../bower_components/font-awesome/css/font-awesome.css']);
                                 }
                             ],
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },                            
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -351,6 +391,9 @@ angular.module('app')
                                     return uiLoad.load(['../bower_components/font-awesome/css/font-awesome.css']);
                                 }
                             ],
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },                            
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -698,6 +741,32 @@ angular.module('app')
                             
                         }
                     })
+                    .state('app.reportes-ingresos-dia', {
+                        url: '/reportes/ingresos/dia',
+                        templateUrl: 'templates/reportes/ingresos/ingresosPorDia.html',
+                        controller: 'IngresosReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            },
+                            pagos: function(pagosFac) {
+                                return pagosFac.all();
+                            }                           
+                        }
+                    })
+                    .state('app.reportes-ingresos-mes', {
+                        url: '/reportes/ingresos/mes',
+                        templateUrl: 'templates/reportes/ingresos/ingresosPorMes.html',
+                        controller: 'IngresosReportesCtrl',
+                        resolve: {
+                            facturas: function(facturasFac) {
+                                return facturasFac.all();
+                            },
+                            pagos: function(pagosFac) {
+                                return pagosFac.all();
+                            }                           
+                        }
+                    })                
                     .state('app.reportes-pagos', {
                         url: '/reportes/pagos',
                         templateUrl: 'templates/reportes/pagos/pagosListado.html',
@@ -826,6 +895,46 @@ angular.module('app')
                         templateUrl: 'templates/configuracion/servicios/servicios-nuevo.html',
                         controller: 'ServiciosDetalleCtrl'                
                     })                
+                    .state('app.configuracion-enfermedades', {
+                        url: '/configuracion/enfermedades',
+                        templateUrl: 'templates/configuracion/enfermedades/enfermedades.html',
+                        controller: 'EnfermedadesCtrl',
+                        resolve: {
+                            enfermedades: function(enfermedadesFac) {
+                                return enfermedadesFac.all();
+                            }
+                        }                    
+                    })
+                    .state('app.configuracion-enfermedades-editar', {
+                        url: '/configuracion/enfermedades/editar/:id',
+                        templateUrl: 'templates/configuracion/enfermedades/enfermedad-editar.html',
+                        controller: 'EnfermedadesDetalleCtrl'                
+                    })
+                    .state('app.configuracion-enfermedades-nuevo', {
+                        url: '/configuracion/enfermedades/nuevo',
+                        templateUrl: 'templates/configuracion/enfermedades/enfermedad-nuevo.html',
+                        controller: 'EnfermedadesDetalleCtrl'                
+                    })
+                    .state('app.configuracion-especialidades', {
+                        url: '/configuracion/especialidades',
+                        templateUrl: 'templates/configuracion/especialidades/especialidades.html',
+                        controller: 'EspecialidadesCtrl',
+                        resolve: {
+                            especialidades: function(especialidadesFac) {
+                                return especialidadesFac.all();
+                            }
+                        }                    
+                    })
+                    .state('app.configuracion-especialidades-editar', {
+                        url: '/configuracion/especialidades/editar/:id',
+                        templateUrl: 'templates/configuracion/especialidades/especialidad-editar.html',
+                        controller: 'EspecialidadesDetalleCtrl'                
+                    })
+                    .state('app.configuracion-especialidades-nuevo', {
+                        url: '/configuracion/especialidades/nuevo',
+                        templateUrl: 'templates/configuracion/especialidades/especialidad-nuevo.html',
+                        controller: 'EspecialidadesDetalleCtrl'                
+                    })
                 
                     .state('app.hos-payments', {
                         url: '/hospital/payments',

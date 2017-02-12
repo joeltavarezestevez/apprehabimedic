@@ -87,6 +87,14 @@
                         </uib-accordion>
                     </div>
                     <br>
+                    <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-show="terapia.pacientes_terapias_detalle.length == terapia.terapia_sesiones_total-1">
+                        <div>
+                            <span class="ng-binding ng-scope" style="text-transform: uppercase; text-align: center;">
+                                Hola {{user.persona.persona_nombres}} {{user.persona.persona_apellidos}}, <br><br>
+                               Esta es la &uacute;ltima sesi&oacute;n del programa de terapias indicado a este(a) paciente.
+                            </span>
+                        </div>
+                    </div>                    
                     <div class="row">
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

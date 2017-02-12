@@ -16,68 +16,11 @@ app.controller('ConsultasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stat
     
     $scope.updatePaciente = function(index) {
         pacientesFac.get(index).success(function(response){
-                d = new Date(response.persona.persona_fecha_nacimiento);
-                d.setDate(d.getDate() + 1);
-                response.persona.persona_fecha_nacimiento = d;
-                $scope.paciente = response;
-                $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
-                
-                $scope.paciente.enfermedad_id = [];
-                angular.forEach(response.pacientes_enfermedades, function(value, key) {
-                    $scope.paciente.enfermedad_id.push(value.enfermedad_id.toString());
-                });
-                
-                $scope.paciente.cirugias = [];
-                angular.forEach(response.pacientes_cirugias, function(value, key) {
-                    $scope.paciente.cirugias.push(value.cirugia_descripcion.toString());
-                });
-                
-                if(response.pacientes_fracturas.length > 0){
-                    $scope.paciente.fractura = 1;
-                    $scope.paciente.fracturas = [];
-                    angular.forEach(response.pacientes_fracturas, function(value, key) {
-                        $scope.paciente.fracturas.push(value.cuerpo_parte_id.toString());
-                    });                    
-                }
-                else {
-                    $scope.paciente.fractura = 2;
-                }
-                
-                angular.forEach(response.persona.personas_telefonos, function(value, key) {
-                    if (value.tipo_telefono_id == 1) {
-                        $scope.paciente.persona_telefono = value.telefono_numero;
-                    }
-                    else {
-                        $scope.paciente.persona_celular = value.telefono_numero;
-                    }
-                });
-
-                if($scope.paciente.aseguradora_id != 1) {
-                    $scope.paciente.seguro = 1;
-                }
-                else {
-                    $scope.paciente.seguro = 0;
-                }
-                
-                if($scope.paciente.paciente_referencia == null) {
-                    $scope.paciente.referencia_tipo = "ninguno";
-                }
-                else {
-                    $scope.paciente.referencia_tipo = $scope.paciente.paciente_referencia.referencia_tipo;
-                    $scope.paciente.persona_referencia = $scope.paciente.paciente_referencia.persona_referencia;
-                }
-                
-                if($scope.paciente.pacientes_fracturas.length == 0){
-                    $scope.paciente.fractura = 2;
-                }
+            $scope.paciente = response;
             console.log($scope.paciente);
         })
     }
     
-    $scope.print = function() {
-        console.log($rootScope.user);
-    }
-    $scope.print();
     $scope.save = function() {
         if ($rootScope.user.persona.doctor != null) {
          $scope.consulta.doctor_id = $rootScope.user.persona.doctor.id;   
