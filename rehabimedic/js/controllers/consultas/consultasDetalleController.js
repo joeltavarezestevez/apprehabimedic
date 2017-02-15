@@ -22,11 +22,11 @@ app.controller('ConsultasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stat
     }
     
     $scope.save = function() {
-        if ($rootScope.user.persona.doctor != null) {
-         $scope.consulta.doctor_id = $rootScope.user.persona.doctor.id;   
+        if ($rootScope.user != null) {
+         $scope.consulta.usuario_id = $rootScope.user.id;   
         }
         else {
-            $scope.consulta.doctor_id = 1;
+            $scope.consulta.usuario_id = 1;
         }
         $scope.consulta.consulta_fecha = new Date();
         $scope.consulta_fecha = $scope.consulta.consulta_fecha;  
@@ -59,6 +59,12 @@ app.controller('ConsultasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stat
     }
     
     $scope.update = function() {
+        if ($rootScope.user != null) {
+         $scope.consulta.usuario_id = $rootScope.user.id;   
+        }
+        else {
+            $scope.consulta.usuario_id = 1;
+        }        
         $scope.consulta_fecha = $scope.consulta.consulta_fecha;  
         $scope.consulta.consulta_fecha = $filter('date')($scope.consulta.consulta_fecha,'yyyy-MM-dd');                
         consultasFac.update($scope.consulta, parseInt($stateParams.id,10))

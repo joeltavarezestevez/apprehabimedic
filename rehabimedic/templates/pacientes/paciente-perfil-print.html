@@ -38,7 +38,7 @@
                                         <h3>
                                             Contacto
                                             <br>
-                                            <small><i class="fa fa-phone"></i> {{paciente.persona_telefono}} - <i class="fa fa-mobile"></i> {{paciente.persona_celular}}</small>
+                                            <small><i class="fa fa-phone"></i> {{paciente.persona.persona_telefono}} - <i class="fa fa-mobile"></i> {{paciente.persona.persona_celular}}</small>
                                             <br>
                                             <small><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</small>
                                             <br>
@@ -177,7 +177,7 @@
                         <hr>
                         <div class="">
                             <h4 class="text-right">
-                                <b>{{terapia.paciente_terapia_fecha}} | Dr. {{terapia.doctor.persona.persona_nombres}} {{terapia.doctor.persona.persona_apellidos}}</b>
+                                <b>{{terapia.paciente_terapia_fecha}} | Dr. {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}}</b>
                             </h4>
                         </div>
                         <br>
@@ -187,15 +187,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-lg-6">
-                                <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
-                                <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
-                                <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
-                                <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
-                            </div>
-                            <div class="col-lg-6">
-                                <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
-                                <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
-                                <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
+                                <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones}} sesiones</p>
                             </div>
                         </div>
                         <br>
@@ -219,15 +211,15 @@
                             <div class="col-lg-12" ng-repeat="detalle in terapia.pacientes_terapias_detalle">
                                 <li>
                                     <b ng-if="detalle.estado_id == 4">
-                                        Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}} | {{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Estado: {{detalle.estado.estado_nombre}}
+                                        Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones}} | {{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Estado: {{detalle.estado.estado_nombre}}
                                     </b>
                                     <b ng-if="detalle.estado_id == 1">
-                                        {{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de {{terapia.terapia_sesiones_total}} |  Estado: Pendiente
+                                        {{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de {{terapia.terapia_sesiones}} |  Estado: Pendiente
                                     </b>
                                     <div ng-if="detalle.estado_id == 4">
                                         <p>&nbsp;&nbsp;&nbsp;
                                             <b>Terapista: </b>
-                                            Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                                            Dr. {{detalle.usuario.persona.persona_nombres}} {{detalle.usuario.persona.persona_apellidos}}
                                         </p>
                                         <p>&nbsp;&nbsp;&nbsp;<b>Ejercicios y Actividades Realizadas:</b></p>
                                         <p style="white-space: pre-line">
@@ -251,7 +243,7 @@
                             <br>
                             <div class="">
                                 <h4 class="text-right">
-                                    <b>{{consulta.consulta_fecha | date: 'dd/MMM/yyyy'}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}</b>
+                                    <b>{{consulta.consulta_fecha | date: 'dd/MMM/yyyy'}} | Dr. {{consulta.usuario.persona.persona_nombres}} {{consulta.usuario.persona.persona_apellidos}}</b>
                                 </h4>
                             </div>
                             <br>
@@ -278,11 +270,7 @@
                             <br>
                             <div class="">
                                 <h4><b>Examen Físico:</b></h4>
-                                <ul>
-                                    <li>Extensi&oacute;n: {{consulta.consulta_examen_fisico_extension}}</li>
-                                    <li>Flexi&oacute;n: {{consulta.consulta_examen_fisico_flexion}}</li>
-                                    <li>E.A.D.: {{consulta.consulta_examen_fisico_ead}}</li>
-                                </ul>
+                                <p>{{consulta.consulta_examen_fisico_extension}}</p>
                             </div>
                             <br>
                             <div class="">

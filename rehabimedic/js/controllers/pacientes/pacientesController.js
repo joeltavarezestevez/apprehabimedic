@@ -59,7 +59,7 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                     bSortable: true,
                     mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
                 },
-                { mData: 'persona.personas_telefonos.0.telefono_numero' },
+                { mData: 'persona.persona_telefono' },
                 { mData: 'persona.persona_correo_electronico' },
                 { mData: 'paciente_balance' },
                 {   
@@ -85,7 +85,7 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                     bSortable: true,
                     mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
                 },
-                { mData: 'persona.personas_telefonos.0.telefono_numero' },
+                { mData: 'persona.persona_telefono' },
                 { mData: 'persona.persona_correo_electronico' },
                 { mData: 'paciente_balance' },
                 {   
@@ -166,8 +166,8 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
 
       modalInstance.result.then(function () {
           pacientesFac.delete(Id)
-              .success(function(data) {
-		console.log(data);
+          .success(function(data) {
+            console.log(data);
                 $timeout(function() {
                   $state.reload(); 
                 }, 1000, false);  
@@ -179,7 +179,10 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                     positionX: 'center',
                     positionY: 'top'
                 }, 'error');
-          });
+          })
+              .error(function(data) {
+                console.log(data);
+            });              
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });

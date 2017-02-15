@@ -1,8 +1,10 @@
 <div class="modal-header">
-    <h3 class="modal-title">Eliminar {{titulo}}</h3>
+    <h3 class="modal-title">Eliminar Paciente</h3>
 </div>
 <div class="modal-body">
-    <p>Est&aacute; seguro que desea eliminar <b>{{registro.nombres}}</b>?</p>
+    <p>Est&aacute; seguro que desea eliminar a <b>{{registro.nombres}}</b>?</p>
+    
+    <small>AL eliminar este paciente, se eliminarán todos los registros vinculados al mismo en el sistema (Consultas, Terapias, Facturas, Pagos, etc.).</small>
 </div>
 <div class="modal-footer text-center">                  
     <button class="btn btn-default" ng-click="cancel()">No</button>

@@ -47,7 +47,7 @@ app.controller('ConsultasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal',
                 {
                     mData: null,
                     bSortable: true,
-                    mRender: function (o) { return '<a class="text-center" href="#/app/doctores/perfil/'+ o.doctor.id + '">'+o.doctor.persona.persona_nombres+' '+ o.doctor.persona.persona_apellidos +'</a>'; }
+                    mRender: function (o) { return o.usuario.persona.persona_nombres+' '+ o.usuario.persona.persona_apellidos; }
                 },
                 {
                     mData: null,

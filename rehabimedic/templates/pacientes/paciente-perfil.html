@@ -43,8 +43,8 @@
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Aseguradora" tooltip-placement="bottom"><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Número de Seguridad Social" tooltip-placement="bottom"><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
                                     <p tooltip-class="success animated fadeIn " uib-tooltip="Fecha de Nacimiento (Edad)" tooltip-placement="bottom"><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
-                                    <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Residencial" tooltip-placement="bottom" ng-if="paciente.persona_telefono"><i class="fa fa-phone"></i> {{paciente.persona_telefono}}</p>
-                                    <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Móvil" tooltip-placement="bottom" ng-if="paciente.persona_celular">&nbsp;<i class="fa fa-mobile"></i> {{paciente.persona_celular}}</p>
+                                    <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Residencial" tooltip-placement="bottom" ng-if="paciente.persona.persona_telefono"><i class="fa fa-phone"></i> {{paciente.persona.persona_telefono}}</p>
+                                    <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Móvil" tooltip-placement="bottom" ng-if="paciente.persona.persona_celular">&nbsp;<i class="fa fa-mobile"></i> {{paciente.persona.persona_celular}}</p>
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Correo Electrónico" tooltip-placement="bottom"><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Dirección" tooltip-placement="bottom"><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Balance Pendiente" tooltip-placement="bottom"><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
@@ -154,6 +154,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <big><b>Listado de Documentos del Paciente</b></big>
+                                            <hr>
                                             <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.paciente_imagenes.length > 0">
                                                 <div>
                                                     <span class="ng-binding ng-scope">
@@ -179,28 +180,21 @@
                                 <uib-tab-heading>
                                     <i class="material-icons icon-md">healing</i> Terapias                            
                                 </uib-tab-heading>
+                                <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.pacientes_terapias.length > 0">
+                                    <div>
+                                        <span class="ng-binding ng-scope">
+                                            No hay terapias registradas.
+                                        </span>
+                                    </div>
+                                </div>                                 
                                 <div class="transparent accordion ng-scope">
                                     <uib-accordion close-others="oneAtATime">
                                         <uib-accordion-group ng-repeat="terapia in paciente.pacientes_terapias">
                                             <uib-accordion-heading>
-                                                <b>{{terapia.paciente_terapia_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{terapia.doctor.persona.persona_nombres}} {{terapia.doctor.persona.persona_apellidos}} | Sesiones: {{terapia.terapia_sesiones_total}}</b>
+                                                <b>{{terapia.paciente_terapia_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}} | Sesiones: {{terapia.terapia_sesiones}}</b>
                                             </uib-accordion-heading>
                                             <div>
                                                 <big><b>Resumen</b></big>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
-                                                    <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
-                                                    <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
-                                                    <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
-                                                    <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
-                                                    <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
-                                                </div>
                                             </div>
                                             <hr>
                                             <div class="row">
@@ -219,14 +213,14 @@
                                                 <uib-accordion close-others="oneAtATime">
                                                     <uib-accordion-group ng-repeat="detalle in terapia.pacientes_terapias_detalle">
                                                         <uib-accordion-heading ng-if="detalle.estado_id == 4">
-                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones}}</b>
                                                         </uib-accordion-heading>
                                                         <uib-accordion-heading ng-if="detalle.estado_id == 1">
-                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                                            <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones}}</b>
                                                         </uib-accordion-heading>                                       <div ng-if="detalle.estado_id == 4">
                                                             <h4><b>Terapista: </b></h4>
                                                             <p>
-                                                                Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                                                                Dr. {{detalle.usuario.persona.persona_nombres}} {{detalle.usuario.persona.persona_apellidos}}
                                                             </p>
                                                             <br>
                                                             <h4><b>Ejercicios y Actividades Realizadas:</b></h4>
@@ -245,11 +239,18 @@
                                 <uib-tab-heading>
                                     <i class="material-icons icon-md">assignment_ind</i> Consultas
                                 </uib-tab-heading>
+                                <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.consultas.length > 0">
+                                    <div>
+                                        <span class="ng-binding ng-scope">
+                                            No hay consultas registradas.
+                                        </span>
+                                    </div>
+                                </div>                                
                                 <div class="transparent accordion ng-scope">
                                     <uib-accordion close-others="oneAtATime">
                                         <uib-accordion-group ng-repeat="consulta in paciente.consultas">
                                             <uib-accordion-heading>
-                                                <b>{{consulta.consulta_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{consulta.doctor.persona.persona_nombres}} {{consulta.doctor.persona.persona_apellidos}}</b>
+                                                <b>{{consulta.consulta_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{consulta.usuario.persona.persona_nombres}} {{consulta.usuario.persona.persona_apellidos}}</b>
                                             </uib-accordion-heading>
                                             <h4><b>Motivo de consulta:</b></h4>
                                             <p>{{consulta.consulta_motivo}}</p>
@@ -267,10 +268,7 @@
                                             </ul>
                                             <br>
                                             <h4><b>Examen Físico:</b></h4>
-                                            <ul>
-                                                <li>Extensi&oacute;n: {{consulta.consulta_examen_fisico_extension}}</li>
-                                                <li>Flexi&oacute;n: {{consulta.consulta_examen_fisico_flexion}}</li>
-                                                <li>E.A.D.: {{consulta.consulta_examen_fisico_ead}}</li>
+                                            <p>{{consulta.consulta_examen_fisico}}</p>
                                             </ul>
                                             <br>
                                             <h4><b>Diagnóstico:</b></h4>
@@ -286,7 +284,14 @@
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                         <big><b>Notas Especiales del Paciente</b></big>
-                                        <hr>
+                                        <hr>                                
+                                        <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.pacientes_notas_especiales.length > 0">
+                                            <div>
+                                                <span class="ng-binding ng-scope">
+                                                    No hay notas especiales registradas.
+                                                </span>
+                                            </div>
+                                        </div>
                                         <li  ng-repeat="nota in paciente.pacientes_notas_especiales">
                                             <b>
                                                 {{nota.updated_at}} | {{nota.usuario.persona.persona_nombres}} {{nota.usuario.persona.persona_apellidos}} 

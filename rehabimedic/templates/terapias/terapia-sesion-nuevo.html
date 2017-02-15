@@ -42,19 +42,11 @@
                         </div>
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label class="form-label"><br><b>Resumen de Terapia Indicada por el(la) Dr(a). {{terapia.doctor.persona.persona_nombres}} {{terapia.doctor.persona.persona_apellidos}}:</b></label>
+                                <label class="form-label"><br><b>Resumen de Terapia Indicada por el(la) Dr(a). {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}}:</b></label>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <p><b>Fecha estimada de Inicio: </b>{{terapia.terapia_fecha_estimada_inicio | date: 'dd-MMM-yyyy'}} </p>
-                            <p><b>Fecha estimada de Finalizaci&oacute;n:</b> {{terapia.terapia_fecha_estimada_fin | date: 'dd-MMM-yyyy'}}</p>
-                            <p><b>Total de terapia en semanas: </b> {{terapia.terapia_semanas}} semanas</p>
-                            <p><b>Sesiones por semana: </b> {{terapia.terapia_sesiones_semana}} sesiones</p>
-                        </div>
-                        <div class="col-lg-6">
-                            <p><b>Duraci&oacute;n de las Sesiones: </b> {{terapia.terapia_sesiones_duracion}} h</p>
-                            <p><b>Total de terapia en horas:</b> {{terapia.terapia_duracion_total}} h</p>
-                            <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones_total}} sesiones</p>
+                            <p><b>Total de terapia en sesiones:</b> {{terapia.terapia_sesiones}} sesiones</p>
                         </div>
                         <div class="col-lg-12">
                             <label class="form-label"><b><br>Ejercicios y Actividades Recomendados</b></label>
@@ -70,12 +62,12 @@
                         <uib-accordion close-others="oneAtATime">
                             <uib-accordion-group ng-repeat="detalle in terapia.pacientes_terapias_detalle">
                                 <uib-accordion-heading ng-if="detalle.estado_id == 4">
-                                    <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones_total}}</b>
+                                    <b>{{detalle.terapia_sesion_fecha | date: 'dd-MMM-yyyy'}} | Sesi&oacute;n: {{detalle.terapia_sesion_numero}} de  {{terapia.terapia_sesiones}}</b>
                                 </uib-accordion-heading> 
                                 <div ng-if="detalle.estado_id == 4">
                                     <h4><b>Terapista: </b></h4>
                                     <p>
-                                        Dr. {{detalle.doctor.persona.persona_nombres}} {{detalle.doctor.persona.persona_apellidos}}
+                                        Dr. {{detalle.usuario.persona.persona_nombres}} {{detalle.usuario.persona.persona_apellidos}}
                                     </p>
                                     <br>
                                     <h4><b>Ejercicios y Actividades Realizados(as):</b></h4>
@@ -87,7 +79,7 @@
                         </uib-accordion>
                     </div>
                     <br>
-                    <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-show="terapia.pacientes_terapias_detalle.length == terapia.terapia_sesiones_total-1">
+                    <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-show="terapia.pacientes_terapias_detalle.length == terapia.terapia_sesiones-1">
                         <div>
                             <span class="ng-binding ng-scope" style="text-transform: uppercase; text-align: center;">
                                 Hola {{user.persona.persona_nombres}} {{user.persona.persona_apellidos}}, <br><br>

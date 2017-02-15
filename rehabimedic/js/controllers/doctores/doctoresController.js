@@ -19,36 +19,61 @@ app.controller('ModalInstanceDoctoresCtrl', ['$scope', '$uibModalInstance', 'Id'
     
   }])
   
-app.controller('DoctoresCtrl', ['$scope', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'doctoresFac', 'doctores', function ($scope, $modal, $stateParams, $timeout, $state, Notification, doctoresFac, doctores) {
+app.controller('DoctoresCtrl', ['$scope', '$rootScope', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'doctoresFac', 'doctores', function ($scope, $rootScope, $modal, $stateParams, $timeout, $state, Notification, doctoresFac, doctores) {
     
     $scope.loading = true;
-    
+    $scope.perfil_usuario = $rootScope.user.perfil_usuario_id;
+    console.log($scope.perfil_usuario);
+
     //Get all doctores
     $scope.doctores = doctores.data;
     console.log($scope.doctores);
-    $scope.tbOptions = {
-        data: $scope.doctores,
-        aoColumns: [
-            { mData: 'id'},                
-            {
-                mData: null,
-                bSortable: false,
-                mRender: function (o) { return '<a class="text-center preview" href="#/app/doctores/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
-            },                    
-            {
-                mData: null,
-                bSortable: true,
-                mRender: function (o) { return '<a class="text-center" href="#/app/doctores/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+o.persona.persona_apellidos+'</a>'; }
-            },
-            { mData: 'persona.personas_telefonos.0.telefono_numero' },   
-            { mData: 'persona.persona_correo_electronico' },            
-            { mData: 'especialidad.especialidad_nombre' },
-            {
-                mData: null,
-                bSortable: false,
-                mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/doctores/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteDoctores('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
-            }
-        ]
+    if ($scope.perfil_usuario != 4) {
+        $scope.tbOptions = {
+            data: $scope.doctores,
+            aoColumns: [
+                { mData: 'id'},                
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/doctores/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                },                    
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/doctores/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+o.persona.persona_apellidos+'</a>'; }
+                },
+                { mData: 'persona.persona_telefono' },   
+                { mData: 'persona.persona_correo_electronico' },            
+                { mData: 'especialidad.especialidad_nombre' },
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/doctores/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteDoctores('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
+                }
+            ]
+        }
+    }
+    else {
+        $scope.tbOptions = {
+            data: $scope.doctores,
+            aoColumns: [
+                { mData: 'id'},                
+                {
+                    mData: null,
+                    bSortable: false,
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/doctores/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                },                    
+                {
+                    mData: null,
+                    bSortable: true,
+                    mRender: function (o) { return '<a class="text-center" href="#/app/doctores/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+o.persona.persona_apellidos+'</a>'; }
+                },
+                { mData: 'persona.persona_telefono' },   
+                { mData: 'persona.persona_correo_electronico' },            
+                { mData: 'especialidad.especialidad_nombre' }
+            ]
+        }        
     }
     
     $scope.loading = false;

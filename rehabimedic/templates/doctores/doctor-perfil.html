@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <section class="box nobox">
             <div class="content-body">
-                <div class="row" style="text-align: right;">
+                <div class="row" style="text-align: right;" ng-hide="perfil_usuario == 4">
                     <div class="btn-group">
                         <!--<a href="#/pacientes/perfil/print/{{paciente.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Imprimir Perfil" tooltip-placement="bottom">
                             <i class="material-icons icon-md">print</i>
@@ -37,8 +37,8 @@
                                 <div class="margin-left-10" style="text-align: left;">
                                     <p tooltip-class="success animated fadeIn " uib-tooltip="Tipo de Sangre" tooltip-placement="bottom"><i class="fa fa-tint"></i> {{doctor .persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
                                     <p tooltip-class="success animated fadeIn " uib-tooltip="Fecha de Nacimiento (Edad)" tooltip-placement="bottom"><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{doctor.persona.persona_edad}} años)</p>
-                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Residencial" tooltip-placement="bottom" ng-if="doctor.persona_telefono"><i class="fa fa-phone"></i> {{doctor.persona_telefono}}</p>
-                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Móvil" tooltip-placement="bottom" ng-if="doctor.persona_celular">&nbsp;<i class="fa fa-mobile"></i> {{doctor.persona_celular}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Residencial" tooltip-placement="bottom" ng-if="doctor.persona.persona_telefono"><i class="fa fa-phone"></i> {{doctor.persona.persona_telefono}}</p>
+                                    <p tooltip-class="success animated fadeIn " uib-tooltip="Teléfono Móvil" tooltip-placement="bottom" ng-if="doctor.persona.persona_celular">&nbsp;<i class="fa fa-mobile"></i> {{doctor.persona.persona_celular}}</p>
                                     <p tooltip-class="success animated fadeIn " uib-tooltip="Correo Electrónico" tooltip-placement="bottom"><i class="fa fa-envelope"></i> {{doctor.persona.persona_correo_electronico}}</p>
                                     <p tooltip-class="success animated fadeIn " uib-tooltip="Dirección" tooltip-placement="bottom"><i class="fa fa-map-marker"></i> {{doctor.persona.persona_direccion}}</p>
                                 </div>

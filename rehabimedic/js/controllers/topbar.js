@@ -60,18 +60,19 @@ app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstanc
     };    
 }])
 
-app.controller('NotificationsDropDownCtrl', ['$scope', '$filter', '$state', '$uibModal', 'citasFac', 'Notification', function($scope, $filter, $state, $modal, citasFac, Notification) {
+app.controller('NotificationsDropDownCtrl', ['$scope', '$filter', '$state', '$uibModal', 'citasFac', 'Notification', function($scope, $filter, $state, $modal, terapiasFac, Notification) {
     
-    $scope.citas = [];
+    $scope.terapias = [];
     $scope.registro = {};
-      citasFac.all()
+      terapiasFac.all()
           .success(function(data) {
+          console.log(data);
           for (var i = 0; i < data.length; i++) {
               if(data[i].estado_id == 1) {
-                  data[i].cita_fecha_hora = new Date(data[i].cita_fecha_hora);
-                  if(data[i].cita_fecha_hora <= new Date()) {
-                      $scope.citas.push(data[i]);
-                  }
+                  data[i].terapia_sesion_fecha = new Date(data[i].terapia_sesion_fecha);
+                  //if(data[i].terapia_sesion_fecha == new Date()) {
+                      $scope.terapias.push(data[i]);
+                  //}
               }
           }
       })

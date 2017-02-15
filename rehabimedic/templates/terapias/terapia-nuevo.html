@@ -91,6 +91,25 @@
                     <br>
                     <div class="row">
                         <div class="form-group">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <br>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <label class="form-label" for="terapia_sesiones">Cantidad de Sesiones <span class="text-danger">*</span></label>
+                                            <span class="desc">Escriba la cantidad de sesiones que durará la terapia</span>
+                                            <div class="controls">
+                                                <input id="terapia_sesiones" name="terapia_semanas" ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="365" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="terapia.terapia_sesiones" required>
+                                            </div>                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <!--<div class="row">
+                        <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <label class="form-label">D&iacute;as <span class="text-danger">*</span></label>
                                 <span class="desc">Elija los d&iacute;as para las sesiones</span>
@@ -175,7 +194,7 @@
                     <div ng-hide="!terapia.citas" ng-repeat="cita in terapia.citas">
                         <p>{{cita.fecha | date: 'dd/MM/yyyy'}}</p>
                     </div>
-                    <br>
+                    <br>-->
                     <div class="row">
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

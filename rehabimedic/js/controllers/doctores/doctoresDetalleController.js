@@ -1,4 +1,7 @@
-app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$timeout', '$filter', '$state', 'Notification', 'doctoresFac', 'especialidades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'perfilesUsuarios', function($scope, $stateParams, $window, $timeout, $filter, $state, Notification, doctoresFac, especialidades, estadosCiviles, gruposSanguineos, paises, sexos, perfilesUsuarios) {
+app.controller('DoctoresDetalleCtrl', ['$scope',  '$rootScope', '$stateParams', '$window', '$timeout', '$filter', '$state', 'Notification', 'doctoresFac', 'especialidades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'perfilesUsuarios', function($scope, $rootScope, $stateParams, $window, $timeout, $filter, $state, Notification, doctoresFac, especialidades, estadosCiviles, gruposSanguineos, paises, sexos, perfilesUsuarios) {
+    
+    $scope.perfil_usuario = $rootScope.user.perfil_usuario_id;
+    console.log($scope.perfil_usuario);
     
     $scope.especialidades = especialidades.data;
     $scope.estados_civiles = estadosCiviles.data;
@@ -31,16 +34,6 @@ app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$ti
                 $scope.doctor = response.data;
                 $scope.doctor.persona_imagen_perfil = $scope.doctor.persona.persona_imagen_perfil;
                 $scope.fecha_nacimiento = $filter('date')($scope.doctor.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
-                console.log($scope.doctor);
-                
-                angular.forEach(response.data.persona.personas_telefonos, function(value, key) {
-                    if (value.tipo_telefono_id == 1) {
-                        $scope.doctor.persona_telefono = value.telefono_numero;
-                    }
-                    else {
-                        $scope.doctor.persona_celular = value.telefono_numero;
-                    }
-                });
                 console.log($scope.doctor);
             },
             function(response) {
@@ -116,6 +109,8 @@ app.controller('DoctoresDetalleCtrl', ['$scope', '$stateParams', '$window', '$ti
         $scope.doctor.persona_nombres = $scope.doctor.persona.persona_nombres;
         $scope.doctor.persona_apellidos = $scope.doctor.persona.persona_apellidos;
         $scope.doctor.persona_direccion = $scope.doctor.persona.persona_direccion;
+        $scope.doctor.persona_telefono = $scope.doctor.persona.persona_telefono;
+        $scope.doctor.persona_celular = $scope.doctor.persona.persona_celular;
         $scope.doctor.persona_correo_electronico = $scope.doctor.persona.persona_correo_electronico;
         $scope.doctor.persona_fecha_nacimiento = $scope.doctor.persona.persona_fecha_nacimiento;
         $scope.doctor.persona_edad = $scope.doctor.persona.persona_edad;

@@ -22,16 +22,17 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     
     $scope.dias = [ { "id": 1, "nombre": "Lunes", "value": 1}, { "id": 2, "nombre": "Martes", "value": 2}, { "id": 3, "nombre": "Miércoles", "value": 3}, { "id": 4, "nombre": "Jueves", "value": 4}, { "id": 5, "nombre": "Viernes", "value": 5}, { "id": 6, "nombre": "Sábado", "value": 6}];
     
-    $scope.resumen = function() {
+    /*$scope.resumen = function() {
         var c = 1;
-        $scope.terapia.citas = [];
+        //$scope.terapia.citas = [];
         $scope.terapia.detalles = [];
         y = $scope.terapia.paciente_terapia_fecha.getFullYear(); 
         m = $scope.terapia.paciente_terapia_fecha.getMonth();
         d = $scope.terapia.paciente_terapia_fecha.getDate();
         
         $scope.terapia.paciente_terapia_fecha = new Date(y, m, d);
-        $scope.terapia.terapia_semanas = $scope.terapia.terapia_semanas;
+        $scope.terapia.terapia_sesiones = $scope.terapia.terapia_sesiones;
+        /*$scope.terapia.terapia_semanas = $scope.terapia.terapia_semanas;
         $scope.terapia.terapia_sesiones_semana = $scope.selected.length;
         $scope.terapia.terapia_sesiones_duracion = $scope.terapia.terapia_sesiones_duracion;
         $scope.terapia.terapia_sesiones_total = $scope.terapia.terapia_semanas * $scope.terapia.terapia_sesiones_semana;
@@ -100,7 +101,7 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
         })
         console.log($scope.selected);
         $scope.resumen();
-    };
+    };*/
     
     terapiasFac.get(parseInt($stateParams.id,10))
     .then(
@@ -141,15 +142,8 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
                 else {
                     $scope.paciente.fractura = 2;
                 }
-                
-                angular.forEach(response.persona.personas_telefonos, function(value, key) {
-                    if (value.tipo_telefono_id == 1) {
-                        $scope.paciente.persona_telefono = value.telefono_numero;
-                    }
-                    else {
-                        $scope.paciente.persona_celular = value.telefono_numero;
-                    }
-                });
+                $scope.paciente.persona_telefono = response.persona.persona_telefono;
+                $scope.paciente.persona_celular = response.persona.persona_celular;
 
                 if($scope.paciente.aseguradora_id != 1) {
                     $scope.paciente.seguro = 1;
@@ -176,10 +170,11 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     $scope.save = function() {
         $scope.terapia.paciente_terapia_fecha = new Date($scope.terapia.paciente_terapia_fecha);
         $scope.terapia.paciente_terapia_fecha = $filter('date')($scope.terapia.paciente_terapia_fecha,'yyyy-MM-dd');
-        $scope.terapia.terapia_fecha_estimada_inicio =  new Date($scope.terapia.terapia_fecha_estimada_inicio);
+        /*$scope.terapia.terapia_fecha_estimada_inicio =  new Date($scope.terapia.terapia_fecha_estimada_inicio);
         $scope.terapia.terapia_fecha_estimada_inicio = $filter('date')($scope.terapia.terapia_fecha_estimada_inicio,'yyyy-MM-dd');
         $scope.terapia.terapia_fecha_estimada_fin = new Date($scope.terapia.terapia_fecha_estimada_fin);
-        $scope.terapia.terapia_fecha_estimada_fin = $filter('date')($scope.terapia.terapia_fecha_estimada_fin,'yyyy-MM-dd');
+        $scope.terapia.terapia_fecha_estimada_fin = $filter('date')($scope.terapia.terapia_fecha_estimada_fin,'yyyy-MM-dd');*/
+
         console.log($scope.terapia);
         terapiasFac.save($scope.terapia)
         .then(
@@ -210,9 +205,13 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     $scope.saveSesion = function() {
         $scope.terapia_detalle.paciente_terapia_id = $scope.terapia.id;
         $scope.terapia_detalle.terapia_sesion_numero = $scope.terapia.pacientes_terapias_detalle.length + 1;
-        if ($rootScope.user.persona.doctor) {
+        /*if ($rootScope.user.persona.doctor) {
             $scope.terapia_detalle.doctor_id = $rootScope.user.persona.doctor.id;
-        }
+        }*/
+
+        $scope.terapia_detalle.paciente_terapia_id = $scope.terapia.id;
+        $scope.terapia_detalle.terapia_sesion_numero = $scope.terapia.pacientes_terapias_detalle.length + 1;
+        $scope.terapia_detalle.usuario_id = $rootScope.user.id;
         
         console.log($scope.terapia_detalle);
         terapiasDetallesFac.save($scope.terapia_detalle)

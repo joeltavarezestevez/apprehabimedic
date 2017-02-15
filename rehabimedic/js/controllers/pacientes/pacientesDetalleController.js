@@ -63,15 +63,6 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
             $scope.paciente = response;
             $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
 
-            angular.forEach(response.persona.personas_telefonos, function(value, key) {
-                if (value.tipo_telefono_id == 1) {
-                    $scope.paciente.persona_telefono = value.telefono_numero;
-                }
-                else {
-                    $scope.paciente.persona_celular = value.telefono_numero;
-                }
-            });
-
             if($scope.paciente.aseguradora_id != 1) {
                 $scope.paciente.seguro = 1;
             }
@@ -177,15 +168,6 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                 angular.forEach($scope.paciente.pacientes_notas_especiales, function(value, key) {
                     value.updated_at = $filter('date')(new Date(value.updated_at),'dd-MMM-yyyy');
                 })
-                
-                angular.forEach(response.data.persona.personas_telefonos, function(value, key) {
-                    if (value.tipo_telefono_id == 1) {
-                        $scope.paciente.persona_telefono = value.telefono_numero;
-                    }
-                    else {
-                        $scope.paciente.persona_celular = value.telefono_numero;
-                    }
-                });
 
                 if($scope.paciente.aseguradora_id != 1) {
                     $scope.paciente.seguro = 1;
@@ -399,6 +381,9 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
         
         $scope.paciente.persona_nombres = $scope.paciente.persona.persona_nombres;
         $scope.paciente.persona_apellidos = $scope.paciente.persona.persona_apellidos;
+        $scope.paciente.persona_direccion = $scope.paciente.persona.persona_direccion;
+        $scope.paciente.persona_telefono = $scope.paciente.persona.persona_telefono;
+        $scope.paciente.persona_celular = $scope.paciente.persona.persona_celular;
         $scope.paciente.persona_direccion = $scope.paciente.persona.persona_direccion;
         $scope.paciente.persona_correo_electronico = $scope.paciente.persona.persona_correo_electronico;
         $scope.paciente.persona_fecha_nacimiento = $scope.paciente.persona.persona_fecha_nacimiento;
