@@ -75,7 +75,8 @@
                                 <uib-tab-heading>
                                     <i class="material-icons icon-md">person</i>Info
                                 </uib-tab-heading>
-                                <br>
+                                <big><b>Informaci&oacute;n General</b></big>
+                                <hr>                                
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div ng-hide="perfil_usuario == 3 || perfil_usuario == 4">
@@ -116,7 +117,7 @@
                                 <hr>                                
                                 <br>
                                 <div ng-show="(perfil_usuario == 1 || perfil_usuario == 2) && paciente.paciente_empleo_estado == 1">
-                                    <big><b>Datos de Empleo</b></big><hr>                                    
+                                    <big><b>Datos de Empleo</b></big><hr>
                                 </div>
                                 <table class="table" style="border: none; margin-left: 10px;" ng-show="(perfil_usuario == 1 || perfil_usuario == 2) && paciente.paciente_empleo_estado == 1">
                                     <thead></thead>
@@ -144,7 +145,12 @@
                                             </td>                                          
                                         </tr>
                                     </tbody>
-                                </table>                                
+                                </table>
+                                <div class="text-left" ng-hide="perfil_usuario == 3 || perfil_usuario == 4">
+                                    <big><b>Terapias Pagadas: </b></big> {{paciente.paciente_terapias_pagadas}}
+                                    <br>
+                                    <big><b>Terapias Pendientes de Pago: </b></big> {{paciente.paciente_terapias_pendientes_pago}}
+                                </div>              
                             </uib-tab>
                             <uib-tab ng-hide="perfil_usuario == 2">
                                 <uib-tab-heading>
@@ -180,6 +186,8 @@
                                 <uib-tab-heading>
                                     <i class="material-icons icon-md">healing</i> Terapias                            
                                 </uib-tab-heading>
+                                <big><b>Listado de Terapias Realizadas</b></big>
+                                <hr>
                                 <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.pacientes_terapias.length > 0">
                                     <div>
                                         <span class="ng-binding ng-scope">
@@ -191,12 +199,8 @@
                                     <uib-accordion close-others="oneAtATime">
                                         <uib-accordion-group ng-repeat="terapia in paciente.pacientes_terapias">
                                             <uib-accordion-heading>
-                                                <b>{{terapia.paciente_terapia_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}} | Sesiones: {{terapia.terapia_sesiones}}</b>
+                                                <b>{{terapia.paciente_terapia_fecha | date: 'dd-MMM-yyyy'}} | Dr. {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}} | Sesiones: {{terapia.pacientes_terapias_detalle.length}}/{{terapia.terapia_sesiones}}</b>
                                             </uib-accordion-heading>
-                                            <div>
-                                                <big><b>Resumen</b></big>
-                                            </div>
-                                            <hr>
                                             <div class="row">
                                                 <div class="col-lg-12">
                                                     <big><b>Ejercicios y Actividades Recomendados</b></big><hr>
@@ -239,6 +243,8 @@
                                 <uib-tab-heading>
                                     <i class="material-icons icon-md">assignment_ind</i> Consultas
                                 </uib-tab-heading>
+                                <big><b>Consultas Realizadas</b></big>
+                                <hr>                                
                                 <div class="alert ng-isolate-scope alert-info minimal alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="info minimal" ng-hide="paciente.consultas.length > 0">
                                     <div>
                                         <span class="ng-binding ng-scope">

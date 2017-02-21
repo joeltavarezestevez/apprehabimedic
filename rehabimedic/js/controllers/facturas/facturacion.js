@@ -1,4 +1,4 @@
-app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'servicios', 'pacientesFac', 'secuenciasFac', 'facturasFac', function($scope, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, servicios, pacientesFac, secuenciasFac, facturasFac) {
+app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'servicios', 'pacientesFac', 'secuenciasFac', 'facturasFac', 'getRNCFac', function($scope, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, servicios, pacientesFac, secuenciasFac, facturasFac, getRNCFac) {
     
     $scope.comprobantes = [
       {id:3, nombre:'Credito Fiscal'},
@@ -14,6 +14,14 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.pacientes = pacientes.data;
     $scope.servicios = servicios.data;
     console.log($scope.pacientes);
+
+    getRNCFac.get('130674779')
+    .success(function(response){
+        console.log(response);
+    })
+    .error(function(response){
+        console.log(response);
+    })
     
     $scope.factura.factura_tipo = "Contado";
     $scope.factura.factura_comprobante_tipo = 4;    

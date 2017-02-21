@@ -168,7 +168,7 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     }
     
     $scope.save = function() {
-        $scope.terapia.paciente_terapia_fecha = new Date($scope.terapia.paciente_terapia_fecha);
+        $scope.terapia.paciente_terapia_fecha = new Date();
         $scope.terapia.paciente_terapia_fecha = $filter('date')($scope.terapia.paciente_terapia_fecha,'yyyy-MM-dd');
         /*$scope.terapia.terapia_fecha_estimada_inicio =  new Date($scope.terapia.terapia_fecha_estimada_inicio);
         $scope.terapia.terapia_fecha_estimada_inicio = $filter('date')($scope.terapia.terapia_fecha_estimada_inicio,'yyyy-MM-dd');

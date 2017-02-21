@@ -118,6 +118,7 @@ app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http'
                     data.pago_fecha = d;
                     console.log(data);
                     $scope.pago = data;
+                    $scope.pago.terapias_totales = parseFloat($scope.pago.paciente.paciente_terapias_pagadas) + parseFloat($scope.pago.paciente.paciente_terapias_pendientes_pago);
                     $scope.updatePaciente($scope.pago.paciente_id);
                     $timeout(function() {
                         var el = document.getElementById('printElement');

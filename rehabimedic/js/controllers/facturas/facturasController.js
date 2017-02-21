@@ -1,4 +1,4 @@
-app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'Notification', 'facturasFac', function($scope, $filter, $modalInstance, Id, Notification, facturasFac) {
+app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'Notification', 'facturasFac', 'getRNCFac', function($scope, $filter, $modalInstance, Id, Notification, facturasFac, getRNCFac) {
 
     $scope.registro = {};
     
@@ -63,10 +63,18 @@ app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInst
     
 }])
   
-app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'facturas', 'facturasFac', 'Auth', function ($rootScope, $scope, $filter, $modal, $stateParams, $timeout, $state, Notification, facturas, facturasFac, Auth) {
+app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'facturas', 'facturasFac', 'getRNCFac', 'Auth', function ($rootScope, $scope, $filter, $modal, $stateParams, $timeout, $state, Notification, facturas, facturasFac, getRNCFac, Auth) {
     
     $scope.loading = true;
     
+    getRNCFac.get(130674779)
+    .success(function(response){
+        console.log(response);
+    })
+    .error(function(response){
+        console.log(response);
+    })
+
     Auth.getLoggedInUser();
     $scope.perfil_usuario = $rootScope.user.perfil_usuario_id;
     console.log(facturas);
