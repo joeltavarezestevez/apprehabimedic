@@ -14,20 +14,31 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.pacientes = pacientes.data;
     $scope.servicios = servicios.data;
     console.log($scope.pacientes);
-
-    getRNCFac.get('130674779')
-    .success(function(response){
-        console.log(response);
-    })
-    .error(function(response){
-        console.log(response);
-    })
     
     $scope.factura.factura_tipo = "Contado";
     $scope.factura.factura_comprobante_tipo = 4;    
 
     $scope.factura.detalles = [];
     
+    $scope.buscarRNC =  function(rnc) {
+        $scope.rnc = rnc;
+        if ($scope.rnc.length >= 9) {
+            getRNCFac.get(rnc)
+            .success(function(response){
+                console.log(response.name);
+                $scope.factura.factura_razon_social = response.name;
+            })
+            .error(function(response){
+                console.log(response);
+            })
+        }
+        else {
+            $scope.factura.factura_razon_social = "";
+        }
+    }
+
+    //$scope.buscarRNC('130674779');
+
     $scope.updatePaciente = function(index) {
         
         $scope.factura.factura_subtotal = 0.00;

@@ -109,14 +109,14 @@
                             <label class="form-label" for="factura_rnc">RNC/C&eacute;dula</label>
                             <span class="desc">Escriba el RNC/C&eacute;dula</span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_rnc" name="factura_rnc " ng-model="factura.factura_rnc">
+                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_rnc" name="factura_rnc " ng-model="factura.factura_rnc" ng-change="buscarRNC(factura.factura_rnc)">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label class="form-label" for="factura_razon_social">Raz&oacute;n Social</label>
                             <span class="desc">Escriba el nombre o Raz&oacute;n Social</span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_razon_social" name="factura_razon_social " ng-model="factura.factura_razon_social">
+                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_razon_social" name="factura_razon_social " ng-model="factura.factura_razon_social" readonly="readonly">
                             </div>
                         </div>                        
                     </div>
