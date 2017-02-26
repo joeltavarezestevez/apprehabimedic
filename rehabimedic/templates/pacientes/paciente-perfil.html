@@ -147,6 +147,8 @@
                                     </tbody>
                                 </table>
                                 <div class="text-left" ng-hide="perfil_usuario == 3 || perfil_usuario == 4">
+                                    <big><b>Terapias Realizadas: </b></big> {{paciente.pacientes_terapias[paciente.pacientes_terapias.length-1].pacientes_terapias_detalle.length}}
+                                    <br>                                    
                                     <big><b>Terapias Pagadas: </b></big> {{paciente.paciente_terapias_pagadas}}
                                     <br>
                                     <big><b>Terapias Pendientes de Pago: </b></big> {{paciente.paciente_terapias_pendientes_pago}}
