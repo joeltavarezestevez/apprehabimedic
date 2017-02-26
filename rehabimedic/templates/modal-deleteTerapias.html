@@ -2,7 +2,7 @@
     <h3 class="modal-title">Eliminar {{titulo}}</h3>
 </div>
 <div class="modal-body">
-    <p>Est&aacute; seguro que desea eliminar <b>{{registro.nombres}}</b>?</p>
+    <p>Est&aacute; seguro que desea eliminar la terapia <b>{{registro.id}} de fecha {{registro.paciente_terapia_fecha}} del paciente {{registro.paciente.persona.persona_nombres}} {{registro.paciente.persona.persona_apellidos}}</b>?</p>
 </div>
 <div class="modal-footer text-center">                  
     <button class="btn btn-default" ng-click="cancel()">No</button>

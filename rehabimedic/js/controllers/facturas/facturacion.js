@@ -6,6 +6,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     ]
     $scope.factura = {};
     $scope.servicio = {};
+    //$scope.servicio_id = 0;
     $scope.factura.factura_metodo_pago = "1";
     $scope.factura.factura_subtotal = 0.00;
     $scope.factura.factura_itbis = 0.00;
@@ -131,27 +132,42 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     }
     // add Detalle
     $scope.addDetalle = function() {
-        $scope.servicio.servicio_monto = $scope.servicio.servicio_precio * $scope.servicio.servicio_cantidad;
-        
-        for (var i=0; i < $scope.factura.detalles.length; i++) {
-            if($scope.servicio.servicio_id == $scope.factura.detalles[i].servicio_id) {
-                $scope.removeDetalle(i);
-                break;
+        if(!$scope.servicio.servicio_id || !$scope.servicio.servicio_cantidad) {
+            Notification({
+                message: 'Debe completar todos los campos del servicio o producto a facturar.',
+                title: 'Error',
+                delay: 5000,
+                positionX: 'center',
+                positionY: 'top'
+            }, 'error');
+        }
+        else {
+
+            $scope.servicio.servicio_monto = $scope.servicio.servicio_precio * $scope.servicio.servicio_cantidad;
+            
+            for (var i=0; i < $scope.factura.detalles.length; i++) {
+                if($scope.servicio.servicio_id == $scope.factura.detalles[i].servicio_id) {
+                    $scope.removeDetalle(i);
+                    break;
+                }
             }
+            $scope.factura.detalles.push($scope.servicio);
+            console.log($scope.factura.detalles.length);
+            $scope.factura.factura_subtotal = 0.00;
+            for (var i=0; i < $scope.factura.detalles.length; i++) {
+            
+            $scope.factura.factura_subtotal = $scope.factura.factura_subtotal + $scope.factura.detalles[i].servicio_monto;
+            //$scope.factura.factura_itbis = $scope.factura.factura_subtotal * 0.18;            
+            }
+            //$scope.factura.factura_total = $scope.factura.factura_subtotal + $scope.factura.factura_itbis - $scope.factura.factura_descuento;
+            $scope.factura.factura_total = $scope.factura.factura_subtotal - $scope.factura.factura_descuento;
+            $scope.servicioselected = {};
+            $scope.servicio = {};
+            $scope.servicio_id = 0;
+            console.log($scope.servicio);
+            console.log($scope.servicio_id);
         }
-        $scope.factura.detalles.push($scope.servicio);
-        console.log($scope.factura.detalles.length);
-        $scope.factura.factura_subtotal = 0.00;
-        for (var i=0; i < $scope.factura.detalles.length; i++) {
-        
-        $scope.factura.factura_subtotal = $scope.factura.factura_subtotal + $scope.factura.detalles[i].servicio_monto;
-        //$scope.factura.factura_itbis = $scope.factura.factura_subtotal * 0.18;            
-        }
-        //$scope.factura.factura_total = $scope.factura.factura_subtotal + $scope.factura.factura_itbis - $scope.factura.factura_descuento;
-        $scope.factura.factura_total = $scope.factura.factura_subtotal - $scope.factura.factura_descuento;
-        $scope.servicioselected = {};
-        $scope.servicio = {};
-    };
+    }
       
     $scope.aplicardescuento = function() {
         if($scope.factura.factura_total > 0){

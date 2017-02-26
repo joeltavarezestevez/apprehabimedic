@@ -290,44 +290,53 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.saveFile = function() {
         $scope.paciente.paciente_id = $scope.paciente.id;
         console.log($scope.paciente);
-        
-        pacientesImagenesFac.save($scope.paciente)
-        .then(
-            function(response){
-                console.log("Documento registrado!");
-                console.log(response);
-                console.log($scope.paciente);
-                $timeout(function() {
-                    $state.reload();
-                    Notification({
-                        message: 'Documento cargado correctamente!',
-                        title: 'Registro realizado',
-                        delay: 5000,
-                        positionX: 'center',
-                        positionY: 'top'
-                    }, 'success');                    
-                }, 1000, false);
-            },
-            function(response){
-                console.log("Error");
-                console.log(response);
-                console.log($scope.paciente);
-                if(response.status == 400 && response.data.message){
-                    Notification({
-                        message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
-                        title: 'Error',
-                        delay: 5000,
-                        positionX: 'center',
-                        positionY: 'top'
-                    }, 'error');
-                    console.log('Errol manin!');
-                    $scope.alert = true;
-                    $scope.mensajes = response.data.message;
+
+        if(!$scope.paciente.imagen_descripcion){
+            Notification({
+                message: 'Debe indicar la descripción del documento',
+                title: 'Error',
+                delay: 5000,
+                positionX: 'center',
+                positionY: 'top'
+            }, 'error');            
+        }
+        else {
+            pacientesImagenesFac.save($scope.paciente)
+            .then(
+                function(response){
+                    console.log("Documento registrado!");
+                    console.log(response);
+                    console.log($scope.paciente);
+                    $timeout(function() {
+                        $state.reload();
+                        Notification({
+                            message: 'Documento cargado correctamente!',
+                            title: 'Registro realizado',
+                            delay: 5000,
+                            positionX: 'center',
+                            positionY: 'top'
+                        }, 'success');                    
+                    }, 1000, false);
+                },
+                function(response){
+                    console.log("Error");
+                    console.log(response);
+                    console.log($scope.paciente);
+                    if(response.status == 400 && response.data.message){
+                        Notification({
+                            message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
+                            title: 'Error',
+                            delay: 5000,
+                            positionX: 'center',
+                            positionY: 'top'
+                        }, 'error');
+                        console.log('Errol manin!');
+                        $scope.alert = true;
+                        $scope.mensajes = response.data.message;
+                    }
                 }
-            }
-        );        
-        
-        
+            );
+        }
     }
     
     $scope.save = function() {
