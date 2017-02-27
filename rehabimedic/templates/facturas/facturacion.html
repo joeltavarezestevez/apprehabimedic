@@ -109,7 +109,7 @@
                             <label class="form-label" for="factura_rnc">RNC/C&eacute;dula</label>
                             <span class="desc">Escriba el RNC/C&eacute;dula</span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_rnc" name="factura_rnc " ng-model="factura.factura_rnc" ng-change="buscarRNC(factura.factura_rnc)">
+                                <input type="number" class="form-control" placeholder="RNC/Cédula" id="factura_rnc" name="factura_rnc " ng-model="factura.factura_rnc" ng-change="buscarRNC(factura.factura_rnc)">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -129,9 +129,8 @@
                             <label class="form-label" for="field-1">Producto a Facturar</label>
                             <span class="desc"></span>
                             <div class="controls">
-                                <select ui-jq="chosen" class="form-control" ng-model="servicio_id" ng-change="updatePrecio(servicio_id)">
-                                    <option value="">Seleccione el producto</option>
-                                    <option ng-repeat="servicio in servicios" value="{{servicio.id}}">{{servicio.servicio_nombre}}</option>                                    
+                                <select ui-jq="chosen" class="form-control" ng-change="updatePrecio(servicio_id)" ng-model="servicio_id" ng-options="servicio.id as servicio.servicio_nombre for servicio in servicios">
+                                    <option value="0">Seleccione el producto</option>
                                 </select>
                             </div>
                         </div>
@@ -139,7 +138,7 @@
                             <label class="form-label" for="servicio_cantidad">Cantidad</label>
                             <span class="desc">Escriba la cantidad</span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Cantidad" id="servicio_cantidad" name="servicio_cantidad " ng-model="servicio.servicio_cantidad">
+                                <input type="number" class="form-control" placeholder="Cantidad" id="servicio_cantidad" name="servicio_cantidad " ng-model="servicio.servicio_cantidad">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -217,7 +216,7 @@
                             <label class="form-label" for="servicio_descuento_monto">Monto</label>
                             <span class="desc">Escriba el monto de descuento a aplicar</span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Monto de descuento" id="factura_descuento_monto" name="factura_descuento_monto " ng-model="factura.factura_descuento_monto">
+                                <input type="number" class="form-control" placeholder="Monto de descuento" id="factura_descuento_monto" name="factura_descuento_monto " ng-model="factura.factura_descuento_monto">
                             </div>                            
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" ng-if="factura.factura_aplicardescuento" ng-hide="bloqueado">
