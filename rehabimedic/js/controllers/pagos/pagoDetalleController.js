@@ -15,7 +15,7 @@ app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http'
         console.log($scope.paciente.paciente_servicios[0].servicio_precio);
         var precio = $scope.paciente.paciente_servicios[0].servicio_precio;
         if (index == 1) {
-            if($scope.pago.pago_cantidad.length > 0) {
+            if($scope.pago.pago_cantidad) {
                 $scope.pago.pago_monto = $scope.pago.pago_cantidad * precio;
             }
             else {
@@ -24,7 +24,7 @@ app.controller('PagoCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http'
             console.log($scope.pago.pago_monto);            
         }
         else {
-            if($scope.pago.pago_monto.length > 0) {
+            if($scope.pago.pago_monto) {
                 var cantidad = parseFloat($scope.pago.pago_monto / precio).toFixed(2);
                 $scope.pago.pago_cantidad = cantidad;
             }

@@ -60,38 +60,44 @@ app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstanc
     };    
 }])
 
-app.controller('NotificationsDropDownCtrl', ['$scope', '$filter', '$state', '$uibModal', 'terapiasFac', 'Notification', function($scope, $filter, $state, $modal, terapiasFac, Notification) {
-    
-    $scope.terapias = [];
-    $scope.registro = {};
-    var d = new Date();
-    d.setDate(d.getDate() - 2);
-    //d = $moment(date,"H:i m/d/Y").fromNow()
-    console.log(d);
+app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', '$state', '$uibModal', 'terapiasFac', 'Notification', function($scope, $rootScope, $filter, $state, $modal, terapiasFac, Notification) {
+    $scope.getTerapiasPendientes = function() {
+      $scope.terapias = [];
+      $scope.registro = {};
+      var d = new Date();
+      d.setDate(d.getDate() - 2);
+      //d = $moment(date,"H:i m/d/Y").fromNow()
+      console.log(d);      
       terapiasFac.all()
-        .success(function(data) {
-          console.log(data);
-          //console.log(data[0].pacientes_terapias_detalle);
-          //console.log(data[0].pacientes_terapias_detalle[data[0].pacientes_terapias_detalle.length-1].terapia_sesion_fecha);
-          for (var i = 0; i < data.length; i++) {
-            if(data[i].estado_id == 1) {
-              var j = data[i].pacientes_terapias_detalle.length - 1;
-              console.log(data[i].pacientes_terapias_detalle[j]);
-              data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha = new Date(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha);
-              data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha.setDate(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha.getDate()+1);
-              if(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha <= d) {
-                var terapiavencida = data[i].pacientes_terapias_detalle[j];
-                terapiavencida.paciente = data[i].paciente;
-                terapiavencida.terapia_sesiones = data[i].terapia_sesiones;
-                terapiavencida.terapias_realizadas = data[i].pacientes_terapias_detalle.length;
-                console.log(terapiavencida);
-                $scope.terapias.push(terapiavencida);
-              }
+      .success(function(data) {
+        console.log(data);
+        //console.log(data[0].pacientes_terapias_detalle);
+        //console.log(data[0].pacientes_terapias_detalle[data[0].pacientes_terapias_detalle.length-1].terapia_sesion_fecha);
+        for (var i = 0; i < data.length; i++) {
+          if(data[i].estado_id == 1) {
+            var j = data[i].pacientes_terapias_detalle.length - 1;
+            console.log(data[i].pacientes_terapias_detalle[j]);
+            data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha = new Date(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha);
+            data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha.setDate(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha.getDate()+1);
+            if(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha <= d) {
+              var terapiavencida = data[i].pacientes_terapias_detalle[j];
+              terapiavencida.paciente = data[i].paciente;
+              terapiavencida.terapia_sesiones = data[i].terapia_sesiones;
+              terapiavencida.terapias_realizadas = data[i].pacientes_terapias_detalle.length;
+              console.log(terapiavencida);
+              $scope.terapias.push(terapiavencida);
             }
           }
-        })
+        }
+        console.log($scope.terapias);
+      })          
+    }
+    $scope.getTerapiasPendientes();
+
+    $rootScope.$on('sesionRealizada', function(event) {
+      $scope.getTerapiasPendientes();
+    });
       
-      console.log($scope.terapias);
         
         $scope.cancelCita = function (size,windowClass,Id) {
             
