@@ -5,9 +5,9 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     $scope.diamayor = 0;
     $scope.terapia = {};
     $scope.terapia_detalle = {};
-    $scope.terapia.citas = [];
+    //$scope.terapia.citas = [];
     $scope.terapia.detalles = [];
-    $scope.cita = {};
+    //$scope.cita = {};
     $scope.detalle = {};
     console.log($rootScope.user);
     $scope.terapia_detalle.terapia_sesion_fecha = $filter('date')(new Date(),'yyyy-MM-dd');
@@ -19,6 +19,10 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     $scope.toggleHora = function() {
       $scope.ismeridian = ! $scope.ismeridian;
     };    
+
+    $scope.generarFactura = function() {
+        console.log($scope.terapia);
+    }
     
     $scope.dias = [ { "id": 1, "nombre": "Lunes", "value": 1}, { "id": 2, "nombre": "Martes", "value": 2}, { "id": 3, "nombre": "Miércoles", "value": 3}, { "id": 4, "nombre": "Jueves", "value": 4}, { "id": 5, "nombre": "Viernes", "value": 5}, { "id": 6, "nombre": "Sábado", "value": 6}];
     
@@ -170,6 +174,7 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     $scope.save = function() {
         $scope.terapia.paciente_terapia_fecha = new Date();
         $scope.terapia.paciente_terapia_fecha = $filter('date')($scope.terapia.paciente_terapia_fecha,'yyyy-MM-dd');
+        $scope.terapia.usuario_id = $rootScope.user.id;
         /*$scope.terapia.terapia_fecha_estimada_inicio =  new Date($scope.terapia.terapia_fecha_estimada_inicio);
         $scope.terapia.terapia_fecha_estimada_inicio = $filter('date')($scope.terapia.terapia_fecha_estimada_inicio,'yyyy-MM-dd');
         $scope.terapia.terapia_fecha_estimada_fin = new Date($scope.terapia.terapia_fecha_estimada_fin);
@@ -238,7 +243,12 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
                 console.log($scope.terapia_detalle);
             }
         );
+        $scope.actualizarTerapiasPendientes();     
     }
+
+    $scope.actualizarTerapiasPendientes = function() {
+      $scope.$emit('sesionRealizada')
+    };    
     
     $scope.back = function() {
         $window.history.back();

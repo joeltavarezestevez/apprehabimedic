@@ -23,6 +23,7 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.paciente = {};
     $scope.paciente.referencia_tipo = "ninguno";
     $scope.paciente.paciente_empleo_estado = 0;
+    $scope.paciente.terapias_realizadas = 0;
     $scope.paciente.seguro = 0;
     $scope.monto_pagado = 0;
     $scope.monto_pendiente = 0;
@@ -188,6 +189,16 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                 if($scope.paciente.pacientes_fracturas.length == 0){
                     $scope.paciente.fractura = 2;
                 }
+                
+                $scope.paciente.terapias_realizadas = 0;
+                
+                angular.forEach($scope.paciente.pacientes_terapias, function(value, key) {
+                    if(value.estado_id == 1) {
+                        console.log(value.pacientes_terapias_detalle.length);
+                        $scope.paciente.terapias_realizadas = $scope.paciente.terapias_realizadas + value.pacientes_terapias_detalle.length;                        
+                    }
+                })                
+
                 $scope.paciente.terapias_totales = parseFloat($scope.paciente.paciente_terapias_pagadas) + parseFloat($scope.paciente.paciente_terapias_pendientes_pago);
                 console.log($scope.paciente);
             },
