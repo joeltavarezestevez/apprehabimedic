@@ -56,9 +56,9 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
             d.setDate(d.getDate() + 1);
             response.persona.persona_fecha_nacimiento = d;
             var i = 0;
-            for(i = 0; i<response.citas.length; i++) {
+            /*for(i = 0; i<response.citas.length; i++) {
                 response.citas[i].cita_fecha_hora = new Date(response.citas[i].cita_fecha_hora);
-            }
+            }*/
             
             $scope.paciente = response;
             $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
@@ -77,7 +77,7 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                 $scope.paciente.referencia_tipo = $scope.paciente.paciente_referencia.referencia_tipo;
                 $scope.paciente.persona_referencia = $scope.paciente.paciente_referencia.persona_referencia;
             }
-            for(i=0; i< $scope.paciente.citas.length; i++) {
+            /*for(i=0; i< $scope.paciente.citas.length; i++) {
                 if(parseFloat($scope.paciente.citas[i].cita_monto_pendiente) == 0) {
                     $scope.monto_pagado = $scope.monto_pagado + parseFloat($scope.paciente.citas[i].cita_monto); 
                     $scope.citas_pagadas.push($scope.paciente.citas[i]);
@@ -86,22 +86,23 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                     $scope.monto_pendiente = $scope.monto_pendiente + parseFloat($scope.paciente.citas[i].cita_monto_pendiente);
                     $scope.citas_pendientes.push($scope.paciente.citas[i]);
                 }
-            }
+            }*/
+            $scope.paciente.terapias_totales = parseFloat($scope.paciente.paciente_terapias_pagadas) + parseFloat($scope.paciente.paciente_terapias_pendientes_pago);
             console.log($scope.paciente);
-            console.log($scope.citas_pendientes);
+            /*console.log($scope.citas_pendientes);
             console.log($scope.citas_pagadas);
             console.log($scope.monto_pagado);
-            console.log($scope.monto_pendiente);
+            console.log($scope.monto_pendiente);*/
         })
     }
     
-    $scope.filterPagadas = function(obj) {
+    /*$scope.filterPagadas = function(obj) {
         return parseFloat(obj.cita_monto_pendiente) == 0;
     }
 
     $scope.filterPendientes = function(obj) {
         return parseFloat(obj.cita_monto_pendiente) > 0;
-    }    
+    }*/    
     
     $scope.printDiv = function (divName) {
 
@@ -187,6 +188,7 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                 if($scope.paciente.pacientes_fracturas.length == 0){
                     $scope.paciente.fractura = 2;
                 }
+                $scope.paciente.terapias_totales = parseFloat($scope.paciente.paciente_terapias_pagadas) + parseFloat($scope.paciente.paciente_terapias_pendientes_pago);
                 console.log($scope.paciente);
             },
             function(response) {

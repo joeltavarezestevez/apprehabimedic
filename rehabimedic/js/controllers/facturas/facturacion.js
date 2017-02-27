@@ -5,8 +5,8 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
       {id:4, nombre:'Consumidor Final'}
     ]
     $scope.factura = {};
-    $scope.servicio = {};
-    //$scope.servicio_id = 0;
+    //$scope.servicio = {};
+    $scope.servicio_id = "0";
     $scope.factura.factura_metodo_pago = "1";
     $scope.factura.factura_subtotal = 0.00;
     $scope.factura.factura_itbis = 0.00;
@@ -15,6 +15,7 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.pacientes = pacientes.data;
     $scope.servicios = servicios.data;
     console.log($scope.pacientes);
+    console.log($scope.servicios);
     
     $scope.factura.factura_tipo = "Contado";
     $scope.factura.factura_comprobante_tipo = 4;    
@@ -142,7 +143,6 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
             }, 'error');
         }
         else {
-
             $scope.servicio.servicio_monto = $scope.servicio.servicio_precio * $scope.servicio.servicio_cantidad;
             
             for (var i=0; i < $scope.factura.detalles.length; i++) {
@@ -161,9 +161,8 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
             }
             //$scope.factura.factura_total = $scope.factura.factura_subtotal + $scope.factura.factura_itbis - $scope.factura.factura_descuento;
             $scope.factura.factura_total = $scope.factura.factura_subtotal - $scope.factura.factura_descuento;
-            $scope.servicioselected = {};
             $scope.servicio = {};
-            $scope.servicio_id = 0;
+            $scope.servicio_id = "0";
             console.log($scope.servicio);
             console.log($scope.servicio_id);
         }

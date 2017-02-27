@@ -10,6 +10,7 @@ app.controller('ModalInstancePagosCtrl', ['$scope', '$filter', '$uibModalInstanc
         $scope.registro.nombres = 'el pago del paciente '+ data.paciente.persona.persona_nombres + ' ' + data.paciente.persona.persona_apellidos + ' en fecha: ' + $scope.fecha;
         console.log(data);
         $scope.pago = data;
+        $scope.pago.terapias_totales = parseFloat($scope.pago.paciente.paciente_terapias_pagadas) + parseFloat($scope.pago.paciente.paciente_terapias_pendientes_pago);
     });   
     
     $scope.anularPago = function () {
