@@ -304,7 +304,12 @@
                                             <b>
                                                 {{nota.updated_at}} | {{nota.usuario.persona.persona_nombres}} {{nota.usuario.persona.persona_apellidos}} 
                                             </b>
-                                            <p><i>&nbsp;&nbsp;&nbsp;{{nota.notas_especiales}}</i></p>
+                                            <p>
+                                                <i>&nbsp;&nbsp;&nbsp;{{nota.notas_especiales}}</i>&nbsp;&nbsp;&nbsp;
+                                                <a class="text-xs text-danger" ng-click="deleteNota(null, null, nota.id)">
+                                                 <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </p>                                            
                                             <br>
                                         </li>
                                     </div>

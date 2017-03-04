@@ -75,13 +75,18 @@
                         <perfect-scrollbar wheel-propagation="true" suppress-scroll-x="true" min-scrollbar-length="20" class='ps-scrollbar'>
                             <ul class="dropdown-menu-list list-unstyled">
                                 <li class="busy" ng-repeat="terapia in terapias | orderBy: '-terapia_sesion_fecha'">
+                                    <div class="text-right">
+                                        <a class="text-xs text-warning" ng-click="deleteNotificacion(null, null, {{terapia.paciente__terapia_id}})">
+                                            <i class="fa fa-times-circle"></i>
+                                        </a>
+                                    </div>                
                                     <!-- available: success, warning, info, error -->
                                     <a href="#/app/pacientes/perfil/{{terapia.paciente.id}}">
                                         <div class="notice-icon">
                                             <i class="material-icons">event_available</i>
                                         </div>                                        
                                         <div>
-                                            <span class="name">
+                                            <span class="name">    
                                                 <h5><a href="#/app/pacientes/perfil/{{terapia.paciente.id}}">{{$index+1}}. {{terapia.paciente.persona.persona_nombres + " " + terapia.paciente.persona.persona_apellidos}}</a></h5>
                                                 <small>Dr. {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}}</small><br>
                                                 <div class="text-right">

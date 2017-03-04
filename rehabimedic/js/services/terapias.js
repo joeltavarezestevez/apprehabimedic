@@ -33,6 +33,15 @@ app.factory('terapiasFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 data: $.param(data)
             });
         },
+
+        deleteNotificacion : function(data, id) {
+            return $http({
+                method: 'PUT',
+                url: urlBase + "/deleteNotificacion/" + id,
+                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+                data: $.param(data)
+            });
+        },          
         
         delete : function(id) {
             return $http.delete(urlBase + "/" + id);

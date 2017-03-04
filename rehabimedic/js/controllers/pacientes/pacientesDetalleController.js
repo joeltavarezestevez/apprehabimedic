@@ -17,7 +17,7 @@ app.controller('ModalInstancePacienteCtrl', ['$scope', '$rootScope','$uibModalIn
     };    
 }])
 
-app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
+app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'pacientesNotasEspecialesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, pacientesNotasEspecialesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
 
     $scope.alert = false;
     $scope.paciente = {};
@@ -479,6 +479,56 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.back = function() {
         $window.history.back();
     }
+
+    $scope.deleteNota = function(id) {
+        pacientesNotasEspecialesFac.delete(id)
+          .success(function(data) {
+            $modalInstance.close();
+            Notification({
+                message: 'Nota Eliminada Correctamente!',
+                title: 'Registro Eliminado',
+                delay: 5000,
+                positionX: 'center',
+                positionY: 'top'
+            }, 'success');
+      });        
+    }
+
+    $scope.deleteNota = function (size,windowClass,Id) {
+      var modalInstance = $modal.open({
+        templateUrl: 'templates/modal-deleteNotasEspeciales.html',
+        controller: 'ModalInstancePacienteCtrl',
+        windowClass: windowClass,
+        size: size,
+        resolve: {
+            Id: function () {
+            return Id;
+         }
+       }          
+      });
+
+      modalInstance.result.then(function () {
+          pacientesNotasEspecialesFac.delete(Id)
+              .success(function(data) {
+              $timeout(function() {
+                  $state.reload(); 
+              }, 1000, false);  
+              
+              Notification({
+                  message: 'Nota Eliminada Correctamente!',
+                  title: 'Registro Eliminado',
+                  delay: 5000,
+                  positionX: 'center',
+                  positionY: 'top'
+              }, 'error');
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    }    
     
     var _video = null,
         patData = null;

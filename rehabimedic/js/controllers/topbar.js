@@ -5,11 +5,12 @@ app.controller('MessagesDropDownCtrl', ['$scope', '$http',
     });
   }]);
 
-app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'citasFac', 'Notification', function($scope, $filter, $modalInstance, Id, citasFac, Notification) {
+app.controller('ModalInstanceBorrarTerapiasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'terapiasFac', 'Notification', function($scope, $filter, $modalInstance, Id, terapiasFac, Notification) {
       
     $scope.registro = {};
+    $scope.terapia = {};
 
-    citasFac.get(parseInt(Id,10))
+    /*citasFac.get(parseInt(Id,10))
     .success(function(data) {
         d = new Date(data.cita_fecha_hora);
         data.cita_fecha_hora = d;
@@ -41,7 +42,7 @@ app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstanc
     }
     
     $scope.cancelarCita = function () {
-      citasFac.cancelarCita($scope.cita, Id)
+      citasFac.cancelarCita($scope.terapia, Id)
       .then(
       function(data) {
           $modalInstance.close();
@@ -53,7 +54,15 @@ app.controller('ModalInstanceCitasCtrl', ['$scope', '$filter', '$uibModalInstanc
               positionY: 'top'
           }, 'info');
       });
-    };
+    };*/
+
+    $scope.deleteNotificacion = function () {
+      terapiasFac.deleteNotificacion($scope.terapia, Id)
+      .then(
+      function(data) {
+          $modalInstance.close();
+      });
+    };    
 
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
@@ -97,9 +106,8 @@ app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', 
     $rootScope.$on('sesionRealizada', function(event) {
       $scope.getTerapiasPendientes();
     });
-      
-        
-        $scope.cancelCita = function (size,windowClass,Id) {
+             
+        /*$scope.cancelCita = function (size,windowClass,Id) {
             
             var modalInstance = $modal.open({
                 templateUrl: 'templates/modal-cancelarCita.html',
@@ -138,10 +146,34 @@ app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', 
             }, function () {
                 console.log('Modal dismissed at: ' + new Date());
             });            
-        }
+        }*/
         
-        $scope.deleteNotification =  function(notification) {
-            $scope.notifications.splice($scope.notifications.indexOf(notification), 1);
-            console.log('borrada');
+        $scope.deleteNotificacion =  function(size, windowClass, Id) {
+            
+            var modalInstance = $modal.open({
+                templateUrl: 'templates/modal-deleteNotificacion.html',
+                controller: 'ModalInstanceBorrarTerapiasCtrl',
+                windowClass: windowClass,
+                size: size,
+                resolve: {
+                    Id: function () {
+                        return Id;
+                    }
+                }          
+            });
+
+            modalInstance.result.then(function () {
+              $state.reload();
+              Notification({
+                  message: 'Recordatorio eliminado Correctamente!',
+                  title: 'Recordatorio Eliminado',
+                  delay: 5000,
+                  positionX: 'center',
+                  positionY: 'top'
+              }, 'info');
+              console.log('borrada');
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
         }
   }]);
