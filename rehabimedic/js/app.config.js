@@ -1,5 +1,6 @@
 var app =  angular.module('app')
-  .constant("BASEURL", "https://rehabimedic.app/rehabimedic/public/index.php")
+  //.constant("BASEURL", "https://rehabimedic.app/rehabimedic/public/index.php")
+  .constant("BASEURL", "https://test-dbrehabimedic.rehabimedic.local")
   .config(
     [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
     function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide) {
