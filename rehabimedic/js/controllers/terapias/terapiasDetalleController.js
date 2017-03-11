@@ -203,6 +203,18 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
                 console.log("Error");
                 console.log(response);
                 console.log($scope.terapia);
+                if(response.status == 400 && response.data.message){
+                    Notification({
+                        message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
+                        title: 'Error',
+                        delay: 5000,
+                        positionX: 'center',
+                        positionY: 'top'
+                    }, 'error');
+                    console.log('Errol manin!');
+                    $scope.alert = true;
+                    $scope.mensajes = response.data.message;
+                }                
             }
         );
     }
@@ -240,7 +252,19 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
             function(response){
                 console.log("Error");
                 console.log(response);
-                console.log($scope.terapia_detalle);
+                console.log($scope.terapia);
+                if(response.status == 400 && response.data.message){
+                    Notification({
+                        message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
+                        title: 'Error',
+                        delay: 5000,
+                        positionX: 'center',
+                        positionY: 'top'
+                    }, 'error');
+                    console.log('Errol manin!');
+                    $scope.alert = true;
+                    $scope.mensaje = response.data.message;
+                }                
             }
         );
         $scope.actualizarTerapiasPendientes();     

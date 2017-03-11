@@ -1,6 +1,6 @@
-app.factory('facturasFac', ['$http', 'BASEURL', function($http, BASEURL) {
+app.factory('notasdeCreditoFac', ['$http', 'BASEURL', function($http, BASEURL) {
     
-    var urlBase = BASEURL + '/api/facturas';
+    var urlBase = BASEURL + '/api/notas_credito';
     
     return {
         
@@ -33,15 +33,6 @@ app.factory('facturasFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 data: $.param(data)
             });
         },
-        
-        anularFactura : function(data, id) {
-            return $http({
-                method: 'PUT',
-                url: urlBase + "/anularFactura/" + id,
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(data)
-            });
-        },              
         
         delete : function(id) {
             return $http.delete(urlBase + "/" + id);

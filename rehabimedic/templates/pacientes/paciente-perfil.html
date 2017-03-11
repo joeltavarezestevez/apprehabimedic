@@ -19,7 +19,7 @@
                         <a ng-hide="perfil_usuario == 3 || perfil_usuario == 4" href="#/app/pagos/nuevo" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Nuevo Pago" tooltip-placement="bottom">
                             <i class="material-icons icon-md">attach_money</i>
                         </a>
-                        <a ng-hide="perfil_usuario == 3 || perfil_usuario == 4" href="#/app/pacientes/editar/{{paciente.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Editar Paciente" tooltip-placement="bottom">
+                        <a ng-hide="perfil_usuario == 4" href="#/app/pacientes/editar/{{paciente.id}}" class="btn btn-info" tooltip-class="success animated fadeIn " uib-tooltip="Editar Paciente" tooltip-placement="bottom">
                             <i class="material-icons icon-md">edit</i>
                         </a>                            
                     </div>
