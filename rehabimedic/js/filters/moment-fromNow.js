@@ -5,7 +5,8 @@
 angular.module('app')
   .filter('fromNow', function() {
     return function(date) {
-      return moment(date,"H:i m/d/Y").fromNow();
+    	moment.locale('es');
+    	return moment(date).fromNow();
     }
   })
 

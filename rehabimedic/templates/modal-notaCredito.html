@@ -1,0 +1,147 @@
+<div class="modal-header">
+    <h3 class="modal-title">Generar Nota de Crédito</h3>
+</div>
+<div class="modal-body">
+    <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-hide="!alert">
+        <button type="button" class="close" ng-click="closeAlert()">
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <div>
+            <span class="ng-binding ng-scope">
+                Errores al crear el registro:
+                <li class="danger">{{mensajes}}.</li>
+            </span>
+        </div>
+    </div>
+    <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
+        <p class="text-center" style="border: none;">
+            <b>DATOS DE LA FACTURA AFECTADA</b>
+        </p>
+        <table class="table">
+            <thead>
+            </thead>            
+            <tbody>
+                <tr>
+                    <td style="width: 55%; border: none;" class="text-left">
+                        <b>Paciente:</b> {{factura.paciente.persona.persona_nombres}} {{factura.paciente.persona.persona_apellidos}}
+                    </td>
+                    <td style="width: 45%; border: none;" class="text-right">
+                        <b>Fecha:</b> {{factura.factura_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 20%; border: none;" class="text-left">
+                        <b>NCF:</b> {{factura.factura_ncf}}
+                    </td>
+                    <td style="width: 80%; border: none;" ng-hide="factura.factura_tipo=='Credito'" class="text-right">
+                        <b>Factura al Contado:</b> {{factura.factura_numero}}
+                    </td>
+                    <td style="width: 80%; border: none;" ng-hide="factura.factura_tipo=='Contado'" class="text-right">
+                        <b>Factura a Credito:</b> {{factura.factura_numero}}
+                    </td>
+                </tr>
+                <tr> 
+                    <td style="width: 20%; border: none;" class="text-left">
+                        <b>Monto de la Factura :</b> {{factura.factura_total | currency }}&nbsp; <br>
+                    </td>
+            </tbody>
+        </table>
+        <hr>
+        <div>
+            <p class="text-center" style="border: none;">
+                <b>DATOS DE LA NOTA DE CR&Eacute;DITO</b>
+            </p>            
+        </div>
+        <div class="row text-right">
+            <h4><b>NCF No. :</b> {{prefijoNCF}}{{ nota_credito.nota_credito_ncf | minLength:8 }}</h4>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <label class="form-label" for="nota_credito_cantidad">Cantidad<span class="text-danger">*</span></label>
+                    <span class="desc">Terapias a acreditar</span>
+                    <div class="controls">
+                        <input type="number" class="form-control" id="nota_credito_cantidad" name="nota_credito_cantidad" placeholder="Escriba la cantidad de terapias" ng-model="nota_credito.nota_credito_cantidad" ng-change="calcular(1)" required>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <label class="form-label" for="nota_credito_monto">Monto<span class="text-danger">*</span></label>
+                    <span class="desc">Escriba el monto a acreditar</span>
+                    <div class="controls">
+                        <input type="number" class="form-control" id="nota_credito_monto" name="nota_credito_monto" placeholder="Escriba el monto" ng-model="nota_credito.nota_credito_monto" ng-change="calcular(2)" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="form-label" for="nota_credito_concepto">Concepto<span class="text-danger">*</span></label>
+                    <span class="desc">Escriba las razones por las que se genera la nota de cr&eacute;dito</span>
+                    <div class="controls">
+                        <input type="text" class="form-control" id="nota_credito_concepto" name="nota_credito_concepto" placeholder="Escriba el concepto" ng-model="nota_credito.nota_credito_concepto" required>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </form>
+</div>
+<div class="modal-footer text-center">                  
+    <button class="btn btn-primary" ng-disabled='form.$invalid' ng-click="generarNotadeCredito()">Generar</button>
+    <button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+</div>
+<div class="text-right" ng-hide="1==1">      
+    <a id="printElement" data-ng-click="printDiv('printThisElement')" class="btn btn-info">
+        <i class="material-icons icon-md">print</i>
+    </a>
+</div>
+<div style="width: 7.2 cm; height: 29.7 cm; text-align: center; font-family:Consolas; line-height: 75%;" id="printThisElement" ng-hide="1==1">
+  <div style="text-align: center;">
+      <br>
+      <img src="img/pipiota.png" width="120"/>
+      <p style="font-size: 11px;">
+        CENTRO DE MEDICINA F&Iacute;SICA Y REHABILITACI&Oacute;N <br>
+        AVE. JUAN P. DUARTE, PLAZA PALERMO <br>
+        M&Oacute;DULO 110, STGO. R.D. <br>
+        809-825-8595 <br>
+        RNC-131341421 <br>
+      </p>
+      <p style="font-size: 11px;">
+          <b>NOTA DE CR&Eacute;DITO</b>
+      </p>
+  </div>
+  <div class="text-left">
+    <p style="font-size: 11px;">
+        ----------------------------------------------------------------- <br>
+        FECHA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;{{nota_credito.nota_credito_fecha | date:'dd-MM-yyyy HH:mm:ss a'}} <br>
+        CAJERO&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;{{nota_credito.usuario.persona.persona_nombres + ' ' + nota_credito.usuario.persona.persona_apellidos | uppercase | limitTo: 25}} <br>
+        PACIENTE&nbsp;&nbsp; : &nbsp;{{nota_credito.paciente.persona.persona_nombres + ' ' + factura.paciente.persona.persona_apellidos | uppercase | limitTo: 25}} <br>
+    </p>
+    <p ng-show="nota_credito.factura.factura_comprobante_tipo == 3" style="font-size: 11px;">RNC/C&Eacute;DULA : {{nota_credito.factura.factura_rnc}} <br> RAZ&Oacute;N SOCIAL : {{nota_credito.factura.factura_razon_social | uppercase | limitTo:25}}</p>
+  </div>
+  <div class="text-left">
+      <p style="font-size: 11px;">
+        FACTURA AFECTADA : {{nota_credito.factura.factura_numero}}&nbsp; <br>
+      </p>    
+      <p style="font-size: 11px;">
+        NCF AFECTADO : {{nota_credito.factura.factura_ncf}}&nbsp; <br>
+      </p>          
+      <p style="font-size: 11px;">
+        MONTO : {{nota_credito.nota_credito_monto | currency }}&nbsp; <br>
+      </p>
+      <p style="font-size: 11px;">
+        CONCEPTO : {{nota_credito.nota_credito_concepto }}&nbsp; <br>
+      </p>      
+    <p>&nbsp;</p>
+  </div>
+  <div class="text-center">
+      <p>
+        ___________________________________ <br>
+        RECIBIDO CONFORME <br>
+        {{nota_credito.nota_credito_fecha | date:'dd-MM-yyyy HH:mm:ss a'}}
+      </p>
+  </div>    
+</div>

@@ -36,7 +36,7 @@ app.factory('doctoresFac', ['$http', 'BASEURL', function($http, BASEURL) {
         },
         
         delete : function(id) {
-            return $http.delete(urlBase + id);
+            return $http.delete(urlBase + "/" + id);
         }
     }
 }]);

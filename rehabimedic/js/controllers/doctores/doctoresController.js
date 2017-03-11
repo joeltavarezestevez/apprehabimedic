@@ -95,7 +95,7 @@ app.controller('DoctoresCtrl', ['$scope', '$rootScope', '$uibModal', '$statePara
           doctoresFac.delete(Id)
               .success(function(data) {
                 $timeout(function() {
-                  $state.reload(); 
+                  $state.reload();
                 }, 1000, false);  
 
                 Notification({
@@ -105,7 +105,10 @@ app.controller('DoctoresCtrl', ['$scope', '$rootScope', '$uibModal', '$statePara
                     positionX: 'center',
                     positionY: 'top'
                 }, 'error');
-          });          
+          })
+          .error(function(response) {
+            console.log(response);
+          })          
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });

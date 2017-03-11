@@ -17,16 +17,6 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12 table-responsive" id="DoctoresTable">
                         <table class="table table-striped" ui-jq="dataTable" ui-options="tbOptions" class="table table-striped">
-                            <thead ng-hide="perfil_usuario !=4">
-                                <tr>
-                                    <th style="width:10%">#</th>      
-                                    <th style="width:5%"><i class="fa fa-image"></i></th>
-                                    <th style="width:30%">Nombre</th>
-                                    <th style="width:15%">Tel&eacute;fono</th>
-                                    <th style="width:25%">Correo Electr&oacute;nico</th>
-                                    <th style="width:15%">Especialidad</th>
-                                </tr>                                
-                            </thead>
                             <thead ng-hide="perfil_usuario ==4">
                                 <tr>
                                     <th style="width:2%">#</th>      
@@ -36,6 +26,17 @@
                                     <th style="width:25%">Correo Electr&oacute;nico</th>
                                     <th style="width:15%">Especialidad</th>
                                     <th style="width:10%">Opciones</th>
+                                </tr>
+                            </thead>                            
+                            <thead ng-hide="perfil_usuario !=4">
+                                <tr>
+                                    <th style="width:2%">#</th>      
+                                    <th style="width:3%"><i class="fa fa-image"></i></th>
+                                    <th style="width:30%">Nombre</th>
+                                    <th style="width:15%">Tel&eacute;fono</th>
+                                    <th style="width:25%">Correo Electr&oacute;nico</th>
+                                    <th style="width:15%">Especialidad</th>
+                                    <!--<th style="width:10%">Opciones</th>-->
                                 </tr>
                             </thead>
                             <tbody>

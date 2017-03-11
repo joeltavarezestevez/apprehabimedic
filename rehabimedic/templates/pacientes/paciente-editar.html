@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                            
-                                        <label class="form-label" for="field-1">Lugar de Nacimiento <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-1">Lugar de Nacimiento</label>
                                         <span class="desc">Seleccione el lugar de nacimiento</span>
                                         <div class="controls">
                                             <select ui-jq="chosen" class="form-control" ng-model="paciente.persona.pais_id">
@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label class="form-label" for="field-5">Estado Civil <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Estado Civil</label>
                                         <span class="desc">Elija el estado civil del paciente</span>
                                         <div class="radio" ng-repeat="estado_civil in estados_civiles">
                                             <label class="icheck icheck-info">
@@ -161,7 +161,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <label class="form-label" for="persona_telefono">Tel&eacute;fono <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="persona_telefono">Tel&eacute;fono</label>
                                         <span class="desc">Ej. (999) 999-9999, etc.</span>
                                         <div class="controls">
                                             <input id="persona_telefono" name="persona_telefono" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="paciente.persona.persona_telefono" model-view-value="true">
@@ -180,7 +180,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="paciente_direccion">Dirección <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="paciente_direccion">Dirección</label>
                                         <span class="desc">Ej. Calle 26, #46, Los Prados, Santiago, etc.</span>
                                         <div class="controls">
                                             <textarea class="form-control" cols="3" id="paciente_direccion" name="paciente_direccion" ng-model="paciente.persona.persona_direccion"></textarea>
@@ -201,7 +201,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="field-5">Tiene Seguro? <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Tiene Seguro?</label>
                                         <span class="desc"></span>
                                         <div class="radio">
                                             <label class="icheck icheck-primary">
@@ -262,7 +262,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="field-5">Trabaja? <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Trabaja?</label>
                                         <span class="desc"></span>
                                         <div class="radio">
                                             <label class="icheck icheck-primary">
@@ -299,7 +299,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                         <label class="form-label" for="field-1">Tiempo en la empresa</label>
                                         <div class="controls">
-                                            <input ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="50" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" id="paciente_empleo_empresa_tiempo" name="paciente_empleo_empresa_tiempo" ng-model="paciente.paciente_empleo.paciente_empleo_empresa_tiempo">
+                                            <input type="text" class="form-control" placeholder="Tiempo en la Empresa en años" id="paciente_empleo_empresa_tiempo" name="paciente_empleo_empresa_tiempo" ng-model="paciente.paciente_empleo_empresa_tiempo">
                                         </div>                                        
                                     </div>                            
                                 </div>
@@ -380,7 +380,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="field-5">Tipo de Referencia <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Tipo de Referencia</label>
                                         <span class="desc"></span>
                                         <div class="radio">
                                             <label class="icheck icheck-primary">
@@ -477,7 +477,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="field-5">Ha sufrido alguna fractura? <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Ha sufrido alguna fractura?</label>
                                         <span class="desc"></span>
                                         <div class="radio">
                                             <label class="icheck icheck-primary">
@@ -508,7 +508,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="field-5">Ha estado interno alguna vez? <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Ha estado interno alguna vez?</label>
                                         <span class="desc"></span>
                                         <div class="radio">
                                             <label class="icheck icheck-primary">
@@ -524,7 +524,7 @@
                                         </div>                                
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <label class="form-label" for="field-5">Ha recibido transfusi&oacute;n de sangre? <span class="text-danger">*</span></label>
+                                        <label class="form-label" for="field-5">Ha recibido transfusi&oacute;n de sangre?</label>
                                         <span class="desc"></span>
                                         <div class="radio">
                                             <label class="icheck icheck-primary">
@@ -610,7 +610,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group" ng-if="paciente.archivo && paciente.imagen_descripcion">
+                        <div class="form-group" ng-if="paciente.archivo">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <button type="submit" class="btn btn-xs btn-icon btn-success" ng-click="saveFile()"><i class="fa fa-cloud-upload"></i> Subir Documento </button>
                             </div>
@@ -672,7 +672,7 @@
                                                     <span> {{ servicio.servicio.servicio_nombre }} </span>
                                                 </td>
                                                 <td class="v-middle">
-                                                    <input type="text" class="form-control" id="servicio_precio" placeholder="Precio" ng-model="servicio.servicio_precio">
+                                                    <input type="number" class="form-control" id="servicio_precio" placeholder="Precio" ng-model="servicio.servicio_precio">
                                                 </td>
                                             </tr>
                                         </table>                

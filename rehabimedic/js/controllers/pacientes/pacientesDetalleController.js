@@ -17,12 +17,13 @@ app.controller('ModalInstancePacienteCtrl', ['$scope', '$rootScope','$uibModalIn
     };    
 }])
 
-app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
+app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'pacientesNotasEspecialesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, pacientesNotasEspecialesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
 
     $scope.alert = false;
     $scope.paciente = {};
     $scope.paciente.referencia_tipo = "ninguno";
     $scope.paciente.paciente_empleo_estado = 0;
+    $scope.paciente.terapias_realizadas = 0;
     $scope.paciente.seguro = 0;
     $scope.monto_pagado = 0;
     $scope.monto_pendiente = 0;
@@ -56,9 +57,9 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
             d.setDate(d.getDate() + 1);
             response.persona.persona_fecha_nacimiento = d;
             var i = 0;
-            for(i = 0; i<response.citas.length; i++) {
+            /*for(i = 0; i<response.citas.length; i++) {
                 response.citas[i].cita_fecha_hora = new Date(response.citas[i].cita_fecha_hora);
-            }
+            }*/
             
             $scope.paciente = response;
             $scope.fecha_nacimiento = $filter('date')($scope.paciente.persona.persona_fecha_nacimiento,'dd-MM-yyyy');
@@ -77,7 +78,7 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                 $scope.paciente.referencia_tipo = $scope.paciente.paciente_referencia.referencia_tipo;
                 $scope.paciente.persona_referencia = $scope.paciente.paciente_referencia.persona_referencia;
             }
-            for(i=0; i< $scope.paciente.citas.length; i++) {
+            /*for(i=0; i< $scope.paciente.citas.length; i++) {
                 if(parseFloat($scope.paciente.citas[i].cita_monto_pendiente) == 0) {
                     $scope.monto_pagado = $scope.monto_pagado + parseFloat($scope.paciente.citas[i].cita_monto); 
                     $scope.citas_pagadas.push($scope.paciente.citas[i]);
@@ -86,22 +87,23 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                     $scope.monto_pendiente = $scope.monto_pendiente + parseFloat($scope.paciente.citas[i].cita_monto_pendiente);
                     $scope.citas_pendientes.push($scope.paciente.citas[i]);
                 }
-            }
+            }*/
+            $scope.paciente.terapias_totales = parseFloat($scope.paciente.paciente_terapias_pagadas) + parseFloat($scope.paciente.paciente_terapias_pendientes_pago);
             console.log($scope.paciente);
-            console.log($scope.citas_pendientes);
+            /*console.log($scope.citas_pendientes);
             console.log($scope.citas_pagadas);
             console.log($scope.monto_pagado);
-            console.log($scope.monto_pendiente);
+            console.log($scope.monto_pendiente);*/
         })
     }
     
-    $scope.filterPagadas = function(obj) {
+    /*$scope.filterPagadas = function(obj) {
         return parseFloat(obj.cita_monto_pendiente) == 0;
     }
 
     $scope.filterPendientes = function(obj) {
         return parseFloat(obj.cita_monto_pendiente) > 0;
-    }    
+    }*/    
     
     $scope.printDiv = function (divName) {
 
@@ -187,6 +189,17 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
                 if($scope.paciente.pacientes_fracturas.length == 0){
                     $scope.paciente.fractura = 2;
                 }
+                
+                $scope.paciente.terapias_realizadas = 0;
+                
+                angular.forEach($scope.paciente.pacientes_terapias, function(value, key) {
+                    if(value.estado_id == 1) {
+                        console.log(value.pacientes_terapias_detalle.length);
+                        $scope.paciente.terapias_realizadas = $scope.paciente.terapias_realizadas + value.pacientes_terapias_detalle.length;                        
+                    }
+                })                
+
+                $scope.paciente.terapias_totales = parseFloat($scope.paciente.paciente_terapias_pagadas) + parseFloat($scope.paciente.paciente_terapias_pendientes_pago);
                 console.log($scope.paciente);
             },
             function(response) {
@@ -290,44 +303,53 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.saveFile = function() {
         $scope.paciente.paciente_id = $scope.paciente.id;
         console.log($scope.paciente);
-        
-        pacientesImagenesFac.save($scope.paciente)
-        .then(
-            function(response){
-                console.log("Documento registrado!");
-                console.log(response);
-                console.log($scope.paciente);
-                $timeout(function() {
-                    $state.reload();
-                    Notification({
-                        message: 'Documento cargado correctamente!',
-                        title: 'Registro realizado',
-                        delay: 5000,
-                        positionX: 'center',
-                        positionY: 'top'
-                    }, 'success');                    
-                }, 1000, false);
-            },
-            function(response){
-                console.log("Error");
-                console.log(response);
-                console.log($scope.paciente);
-                if(response.status == 400 && response.data.message){
-                    Notification({
-                        message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
-                        title: 'Error',
-                        delay: 5000,
-                        positionX: 'center',
-                        positionY: 'top'
-                    }, 'error');
-                    console.log('Errol manin!');
-                    $scope.alert = true;
-                    $scope.mensajes = response.data.message;
+
+        if(!$scope.paciente.imagen_descripcion){
+            Notification({
+                message: 'Debe indicar la descripción del documento',
+                title: 'Error',
+                delay: 5000,
+                positionX: 'center',
+                positionY: 'top'
+            }, 'error');            
+        }
+        else {
+            pacientesImagenesFac.save($scope.paciente)
+            .then(
+                function(response){
+                    console.log("Documento registrado!");
+                    console.log(response);
+                    console.log($scope.paciente);
+                    $timeout(function() {
+                        $state.reload();
+                        Notification({
+                            message: 'Documento cargado correctamente!',
+                            title: 'Registro realizado',
+                            delay: 5000,
+                            positionX: 'center',
+                            positionY: 'top'
+                        }, 'success');                    
+                    }, 1000, false);
+                },
+                function(response){
+                    console.log("Error");
+                    console.log(response);
+                    console.log($scope.paciente);
+                    if(response.status == 400 && response.data.message){
+                        Notification({
+                            message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
+                            title: 'Error',
+                            delay: 5000,
+                            positionX: 'center',
+                            positionY: 'top'
+                        }, 'error');
+                        console.log('Errol manin!');
+                        $scope.alert = true;
+                        $scope.mensajes = response.data.message;
+                    }
                 }
-            }
-        );        
-        
-        
+            );
+        }
     }
     
     $scope.save = function() {
@@ -457,6 +479,56 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.back = function() {
         $window.history.back();
     }
+
+    $scope.deleteNota = function(id) {
+        pacientesNotasEspecialesFac.delete(id)
+          .success(function(data) {
+            $modalInstance.close();
+            Notification({
+                message: 'Nota Eliminada Correctamente!',
+                title: 'Registro Eliminado',
+                delay: 5000,
+                positionX: 'center',
+                positionY: 'top'
+            }, 'success');
+      });        
+    }
+
+    $scope.deleteNota = function (size,windowClass,Id) {
+      var modalInstance = $modal.open({
+        templateUrl: 'templates/modal-deleteNotasEspeciales.html',
+        controller: 'ModalInstancePacienteCtrl',
+        windowClass: windowClass,
+        size: size,
+        resolve: {
+            Id: function () {
+            return Id;
+         }
+       }          
+      });
+
+      modalInstance.result.then(function () {
+          pacientesNotasEspecialesFac.delete(Id)
+              .success(function(data) {
+              $timeout(function() {
+                  $state.reload(); 
+              }, 1000, false);  
+              
+              Notification({
+                  message: 'Nota Eliminada Correctamente!',
+                  title: 'Registro Eliminado',
+                  delay: 5000,
+                  positionX: 'center',
+                  positionY: 'top'
+              }, 'error');
+            })
+            .error(function(data) {
+                console.log(data);
+            });
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    }    
     
     var _video = null,
         patData = null;

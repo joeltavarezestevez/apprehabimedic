@@ -41,7 +41,7 @@ app.factory('facturasFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
                 data: $.param(data)
             });
-        },        
+        },              
         
         delete : function(id) {
             return $http.delete(urlBase + "/" + id);

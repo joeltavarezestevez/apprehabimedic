@@ -1,7 +1,9 @@
-app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInstance', 'Id', 'Notification', 'facturasFac', function($scope, $filter, $modalInstance, Id, Notification, facturasFac) {
+app.controller('ModalInstanceFacturasCtrl', ['$scope', '$rootScope', '$filter', '$uibModalInstance', '$timeout', '$state', 'Id', 'Notification', 'facturasFac', 'secuenciasFac', 'notasdeCreditoFac', function($scope, $rootScope, $filter, $modalInstance, $timeout, $state, Id, Notification, facturasFac, secuenciasFac, notasdeCreditoFac) {
 
     $scope.registro = {};
-    
+    $scope.nota_credito = {};
+    $scope.prefijoNCF = "";
+
     facturasFac.get(parseInt(Id,10))
     .success(function(data) {
         d = new Date(data.factura_fecha);
@@ -25,11 +27,102 @@ app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInst
                   positionY: 'top'
               }, 'info');
           });
-    };    
+    };
+
+    $scope.buscarNCF = function(index) {
+        secuenciasFac.get(index).success(function(response){
+            $scope.prefijoNCF = response.secuencia_prefijo;
+            $scope.nota_credito.nota_credito_ncf = response.secuencia_actual;
+        })
+    }
+
+    $scope.buscarNCF(5);
+
+    $scope.generarNotadeCredito = function () {
+        $scope.nota_credito.paciente_id = $scope.factura.paciente_id;
+        $scope.nota_credito.nota_credito_fecha = new Date();
+        $scope.nota_credito.nota_credito_fecha = $filter('date')($scope.nota_credito.nota_credito_fecha,'yyyy-MM-dd HH:mm:ss');        
+        $scope.nota_credito.nota_credito_ncf = $scope.prefijoNCF + $filter('minLength')($scope.nota_credito.nota_credito_ncf, 8);
+        $scope.nota_credito.usuario_id = $rootScope.user.id;
+        $scope.nota_credito.factura_id = $scope.factura.id;
+        $scope.nota_credito.factura_numero = $scope.factura.factura_numero;
+        $scope.nota_credito.factura_ncf = $scope.factura.factura_ncf;
+        console.log($scope.nota_credito);
+
+        notasdeCreditoFac.save($scope.nota_credito, Id)
+        .then(
+            function(response){
+                console.log("nota de credito registrada!");
+                console.log(response);
+                console.log($scope.nota_credito);
+                notasdeCreditoFac.get(parseInt(response.data.id,10))
+                .success(function(data) {
+                    d = new Date(data.nota_credito_fecha);
+                    data.nota_credito_fecha = d;
+                    console.log(data);
+                    $scope.nota_credito = data;
+                    $timeout(function() {
+                        var el = document.getElementById('printElement');
+                        angular.element(el).triggerHandler('click');                    
+                        $state.reload();
+                        console.log("State Changed");
+                        Notification({
+                            message: 'Nota de Crédito Generada Correctamente!',
+                            title: 'Nota de Crédito',
+                            delay: 5000,
+                            positionX: 'center',
+                            positionY: 'top'
+                        }, 'success');                    
+                    }, 1000, false);
+                })    
+            },
+            function(response){
+                console.log("Error");
+                console.log(response);
+                console.log($scope.nota_credito);
+                if(response.status == 400 && response.data.message){
+                    Notification({
+                        message: 'Errores al intentar crear el registro. Revise los mensajes arriba.',
+                        title: 'Error',
+                        delay: 5000,
+                        positionX: 'center',
+                        positionY: 'top'
+                    }, 'error');
+                    console.log('Errol manin!');
+                    $scope.alert = true;
+                    $scope.mensajes = response.data.message;
+                }
+            }
+        )
+    };          
 
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };
+
+    $scope.calcular = function(index) {
+        console.log($scope.factura.detalle_facturas[0].servicio_precio);
+        var precio = $scope.factura.detalle_facturas[0].servicio_precio;
+        if (index == 1) {
+            if($scope.nota_credito.nota_credito_cantidad) {
+                $scope.nota_credito.nota_credito_monto = $scope.nota_credito.nota_credito_cantidad * precio;
+            }
+            else {
+                $scope.nota_credito.nota_credito_monto = "";
+            }
+            console.log($scope.nota_credito.nota_credito_monto);            
+        }
+        else {
+            if($scope.nota_credito.nota_credito_monto) {
+                var cantidad = parseFloat($scope.nota_credito.nota_credito_monto / precio).toFixed(2);
+                $scope.nota_credito.nota_credito_cantidad = parseFloat(cantidad);
+            }
+            else {
+                $scope.nota_credito.nota_credito_cantidad = "";
+            }
+            console.log($scope.nota_credito.nota_credito_cantidad);                        
+        }
+    }    
 
     $scope.printDiv = function (divName) {
 
@@ -66,7 +159,7 @@ app.controller('ModalInstanceFacturasCtrl', ['$scope', '$filter', '$uibModalInst
 app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'facturas', 'facturasFac', 'Auth', function ($rootScope, $scope, $filter, $modal, $stateParams, $timeout, $state, Notification, facturas, facturasFac, Auth) {
     
     $scope.loading = true;
-    
+
     Auth.getLoggedInUser();
     $scope.perfil_usuario = $rootScope.user.perfil_usuario_id;
     console.log(facturas);
@@ -103,7 +196,7 @@ app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', 
                 {
                     mData: null,
                     bSortable: false,
-                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" onclick="openModalFacturaDetalle('+ o.id + ')"><i class="fa fa-print"></i></button>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalAnularFactura('+ o.id + ')"><i class="fa fa-times-circle"></i></button></div>'; }
+                    mRender: function (o) { return '<div class="text-center"><button title="Generar nota de cr&eacute;dito" class="btn btn-xs btn-primary ng-click-active" onclick="openModalNotaCredito('+ o.id + ')"><i class="fa fa-credit-card"></i></button>&nbsp;<button title="Reimprimir factura" class="btn btn-xs btn-success ng-click-active" onclick="openModalFacturaDetalle('+ o.id + ')"><i class="fa fa-print"></i></button>&nbsp;<button title="Anular factura" class="btn btn-xs btn-danger ng-click-active" onclick="openModalAnularFactura('+ o.id + ')"><i class="fa fa-times-circle"></i></button></div>'; }
                 }
             ]
         }        
@@ -138,7 +231,7 @@ app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', 
                 {
                     mData: null,
                     bSortable: false,
-                    mRender: function (o) { return '<div class="text-center"><button class="btn btn-xs btn-success ng-click-active" onclick="openModalFacturaDetalle('+ o.id + ')"><i class="fa fa-print"></i></button></div>'; }
+                    mRender: function (o) { return '<div class="text-center"><button title="Generar nota de cr&eacute;dito" class="btn btn-xs btn-primary ng-click-active" onclick="openModalNotaCredito('+ o.id + ')"><i class="fa fa-credit-card"></i></button>&nbsp;<button title="Reimprimir factura" class="btn btn-xs btn-success ng-click-active" onclick="openModalFacturaDetalle('+ o.id + ')"><i class="fa fa-print"></i></button></div>'; }
                 }
             ]
         }        
@@ -146,6 +239,26 @@ app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', 
 
     $scope.loading = false;
     
+    $scope.generarNotaCredito = function (size,windowClass,Id) {
+      var modalInstance = $modal.open({
+        templateUrl: 'templates/modal-notaCredito.html',
+        controller: 'ModalInstanceFacturasCtrl',
+        windowClass: windowClass,
+        size: size,
+        resolve: {
+            Id: function () {
+            return Id;
+         }
+       }          
+      });
+
+      modalInstance.result.then(function () {
+          $state.reload(); 
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
     $scope.anularFactura = function (size,windowClass,Id) {
       var modalInstance = $modal.open({
         templateUrl: 'templates/modal-facturaAnular.html',
@@ -187,6 +300,10 @@ app.controller('FacturasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', 
     };
     
 }]);
+
+function openModalNotaCredito(Id) {
+    angular.element(document.getElementById('FacturasTable')).scope().generarNotaCredito(null,null,Id);
+}
 
 function openModalAnularFactura(Id) {
     angular.element(document.getElementById('FacturasTable')).scope().anularFactura(null,null,Id);

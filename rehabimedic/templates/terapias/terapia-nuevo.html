@@ -11,7 +11,19 @@
                 <strong>Registrar terapia</strong>
             </li>
         </ol>
-        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
+        <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-hide="!alert">
+            <button type="button" class="close" ng-click="closeAlert()">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div>
+                <span class="ng-binding ng-scope">
+                    Errores al crear el registro:
+                    <li class="danger" ng-repeat="mensaje in mensajes">{{mensaje}}.</li>
+                </span>
+            </div>
+        </div>        
+        <form id="form" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
             <section class="box">
                 <header class="panel_header">
                     <h2 class="title pull-left">Datos de la Terapia</h2>
@@ -92,19 +104,22 @@
                     <div class="row">
                         <div class="form-group">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <br>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <label class="form-label" for="terapia_sesiones">Cantidad de Sesiones <span class="text-danger">*</span></label>
-                                            <span class="desc">Escriba la cantidad de sesiones que durará la terapia</span>
-                                            <div class="controls">
-                                                <input id="terapia_sesiones" name="terapia_semanas" ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="365" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="terapia.terapia_sesiones" required>
-                                            </div>                                
-                                        </div>
-                                    </div>
+                                <label class="form-label" for="terapia_sesiones">Cantidad de Sesiones <span class="text-danger">*</span></label>
+                                <span class="desc">Escriba la cantidad de sesiones que durará la terapia</span>
+                                <div class="controls">
+                                    <input id="terapia_sesiones" name="terapia_sesiones" ui-jq="TouchSpin" type="number" value="10" class="form-control" data-min='0' data-max="365" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="terapia.terapia_sesiones" required>
                                 </div>
                             </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="form-label" for="terapia_generar_factura">Factura</label>
+                                <span class="desc">Elija si desea generar una factura por este programa de terapias</span>
+                                <div class="checkbox">
+                                    <label class="icheck icheck-primary">
+                                        <input type="checkbox" name="terapia_generar_factura" value="1" ng-model="terapia.generar_factura" ng-change="generarFactura()">
+                                        <i></i> Generar Factura
+                                    </label>
+                                </div>                            
+                            </div>                            
                         </div>
                     </div>
                     <br>
@@ -201,7 +216,7 @@
                                 <label class="form-label" for="paciente_terapia_programa">Programa de Terapias <span class="text-danger">*</span></label> 
                                 <span class="desc">Describa los ejercicios y actividades a realizar durante la terapia</span>
                                 <div class="controls">
-                                    <textarea class="form-control" cols="3" rows="20" id="paciente_terapia_programa" name="paciente_terapia_programa" ng-model="terapia.paciente_terapia_programa"></textarea>
+                                    <textarea class="form-control" cols="3" rows="20" id="paciente_terapia_programa" name="paciente_terapia_programa" ng-model="terapia.paciente_terapia_programa" required></textarea>
                                 </div>
                             </div>
                         </div>                      
