@@ -11,28 +11,133 @@
         </li>
     </ol>    
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" ng-controller="AseguradorasDetalleCtrl">
-        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">
-            <section class="box">
-                <header class="panel_header">
-                    <h2 class="title pull-left">Datos</h2>
-                    <div class="actions panel_actions pull-right">
-                        <i class="box_toggle material-icons">expand_more</i>
-                    </div>
-                </header>
-                <div class="content-body padding-bottom-0">
-                    <div class="row">
-                        <div class="form-group">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label class="form-label" for="persona_nombres">Nombre <span class="text-danger">*</span></label>
-                                <span class="desc">Escriba el nombre de la aseguradora</span>
-                                <div class="controls">
-                                    <input type="text" class="form-control" placeholder="Nombre de la Aseguradora" id="aseguradora_nombre" name="aseguradora_nombre" ng-model="aseguradora.aseguradora_nombre" required>
+        <form id="general_validate" action="javascript:;" name="form" class="form-validation ng-invalid ng-invalid-required ng-valid-email ng-valid-url ng-valid-pattern ng-valid-blacklist ng-valid-minlength ng-valid-maxlength ng-invalid-validator ng-invalid-b ng-invalid-a ng-dirty ng-valid-parse">        
+            <uib-tabset class="tab-container primary">
+                <uib-tab>
+                    <uib-tab-heading>
+                        <i class="material-icons">person</i> Datos de la aseguradora
+                    </uib-tab-heading>    
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Información General</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="aseguradora_nombre">Nombre <span class="text-danger">*</span></label>
+                                        <span class="desc">Escriba el nombre de la aseguradora</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Nombre de la Aseguradora" id="aseguradora_nombre" name="aseguradora_nombre" ng-model="aseguradora.aseguradora_nombre" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="aseguradora_telefono">Tel&eacute;fono</label>
+                                        <span class="desc">Ej. (999) 999-9999, etc.</span>
+                                        <div class="controls">
+                                            <input id="aseguradora_telefono" name="aseguradora_telefono" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="aseguradora.aseguradora_telefono" model-view-value="true">
+                                        </div>                                        
+                                    </div>
                                 </div>
-                            </div>                       
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="form-label" for="aseguradora_direccion">Dirección</label>
+                                        <span class="desc">Ej. Calle 26, #46, Los Prados, Santiago, etc.</span>
+                                        <div class="controls">
+                                            <textarea class="form-control" cols="3" id="aseguradora_direccion" name="aseguradora_direccion" ng-model="aseguradora.aseguradora_direccion"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br> 
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="aseguradora_representante">Representante</label>
+                                        <span class="desc">Escriba el nombre del representante de la aseguradora</span>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" placeholder="Representante de la Aseguradora" id="aseguradora_representante" name="aseguradora_representante" ng-model="aseguradora.aseguradora_representante">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <label class="form-label" for="aseguradora_representante_telefono">Tel&eacute;fono del representante</label>
+                                        <span class="desc">Ej. (999) 999-9999, etc.</span>
+                                        <div class="controls">
+                                            <input id="aseguradora_representante_telefono" name="aseguradora_representante_telefono" type="text" class="form-control" ui-mask="999-999-9999" placeholder="___-___-____" ng-model="aseguradora.aseguradora_representante_telefono" model-view-value="true">
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
+                </uib-tab>        
+                <uib-tab ng-if="perfil_usuario == 1">
+                    <uib-tab-heading>
+                        <i class="material-icons">healing</i> Planes
+                    </uib-tab-heading>                   
+                    <section class="box">
+                        <header class="panel_header">
+                            <h2 class="title pull-left">Planes de servicios para el Paciente</h2>
+                            <div class="actions panel_actions pull-right">
+                                <i class="box_toggle material-icons">expand_more</i>
+                            </div>
+                        </header>
+                        <div class="content-body padding-bottom-0">
+                            <div class="text-right">
+                                <a class="btn btn-primary" ng-click="agregarPlan(null,null,aseguradora.id)">
+                                    <i class="fa fa-plus"></i>&nbsp;Agregar plan
+                                </a>
+                            </div>
+                            <br>
+                            <div class="transparent accordion ng-scope">
+                                <uib-accordion close-others="oneAtATime">
+                                    <uib-accordion-group ng-repeat="plan in aseguradora.planes">
+                                        <uib-accordion-heading>
+                                            <b>{{plan.plan_descripcion}}</b>
+                                        </uib-accordion-heading>
+                                        <big><b>Listado de Servicios</b></big><br>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table class="table table-bordered table-hover bg-white-only">
+                                                        <tr style="font-weight: bold">
+                                                            <td style="width:20%">Id</td>
+                                                            <td style="width:40%">Descripci&oacute;n</td>
+                                                            <td style="width:20%">Precio</td>
+                                                            <td style="width:20%">Cobertura</td>
+                                                        </tr>
+                                                        <tr ng-repeat="servicio in plan.planes_servicios">
+                                                            <td class="v-middle">
+                                                                <span> {{ servicio.id || 'empty' }} </span>
+                                                            </td>
+                                                            <td class="v-middle">
+                                                                <span> {{ servicio.servicio.servicio_nombre }} </span>
+                                                            </td>
+                                                            <td class="v-middle">
+                                                                <input type="text" class="form-control" id="servicio_precio" placeholder="Precio" ng-model="servicio.servicio_precio">
+                                                            </td>
+                                                            <td class="v-middle">
+                                                                <input type="text" class="form-control" id="servicio_cobertura" placeholder="Cobertura" ng-model="servicio.servicio_cobertura">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </uib-accordion-group>
+                                </uib-accordion>
+                            </div>
+                        </div>
+                    </section>
+                </uib-tab>
+            </uib-tabset>
+            <br>
             <div class="row text-center">
                 <div class="form-group">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -42,5 +147,3 @@
                 </div>
             </div>
         </form>            
-    </div>
-</div>

@@ -33,6 +33,9 @@ app.controller('AseguradorasCtrl', ['$scope', '$uibModal', '$stateParams', '$tim
             aoColumns: [
                 { mData: 'id' },
                 { mData: 'aseguradora_nombre' },
+                { mData: 'aseguradora_telefono' },
+                { mData: 'aseguradora_representante' },
+                { mData: 'aseguradora_representante_telefono' },
                 {
                     mData: null,
                     bSortable: false,
