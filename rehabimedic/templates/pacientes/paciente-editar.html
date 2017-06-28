@@ -247,6 +247,18 @@
                                             <input type="text" class="form-control" placeholder="NSS del Paciente" id="paciente_poliza" name="paciente_poliza" ng-model="paciente.paciente_nss" maxlength="8">
                                         </div>
                                     </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-if="planes.length > 0">
+                                        <label class="form-label" for="field-1">Plan</label>
+                                        <span class="desc">Seleccione el plan del paciente</span>
+                                        <div class="controls">
+                                        <div class="radio" ng-repeat="plan in planes">
+                                            <label class="icheck icheck-primary">
+                                                <input type="radio" name="plan" value="{{plan.id}}" ng-model="paciente.plan_id">
+                                                <i></i> {{plan.plan_descripcion}}
+                                            </label>
+                                        </div>                                
+                                        </div>
+                                    </div>                                    
                                 </div>                                 
                             </div>
                         </div>
@@ -642,7 +654,7 @@
                         </div>
                     </div>
                 </uib-tab>
-                <uib-tab ng-if="perfil_usuario == 1">
+                <!--<uib-tab ng-if="perfil_usuario == 1">
                     <uib-tab-heading>
                         <i class="material-icons">folder_open</i> Precios Productos
                     </uib-tab-heading>                   
@@ -668,7 +680,6 @@
                                                     <span> {{ servicio.id || 'empty' }} </span>
                                                 </td>
                                                 <td class="v-middle">
-                                                    <!-- editable status (select-local) -->
                                                     <span> {{ servicio.servicio.servicio_nombre }} </span>
                                                 </td>
                                                 <td class="v-middle">
@@ -682,7 +693,7 @@
                         </div>
                         <br>
                     </section>
-                </uib-tab>
+                </uib-tab>-->
             </uib-tabset>
             <br>
             <div class="row text-center">

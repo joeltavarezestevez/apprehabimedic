@@ -6,6 +6,8 @@ app.controller('SecuenciasDetalleCtrl', ['$scope', '$stateParams', '$window', '$
     .then(
         function(response){
             $scope.secuencia = response.data;
+            $scope.secuencia.secuencia_actual = parseInt($scope.secuencia.secuencia_actual);
+            $scope.secuencia.secuencia_limite = parseInt($scope.secuencia.secuencia_limite);
         },
         function(response) {
             $scope.message = "Error: "+response.status + " " + response.statusText;

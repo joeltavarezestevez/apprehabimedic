@@ -9,7 +9,8 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     $scope.servicio_id = "0";
     $scope.factura.factura_metodo_pago = "1";
     $scope.factura.factura_subtotal = 0.00;
-    $scope.factura.factura_itbis = 0.00;
+    $scope.factura.factura_cobertura = 0.00;
+    $scope.factura.factura_diferencia = 0.00;
     $scope.factura.factura_descuento = 0.00;
     $scope.factura.factura_total = 0.00;
     $scope.pacientes = pacientes.data;
@@ -24,15 +25,17 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     
     $scope.buscarRNC =  function(rnc) {
         $scope.rnc = rnc;
-        if ($scope.rnc.length >= 9) {
+        if (rnc.length >= 9) {
             getRNCFac.get(rnc)
             .success(function(response){
-                console.log(response.name);
+                console.log(response);
                 $scope.factura.factura_razon_social = response.name;
+                console.log(response.name);
             })
             .error(function(response){
                 console.log(response);
             })
+
         }
         else {
             $scope.factura.factura_razon_social = "";
@@ -113,6 +116,8 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     // remove Detalle
     $scope.removeDetalle = function(index) {
         $scope.factura.factura_subtotal = $scope.factura.factura_subtotal - $scope.factura.detalles[index].servicio_monto;
+        $scope.factura.factura_cobertura = $scope.factura.factura_cobertura - $scope.factura.detalles[index].servicio_cobertura;
+        $scope.factura.factura_diferencia = $scope.factura.factura_diferencia - $scope.factura.detalles[index].servicio_diferencia;
         //$scope.factura.factura_itbis = $scope.factura.factura_subtotal * 0.18;
         //$scope.factura.factura_total = $scope.factura.factura_subtotal + $scope.factura.factura_itbis - $scope.factura.factura_descuento;        
         $scope.factura.factura_total = $scope.factura.factura_subtotal - $scope.factura.factura_descuento;
@@ -121,12 +126,30 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
 
     $scope.updatePrecio = function(id) {
         var i = 0;
+        var j = 0;
         console.log($scope.paciente);
-        for (i= 0; i<$scope.paciente.paciente_servicios.length; i++) {
-            if ($scope.paciente.paciente_servicios[i].servicio_id == id) {
-                $scope.servicio.servicio_id = id;
-                $scope.servicio.servicio_precio = $scope.paciente.paciente_servicios[i].servicio_precio;
-                $scope.servicio.servicio_nombre = $scope.paciente.paciente_servicios[i].servicio.servicio_nombre;
+        if($scope.paciente.aseguradora_id != 1 && $scope.paciente.plan_id != 1) {
+            for (i= 0; i<$scope.paciente.aseguradora.planes.length; i++) {
+                if ($scope.paciente.aseguradora.planes[i].id == $scope.paciente.plan_id) {
+                    for (j= 0; j < $scope.paciente.aseguradora.planes[i].planes_servicios.length; j++) {
+                        if ($scope.paciente.aseguradora.planes[i].planes_servicios[j].id == id) {
+                            $scope.servicio.servicio_id = id;
+                            $scope.servicio.servicio_precio = $scope.paciente.aseguradora.planes[i].planes_servicios[j].servicio_precio;
+                            $scope.servicio.servicio_cobertura = $scope.paciente.aseguradora.planes[i].planes_servicios[j].servicio_cobertura;
+                            $scope.servicio.servicio_nombre = $scope.paciente.aseguradora.planes[i].planes_servicios[j].servicio.servicio_nombre;
+                        }
+                    }
+                }            
+            }            
+        }
+        else {
+            for (i= 0; i < $scope.servicios.length; i++) {
+                if ($scope.servicios[i].id == id) {
+                    $scope.servicio.servicio_id = id;
+                    $scope.servicio.servicio_precio = $scope.servicios[i].servicio_precio;
+                    $scope.servicio.servicio_cobertura = 0.00;
+                    $scope.servicio.servicio_nombre = $scope.servicios[i].servicio_nombre;
+                }
             }            
         }
         console.log($scope.servicio);
@@ -144,7 +167,8 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
         }
         else {
             $scope.servicio.servicio_monto = $scope.servicio.servicio_precio * $scope.servicio.servicio_cantidad;
-            
+            $scope.servicio.servicio_cobertura = $scope.servicio.servicio_cobertura * $scope.servicio.servicio_cantidad;
+            $scope.servicio.servicio_diferencia = $scope.servicio.servicio_monto - $scope.servicio.servicio_cobertura;
             for (var i=0; i < $scope.factura.detalles.length; i++) {
                 if($scope.servicio.servicio_id == $scope.factura.detalles[i].servicio_id) {
                     $scope.removeDetalle(i);
@@ -154,13 +178,17 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
             $scope.factura.detalles.push($scope.servicio);
             console.log($scope.factura.detalles.length);
             $scope.factura.factura_subtotal = 0.00;
+            $scope.factura.factura_cobertura = 0.00;
+            $scope.factura.factura_diferencia = 0.00;
             for (var i=0; i < $scope.factura.detalles.length; i++) {
             
             $scope.factura.factura_subtotal = $scope.factura.factura_subtotal + $scope.factura.detalles[i].servicio_monto;
+            $scope.factura.factura_cobertura = $scope.factura.factura_cobertura + $scope.factura.detalles[i].servicio_cobertura;
+            $scope.factura.factura_diferencia = $scope.factura.factura_diferencia + $scope.factura.detalles[i].servicio_diferencia;
             //$scope.factura.factura_itbis = $scope.factura.factura_subtotal * 0.18;            
             }
             //$scope.factura.factura_total = $scope.factura.factura_subtotal + $scope.factura.factura_itbis - $scope.factura.factura_descuento;
-            $scope.factura.factura_total = $scope.factura.factura_subtotal - $scope.factura.factura_descuento;
+            $scope.factura.factura_total = $scope.factura.factura_diferencia - $scope.factura.factura_descuento;
             $scope.servicio = {};
             $scope.servicio_id = "0";
             console.log($scope.servicio);
@@ -169,20 +197,23 @@ app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', 
     }
       
     $scope.aplicardescuento = function() {
-        if($scope.factura.factura_total > 0){
+        if($scope.factura.factura_diferencia > 0 && $scope.factura.factura_descuento < $scope.factura.factura_diferencia){
             $scope.factura.factura_descuento = $scope.factura.factura_descuento_monto;
-            $scope.factura.factura_total = $scope.factura.factura_subtotal - $scope.factura.factura_descuento;
+            $scope.factura.factura_total = $scope.factura.factura_diferencia - $scope.factura.factura_descuento;
             //$scope.factura.descuento_monto = 0.00;
             $scope.bloqueado = true;
         }
+        else if ($scope.factura.factura_descuento > $scope.factura.factura_diferencia) {
+            alert("El descuento no puede ser mayor que la diferencia a pagar");
+        }
         else {
             alert("No tiene detalles agregados a la factura");
-        }
+        }        
     };
     $scope.elegirdescuento = function(value){
         if(value == false){
             $scope.valor = $scope.factura.factura_descuento;
-            $scope.factura.factura_total = $scope.factura.factura_subtotal;
+            $scope.factura.factura_total = $scope.factura.factura_diferencia;
             $scope.factura.factura_descuento = 0.00;
             $scope.factura.factura_descuento_monto = 0.00;
         }

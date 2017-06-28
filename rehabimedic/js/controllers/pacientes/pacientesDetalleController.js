@@ -17,7 +17,7 @@ app.controller('ModalInstancePacienteCtrl', ['$scope', '$rootScope','$uibModalIn
     };    
 }])
 
-app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'pacientesImagenesFac', 'pacientesNotasEspecialesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, pacientesImagenesFac, pacientesNotasEspecialesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
+app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'aseguradorasFac', 'pacientesImagenesFac', 'pacientesNotasEspecialesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, aseguradorasFac, pacientesImagenesFac, pacientesNotasEspecialesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
 
     $scope.alert = false;
     $scope.paciente = {};
@@ -28,7 +28,8 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.monto_pagado = 0;
     $scope.monto_pendiente = 0;
     $scope.citas_pagadas = [];
-    $scope.citas_pendientes = [];    
+    $scope.citas_pendientes = [];
+    $scope.planes = [];
     
     
     //loading data
@@ -45,6 +46,29 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
         $scope.alert = false;
         console.log($scope.alert);
     }
+
+   /* $scope.updatePlanes = function(id) {
+        aseguradorasFac.get(id)
+        .success(function(response){
+            $scope.planes = response.planes;
+            console.log($scope.planes);
+        })
+        .error(function(response) {
+            console.log(response);
+        })
+    }*/
+
+    $scope.$watch('paciente.aseguradora_id', function(newValue, oldValue) {
+      if ( newValue) {
+          var seguro = $scope.paciente.aseguradora_id;
+          aseguradorasFac.get(seguro)
+          .success(function(response){
+            $scope.planes = response.planes;
+            console.log($scope.planes);
+        })
+      }
+    })    
+    console.log($scope.planes);
     
     $scope.updatePaciente = function(index) {
         $scope.monto_pagado = 0;

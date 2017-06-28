@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col-lg-5 text-left">
                                     <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
-                                    <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
+                                    <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}} - {{paciente.plan.plan_descripcion}}</p>
                                     <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
                                     <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
                                 </div>
@@ -109,14 +109,14 @@
                             <label class="form-label" for="factura_rnc">RNC/C&eacute;dula</label>
                             <span class="desc">Escriba el RNC/C&eacute;dula</span>
                             <div class="controls">
-                                <input type="number" class="form-control" placeholder="RNC/Cédula" id="factura_rnc" name="factura_rnc " ng-model="factura.factura_rnc" ng-change="buscarRNC(factura.factura_rnc)">
+                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_rnc" name="factura_rnc " ng-model="factura.factura_rnc" ng-change="buscarRNC(factura.factura_rnc)">
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                             <label class="form-label" for="factura_razon_social">Raz&oacute;n Social</label>
-                            <span class="desc">Escriba el nombre o Raz&oacute;n Social</span>
+                            <!--<span class="desc">Escriba el nombre o Raz&oacute;n Social</span>-->
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="RNC/Cédula" id="factura_razon_social" name="factura_razon_social " ng-model="factura.factura_razon_social" readonly="readonly">
+                                <input type="text" class="form-control" placeholder="" id="factura_razon_social" name="factura_razon_social " ng-model="factura.factura_razon_social" readonly="readonly">
                             </div>
                         </div>                        
                     </div>
@@ -130,7 +130,7 @@
                             <span class="desc"></span>
                             <div class="controls">
                                 <select ui-jq="chosen" class="form-control" ng-change="updatePrecio(servicio_id)" ng-model="servicio_id" ng-options="servicio.id as servicio.servicio_nombre for servicio in servicios">
-                                    <option value="0">Seleccione el producto</option>
+                                    <option disabled></option>
                                 </select>
                             </div>
                         </div>
@@ -143,12 +143,19 @@
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <label class="form-label" for="persona_nombres">Precio</label>
-                            <span class="desc">Escriba el precio</span>
+                            <span class="desc"></span>
                             <div class="controls">
                                 <input type="text" class="form-control" placeholder="Precio" id="servicio_precio" name="servicio_precio" ng-model="servicio.servicio_precio" readonly="readonly">
                             </div>
-                        </div>                         
+                        </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                            <label class="form-label" for="persona_nombres">Cobertura</label>
+                            <span class="desc"></span>
+                            <div class="controls">
+                                <input type="text" class="form-control" placeholder="Cobertura" id="servicio_cobertura" name="servicio_cobertura" ng-model="servicio.servicio_cobertura">
+                            </div>
+                        </div>                                                 
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">
                             <button class="btn btn-primary btn-xs" ng-click="addDetalle()">Agregar</button>
                         </div>
                     </div>
@@ -163,6 +170,8 @@
                                 <td style="width:20%">Cantidad</td>
                                 <td style="width:10%">Precio</td>
                                 <td style="width:10%">Monto</td>
+                                <td style="width:10%">Cobertura</td>
+                                <td style="width:10%">Diferencia</td>                                                                
                                 <td style="width:10%">Opciones</td>
                             </tr>
                             <tr ng-repeat="detalle in factura.detalles">
@@ -189,6 +198,16 @@
                                 <td class="v-middle">
                                     <span e-name="servicio_monto" e-form="rowform">
                                     {{ detalle.servicio_monto | currency}}
+                                    </span>
+                                </td>                                
+                                <td class="v-middle">
+                                    <span e-name="servicio_cobertura" e-form="rowform">
+                                    {{ detalle.servicio_cobertura | currency}}
+                                    </span>
+                                </td>
+                                <td class="v-middle">
+                                    <span e-name="servicio_diferencia" e-form="rowform">
+                                    {{ detalle.servicio_diferencia | currency}}
                                     </span>
                                 </td>
                                 <td style="white-space: nowrap">
@@ -227,7 +246,7 @@
                 <div class="row text-right">
                     <div class="form-group">
                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 text-right">
-                            <label class="form-label">Sub-Total</label>
+                            <label class="form-label">Monto</label>
                             <div class="controls">
                                 <p class="form-control-static"><strong>{{factura.factura_subtotal | currency}}</strong></p>
                             </div>
@@ -235,17 +254,28 @@
                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">&nbsp;</div>
                     </div>
                 </div>
-                <!--<div class="row text-right">
+                <div class="row text-right">
                     <div class="form-group">
                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                            <label class="form-label">ITBIS</label>
+                            <label class="form-label">Cobertura</label>
                             <div class="controls">
-                                <p class="form-control-static"><strong>${{factura.factura_itbis}}</strong></p>
+                                <p class="form-control-static"><strong>${{factura.factura_cobertura | currency}}</strong></p>
                             </div>
                         </div>
                         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
                     </div>
-                </div>-->
+                </div>
+                <div class="row text-right">
+                    <div class="form-group">
+                        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
+                            <label class="form-label">Diferencia</label>
+                            <div class="controls">
+                                <p class="form-control-static"><strong>${{factura.factura_diferencia | currency}}</strong></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">&nbsp;</div>
+                    </div>
+                </div>
                 <div class="row text-right">
                     <div class="form-group">
                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
@@ -260,7 +290,7 @@
                 <div class="row text-right">
                     <div class="form-group">
                         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
-                            <label class="form-label">Total</label>
+                            <label class="form-label">Total a pagar</label>
                             <div class="controls">
                                 <p class="form-control-static"><strong>{{factura.factura_total | currency}}</strong></p>
                             </div>
@@ -323,15 +353,21 @@
                 <th style="width: 10%;">
                     CANT.
                 </th>
-                <th style="width: 60%;">
+                <th style="width: 50%;">
                     DESCRIPCI&Oacute;N                       
                 </th>
-                <th style="width: 15%;">
+                <th style="width: 10%;">
                     PRECIO                        
                 </th>
-                <th style="width: 15%;">
+                <th style="width: 10%;">
                     MONTO                        
                 </th>
+                <th style="width: 10%;">
+                    COBERTURA                        
+                </th>
+                <th style="width: 10%;">
+                    DIFERENCIA                        
+                </th>                                
             </tr>
         </thead>            
         <tbody>
@@ -348,6 +384,12 @@
                 <td>
                     {{detalle.servicio_monto | currency }}
                 </td>
+                <td>
+                    {{detalle.servicio_cobertura | currency }}
+                </td>
+                <td>
+                    {{detalle.servicio_diferencia | currency }}
+                </td>                                
             </tr>
         </tbody>
     </table>
@@ -355,6 +397,8 @@
   <div class="text-right">
       <p style="font-size: 11px;">
         MONTO : {{factura.factura_subtotal | currency }}&nbsp; <br>
+        COBERTURA : {{factura.factura_cobertura | currency }}&nbsp; <br>
+        DIFERENCIA : {{factura.factura_diferencia | currency }}&nbsp; <br>
         DESCUENTO : &nbsp;&nbsp;{{factura.factura_descuento | currency}}&nbsp; <br>
         TOTAL : {{factura.factura_total | currency }}&nbsp; <br>
       </p>
