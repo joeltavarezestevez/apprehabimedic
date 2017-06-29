@@ -1,4 +1,4 @@
-app.controller('FacturacionCtrl', ['$scope', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'servicios', 'pacientesFac', 'secuenciasFac', 'facturasFac', 'getRNCFac', function($scope, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, servicios, pacientesFac, secuenciasFac, facturasFac, getRNCFac) {
+app.controller('FacturacionCtrl', ['$scope', '$window', '$rootScope', '$state', '$filter', '$http', '$timeout', 'Notification', 'pacientes', 'servicios', 'pacientesFac', 'secuenciasFac', 'facturasFac', 'getRNCFac', function($scope, $window, $rootScope, $state, $filter, $http, $timeout, Notification, pacientes, servicios, pacientesFac, secuenciasFac, facturasFac, getRNCFac) {
     
     $scope.comprobantes = [
       {id:3, nombre:'Credito Fiscal'},

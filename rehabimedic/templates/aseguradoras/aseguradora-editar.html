@@ -90,7 +90,7 @@
                         </header>
                         <div class="content-body padding-bottom-0">
                             <div class="text-right">
-                                <a class="btn btn-primary" ng-click="agregarPlan(null,null,aseguradora.id)">
+                                <a class="btn btn-primary" ng-click="agregarPlan(null,null,aseguradora.id, null)">
                                     <i class="fa fa-plus"></i>&nbsp;Agregar plan
                                 </a>
                             </div>
@@ -99,7 +99,8 @@
                                 <uib-accordion close-others="oneAtATime">
                                     <uib-accordion-group ng-repeat="plan in aseguradora.planes">
                                         <uib-accordion-heading>
-                                            <b>{{plan.plan_descripcion}}</b>
+											<b>{{plan.plan_descripcion}}</b>
+                                            <a ng-click="agregarPlan(null,null,aseguradora.id, plan.id)">Editar</a>
                                         </uib-accordion-heading>
                                         <big><b>Listado de Servicios</b></big><br>
                                         <div class="row">

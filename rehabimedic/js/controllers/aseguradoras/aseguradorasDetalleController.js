@@ -1,39 +1,76 @@
 app.controller('ModalInstancePlanesCtrl', ['$scope', '$rootScope', '$timeout', '$state', '$uibModalInstance', 'Id', 'Notification', 'aseguradorasFac', 'planesAseguradorasFac', function($scope, $rootScope, $timeout, $state, $modalInstance, Id, Notification, aseguradorasFac, planesAseguradorasFac) {
-      
+	console.log(Id);
     $scope.aseguradora = {};
-
-    aseguradorasFac.get(parseInt(Id,10))
-    .success(function(data) {
-        $scope.aseguradora = data;
-        console.log($scope.aseguradora);
-    });   
-    
+	$scope.plan = {};
+	if(Id.plan_id == null) {
+		aseguradorasFac.get(parseInt(Id.aseguradora_id,10))
+		.success(function(data) {
+			$scope.aseguradora = data;
+			console.log($scope.aseguradora);
+		});   
+	}
+	else {
+		aseguradorasFac.get(parseInt(Id.aseguradora_id,10))
+		.success(function(data) {
+			$scope.aseguradora = data;
+			console.log($scope.aseguradora);
+		});
+		
+		planesAseguradorasFac.get(parseInt(Id.plan_id,10))
+		.success(function(data) {
+			$scope.plan = data;
+			$scope.plan.plan_porcentaje_cobertura = parseInt($scope.plan.plan_porcentaje_cobertura);
+			console.log($scope.plan);
+		});		
+    }
+	
     $scope.ok = function (Id) {
         $modalInstance.close();
     };
     
     $scope.agregarPlan = function() {
-        $scope.plan.aseguradora_id = $scope.aseguradora.id;
-        console.log($scope.plan);
-        planesAseguradorasFac.save($scope.plan)
-          .success(function(data) {
-            $modalInstance.close();
-            $timeout(function() {
-              $state.reload(); 
-            }, 1000, false);             
-            Notification({
-                message: 'Plan Agregado Correctamente!',
-                title: 'Registro Realizado',
-                delay: 5000,
-                positionX: 'center',
-                positionY: 'top'
-            }, 'success');
-        })
-        .error(function(data) {
-            console.log(data);
-        })    
-    }
-
+		if(Id.plan_id == null) {
+			$scope.plan.aseguradora_id = $scope.aseguradora.id;
+			console.log($scope.plan);
+			planesAseguradorasFac.save($scope.plan)
+			  .success(function(data) {
+				$modalInstance.close();
+				$timeout(function() {
+				  $state.reload(); 
+				}, 1000, false);             
+				Notification({
+					message: 'Plan Agregado Correctamente!',
+					title: 'Registro Realizado',
+					delay: 5000,
+					positionX: 'center',
+					positionY: 'top'
+				}, 'success');
+			})
+			.error(function(data) {
+				console.log(data);
+			})    
+		}
+		else {
+			console.log($scope.plan);
+			planesAseguradorasFac.update($scope.plan, Id.plan_id)
+			  .success(function(data) {
+				$modalInstance.close();
+				$timeout(function() {
+				  $state.reload(); 
+				}, 1000, false);             
+				Notification({
+					message: 'Plan Agregado Correctamente!',
+					title: 'Registro Realizado',
+					delay: 5000,
+					positionX: 'center',
+					positionY: 'top'
+				}, 'success');
+			})
+			.error(function(data) {
+				console.log(data);
+			}) 		
+		}
+	}
     $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
     };    
@@ -112,7 +149,7 @@ app.controller('AseguradorasDetalleCtrl', ['$scope', '$stateParams', '$window', 
         $window.history.back();
     }   
 
-    $scope.agregarPlan = function (size,windowClass,Id) {
+    $scope.agregarPlan = function (size,windowClass,Id, planId) {
       var modalInstance = $modal.open({
         templateUrl: 'templates/modal-agregarPlanAseguradora.html',
         controller: 'ModalInstancePlanesCtrl',
@@ -120,7 +157,7 @@ app.controller('AseguradorasDetalleCtrl', ['$scope', '$stateParams', '$window', 
         size: size,
         resolve: {
             Id: function () {
-            return Id;
+            return { "aseguradora_id": Id, "plan_id": planId };
          }
        }                  
       });
