@@ -21,7 +21,7 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
 
     $scope.alert = false;
     $scope.paciente = {};
-    $scope.paciente.referencia_tipo = "ninguno";
+    $scope.paciente.referencia_tipo = "doctor";
     $scope.paciente.paciente_empleo_estado = 0;
     $scope.paciente.terapias_realizadas = 0;
     $scope.paciente.seguro = 0;
