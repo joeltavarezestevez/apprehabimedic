@@ -91,7 +91,12 @@ angular.module('app')
                     .state('app.consultas', {
                         url: '/consultas',
                         templateUrl: 'templates/consultas/consultas.html',
-                        controller: 'ConsultasCtrl'
+                        controller: 'ConsultasCtrl',
+						resolve: {
+                            consultas: function(consultasFac) {
+                                return consultasFac.detalles();
+                            }
+						}							
                     })
                     .state('app.consulta-nuevo', {
                         url: '/consultas/nuevo',
@@ -248,7 +253,7 @@ angular.module('app')
                         controller: 'PacientesCtrl',
                         resolve: {                        
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.someFields();
                             }
                         }
                     })
@@ -505,6 +510,19 @@ angular.module('app')
                             }
                         }
                     })
+                    .state('app.terapias-editar', {
+                        url: '/terapias/editar/:id',
+                        templateUrl: 'templates/terapias/terapia-editar.html',
+                        controller: 'TerapiasDetalleCtrl',
+                        resolve: {
+                            pacientes: function(pacientesFac) {
+                                return pacientesFac.all();
+                            },                            
+                            terapias: function(terapiasFac) {
+                                return terapiasFac.all();
+                            }
+                        }
+                    })					
                     .state('app.terapia-sesion-nuevo', {
                         url: '/terapias/:id/sesion/nueva',
                         templateUrl: 'templates/terapias/terapia-sesion-nuevo.html',
@@ -521,7 +539,7 @@ angular.module('app')
                         controller: 'TerapiasCtrl',
                         resolve: {
                             terapias: function(terapiasFac) {
-                                return terapiasFac.all();
+                                return terapiasFac.detalles();
                             }
                         }                        
                     })
@@ -935,6 +953,27 @@ angular.module('app')
                         templateUrl: 'templates/configuracion/especialidades/especialidad-nuevo.html',
                         controller: 'EspecialidadesDetalleCtrl'                
                     })
+					
+                    .state('app.configuracion-referidores', {
+                        url: '/configuracion/referidores',
+                        templateUrl: 'templates/configuracion/referidores/referidores.html',
+                        controller: 'ReferidoresCtrl',
+                        resolve: {
+                            referidores: function(referidoresFac) {
+                                return referidoresFac.all();
+                            }
+                        }                    
+                    })
+                    .state('app.configuracion-referidores-editar', {
+                        url: '/configuracion/referidores/editar/:id',
+                        templateUrl: 'templates/configuracion/referidores/referidor-editar.html',
+                        controller: 'ReferidoresDetalleCtrl'                
+                    })
+                    .state('app.configuracion-referidores-nuevo', {
+                        url: '/configuracion/referidores/nuevo',
+                        templateUrl: 'templates/configuracion/referidores/referidor-nuevo.html',
+                        controller: 'ReferidoresDetalleCtrl'                
+                    })					
                 
                     .state('app.hos-payments', {
                         url: '/hospital/payments',

@@ -1,22 +1,15 @@
-app.factory('terapiasFac', ['$http', 'BASEURL', function($http, BASEURL) {
+app.factory('referidoresFac', ['$http', 'BASEURL', function($http, BASEURL) {
     
-    var urlBase = BASEURL + '/api/terapias';
+    var urlBase = BASEURL + '/api/referidores';
     
     return {
-        detalles : function() {
-            var promise = $http.get(urlBase + "/detalles");
-            promise.success(function(data, status, headers, conf){
-                return data;
-            });
-            return promise;            
-        }, 
         
         all : function() {
             var promise = $http.get(urlBase);
             promise.success(function(data, status, headers, conf){
                 return data;
             });
-            return promise;            
+            return promise;
         },
 
         get : function(id) {
@@ -40,15 +33,6 @@ app.factory('terapiasFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 data: $.param(data)
             });
         },
-
-        deleteNotificacion : function(data, id) {
-            return $http({
-                method: 'PUT',
-                url: urlBase + "/deleteNotificacion/" + id,
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param(data)
-            });
-        },          
         
         delete : function(id) {
             return $http.delete(urlBase + "/" + id);

@@ -18,48 +18,42 @@ app.controller('ModalInstanceConsultasCtrl', ['$scope', '$filter', '$uibModalIns
     
   }])
   
-app.controller('ConsultasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'consultasFac', 'Auth', function ($rootScope, $scope, $filter, $modal, $stateParams, $timeout, $state, Notification, consultasFac, Auth) {
+app.controller('ConsultasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal', '$stateParams', '$timeout', '$state', 'Notification', 'consultas', 'consultasFac', 'Auth', function ($rootScope, $scope, $filter, $modal, $stateParams, $timeout, $state, Notification, consultas, consultasFac, Auth) {
     
-    $scope.loading = true;
-    
-    Auth.getLoggedInUser();
     $scope.permiso = $rootScope.user.perfil_usuario_id;
     
-    //Get All Pacientes
-    consultasFac.all()
-    .success(function(data) {
-        $scope.consultas = data;
-        console.log($scope.consultas);
-        $scope.tbOptions = {
-            data: $scope.consultas,
-            aoColumns: [
-                { mData: 'id' },                              
-                {
-                    mData: null,
-                    bSortable: true,
-                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente.id + '">'+o.paciente.persona.persona_nombres+' '+ o.paciente.persona.persona_apellidos +'</a>'; }
-                },
-                {
-                    mData: null,
-                    bSortable: true,
-                    mRender: function (o) { return $filter('date')(o.consulta_fecha,'dd-MM-yyyy'); }
-                },
-                {
-                    mData: null,
-                    bSortable: true,
-                    mRender: function (o) { return o.usuario.persona.persona_nombres+' '+ o.usuario.persona.persona_apellidos; }
-                },
-                {
-                    mData: null,
-                    bSortable: false,
-                    mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/consultas/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteConsultas('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
-                }
-            ]
-        }
-        
-        $scope.loading = false;
-    })
-    
+    //Get All consultas
+    $scope.consultas = consultas.data;
+    console.log($scope.consultas);
+	$scope.tbOptions = {
+		data: $scope.consultas,
+		aoColumns: [
+			{ mData: 'id' },                              
+			{
+				mData: null,
+				bSortable: true,
+				mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente.id + '">'+o.paciente.persona_nombres+' '+ o.paciente.persona_apellidos +'</a>'; }
+			},
+			{
+				mData: null,
+				bSortable: true,
+				mRender: function (o) { return $filter('date')(o.consulta_fecha,'dd-MM-yyyy'); }
+			},
+			{
+				mData: null,
+				bSortable: true,
+				mRender: function (o) { return o.usuario.persona_nombres+' '+ o.usuario.persona_apellidos; }
+			},
+			{
+				mData: null,
+				bSortable: false,
+				mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/consultas/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteConsultas('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
+			}
+		]
+	}
+	
+	$scope.loading = false;
+
     $scope.open = function (size,windowClass,Id) {
       var modalInstance = $modal.open({
         templateUrl: 'templates/modal-deleteConsultas.html',

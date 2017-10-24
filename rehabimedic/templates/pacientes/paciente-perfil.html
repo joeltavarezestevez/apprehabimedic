@@ -39,6 +39,7 @@
                                 </h3>
                                 <p class="uprofile-title" tooltip-class="success animated fadeIn " uib-tooltip="Lugar de Nacimiento" tooltip-placement="bottom">{{paciente.persona.pais.pais_nombre}}</p>
                                 <div class="margin-left-10" style="text-align: left;">
+                                    <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Cédula" tooltip-placement="bottom"><i class="fa fa-newspaper-o"></i> {{paciente.persona.persona_cedula}}</p>
                                     <p tooltip-class="success animated fadeIn " uib-tooltip="Tipo de Sangre" tooltip-placement="bottom"><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Aseguradora" tooltip-placement="bottom"><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
                                     <p ng-hide="perfil_usuario == 3 || perfil_usuario == 4" tooltip-class="success animated fadeIn " uib-tooltip="Número de Seguridad Social" tooltip-placement="bottom"><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
@@ -287,7 +288,7 @@
                             </uib-tab>
                             <uib-tab ng-hide="perfil_usuario == 2">
                                 <uib-tab-heading>
-                                    <i class="material-icons icon-md">assignment</i> Notas
+                                    <i class="material-icons icon-md">assignment</i> Notas <span class="badge badge-success ng-binding">{{paciente.pacientes_notas_especiales.length}}</span>
                                 </uib-tab-heading>
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

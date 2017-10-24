@@ -52,23 +52,23 @@
                                         <div class="controls">
                                             <input type="text" class="form-control" placeholder="Apellidos del Paciente" id="persona_apellidos" name="persona_apellidos" ng-model="paciente.persona_apellidos" required>
                                         </div>
-                                    </div>                        
+                                    </div>								
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-controller="DatepickerDemoCtrl">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" ng-controller="DatepickerDemoCtrl">
                                         <label class="form-label" for="persona_fecha_nacimiento">Fecha de Nacimiento <span class="text-danger">*</span></label>
-                                        <span class="desc">Seleccione la fecha de nacimiento</span>
+                                        <span class="desc"></span>
                                         <div class="input-group" inputgroup>
                                             <input type="date" class="form-control datepicker" uib-datepicker-popup is-open="dtpick.opened2" min-date="'1900-01-01'" max-date="dt" datepicker-options="dateOptions" ng-required="true" id="persona_fecha_nacimiento" ng-model="paciente.persona_fecha_nacimiento" current-text="Hoy" clear-text="Limpiar" close-text="Cerrar">
                                             <span class="input-group-addon" ng-click="open($event,'opened2')"><i class="fa fa-calendar" style="color: #000;"></i></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">                            
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">                            
                                         <label class="form-label" for="field-1">Lugar de Nacimiento</label>
-                                        <span class="desc">Seleccione el lugar de nacimiento</span>
+                                        <span class="desc"></span>
                                         <div class="controls">
                                             <select ui-jq="chosen" class="form-control" ng-model="paciente.pais_id">
                                                 <option value="">Seleccione el pais</option>
@@ -76,6 +76,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <label class="form-label" for="persona_cedula">C&eacute;dula</label>
+                                        <span class="desc">Ej. 031-0535293-2, etc.</span>
+                                        <div class="controls">
+                                            <input id="persona_cedula" name="persona_cedula" type="text" class="form-control" ui-mask="999-9999999-9" placeholder="___-_______-_" ng-model="paciente.persona_cedula" model-view-value="true">
+                                        </div>
+                                    </div>										
                                 </div>                        
                             </div>
                             <div class="row">

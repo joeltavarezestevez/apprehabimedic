@@ -4,6 +4,14 @@ app.factory('pacientesFac', ['$http', 'BASEURL', function($http, BASEURL) {
     
     return {
         
+        someFields : function() {
+            var promise = $http.get(urlBase + "/someFields");
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;
+        }, 
+		
         all : function() {
             var promise = $http.get(urlBase);
             promise.success(function(data, status, headers, conf){

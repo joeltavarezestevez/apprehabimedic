@@ -110,6 +110,7 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     terapiasFac.get(parseInt($stateParams.id,10))
     .then(
         function(response){
+			response.data.terapia_sesiones = parseInt(response.data.terapia_sesiones);
             $scope.terapia = response.data;
             console.log($scope.terapia);
         },
@@ -218,6 +219,33 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
             }
         );
     }
+	
+    $scope.update = function() {
+        terapiasFac.update($scope.terapia, parseInt($stateParams.id,10))
+        .then(
+            function(response){
+                console.log("terapia actualizada!");
+                console.log(response);
+                console.log($scope.terapias);
+                $timeout(function() {
+                    $state.go('app.terapias');
+                    console.log("State Changed");
+                    Notification({
+                        message: 'Terapia actualizada correctamente!',
+                        title: 'Registro Actualizado',
+                        delay: 5000,
+                        positionX: 'center',
+                        positionY: 'top'
+                    }, 'info');                    
+                }, 1000, false);
+            },
+            function(response){
+                console.log("Error");
+                console.log(response);
+                console.log($scope.terapia);
+            }
+        );
+    }	
     
     $scope.saveSesion = function() {
         $scope.terapia_detalle.paciente_terapia_id = $scope.terapia.id;

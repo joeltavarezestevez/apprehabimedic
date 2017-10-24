@@ -3,6 +3,13 @@ app.factory('consultasFac', ['$http', 'BASEURL', function($http, BASEURL) {
     var urlBase = BASEURL + '/api/consultas';
     
     return {
+        detalles : function() {
+            var promise = $http.get(urlBase + "/detalles");
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;            
+        }, 
         
         all : function() {
             var promise = $http.get(urlBase);

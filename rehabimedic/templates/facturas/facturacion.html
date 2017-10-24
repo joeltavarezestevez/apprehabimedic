@@ -27,7 +27,9 @@
                             <div class="row">
                                 <div class="col-lg-12 text-center">
                                     <h4>
-                                        {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} <br><small>{{paciente.persona.pais.pais_nombre}}</small>
+                                        {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} 
+										<br><small>{{paciente.persona.pais.pais_nombre}}</small>
+										<br><small>{{paciente.persona.persona_cedula}}</small>
                                     </h4> 
                                 </div>
                             </div>
@@ -145,7 +147,7 @@
                             <label class="form-label" for="persona_nombres">Precio</label>
                             <span class="desc"></span>
                             <div class="controls">
-                                <input type="text" class="form-control" placeholder="Precio" id="servicio_precio" name="servicio_precio" ng-model="servicio.servicio_precio" readonly="readonly">
+                                <input type="text" class="form-control" placeholder="Precio" id="servicio_precio" name="servicio_precio" ng-model="servicio.servicio_precio">
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
