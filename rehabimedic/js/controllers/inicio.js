@@ -16,78 +16,45 @@
     });
     
     
-    app.controller('InicioCtrl', ['$scope', '$filter', 'terapias', 'pagos', 'facturas', 'consultas', function($scope, $filter, terapias, pagos, facturas, consultas) {
+    app.controller('InicioCtrl', ['$scope', '$filter', 'terapiasmensuales', 'pagos', 'facturas', 'consultasmensuales', 'terapiasFac', 'consultasFac', function($scope, $filter, terapiasmensuales, pagos, facturas, consultasmensuales, terapiasFac, consultasFac) {
         
         $scope.hoy = $filter('date')(new Date(),'yyyy-MM-dd');
         $scope.today = $filter('date')(new Date(),'dd-MM-yyyy');
         $scope.fecha = new Date();
         $scope.fechaActual = new Date()-1;
-        $scope.terapias_all = terapias.data;
-        $scope.consultas_all = consultas.data;
+        $scope.labels = [];
+        $scope.consultas = [];
+        $scope.terapias = [];
+        $scope.terapias_all = terapiasmensuales.data;
+        $scope.consultas_all = consultasmensuales.data;
         $scope.facturas_all = facturas.data;
         $scope.pagos_all = pagos.data;
-        $scope.pacientes_atendidos = 0;
+        $scope.terapiasporfecha = 0;
+        $scope.consultasporfecha = 0;
+
+        $scope.pacientesatendidos = 0;
         $scope.ingresos_recibidos = 0;
-        $scope.consultas_enero = 0;
-        $scope.consultas_febrero = 0;
-        $scope.consultas_marzo = 0;
-        $scope.consultas_abril = 0;
-        $scope.consultas_mayo = 0;
-        $scope.consultas_junio = 0;
-        $scope.consultas_julio = 0;
-        $scope.consultas_agosto = 0;
-        $scope.consultas_septiembre = 0;
-        $scope.consultas_octubre = 0;
-        $scope.consultas_noviembre = 0;
-        $scope.consultas_diciembre = 0; 
-        
-        $scope.terapias_enero = 0;
-        $scope.terapias_febrero = 0;
-        $scope.terapias_marzo = 0;
-        $scope.terapias_abril = 0;
-        $scope.terapias_mayo = 0;
-        $scope.terapias_junio = 0;
-        $scope.terapias_julio = 0;
-        $scope.terapias_agosto = 0;
-        $scope.terapias_septiembre = 0;
-        $scope.terapias_octubre = 0;
-        $scope.terapias_noviembre = 0;
-        $scope.terapias_diciembre = 0; 
-        
-        $scope.facturas_enero = 0;
-        $scope.facturas_febrero = 0;
-        $scope.facturas_marzo = 0;
-        $scope.facturas_abril = 0;
-        $scope.facturas_mayo = 0;
-        $scope.facturas_junio = 0;
-        $scope.facturas_julio = 0;
-        $scope.facturas_agosto = 0;
-        $scope.facturas_septiembre = 0;
-        $scope.facturas_octubre = 0;
-        $scope.facturas_noviembre = 0;
-        $scope.facturas_diciembre = 0; 
-        
-        $scope.pagos_enero = 0;
-        $scope.pagos_febrero = 0;
-        $scope.pagos_marzo = 0;
-        $scope.pagos_abril = 0;
-        $scope.pagos_mayo = 0;
-        $scope.pagos_junio = 0;
-        $scope.pagos_julio = 0;
-        $scope.pagos_agosto = 0;
-        $scope.pagos_septiembre = 0;
-        $scope.pagos_octubre = 0;
-        $scope.pagos_noviembre = 0;
-        $scope.pagos_diciembre = 0;        
-        
-        console.log($scope.pagos);
         
         var c=0;
-        
-        $scope.labels = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre', 'Noviembre', 'Diciembre'];
-        
+
+        for(c=0; c<$scope.consultas_all.length; c++) {
+            $scope.labels.push($scope.consultas_all[c].meses + ' ' + $scope.consultas_all[c].año);
+        }
+
+        for(c=0; c<$scope.consultas_all.length; c++) {
+            $scope.consultas.push($scope.consultas_all[c].cantidad);
+        }
+
+        for(c=0; c<$scope.consultas_all.length; c++) {
+            $scope.terapias.push($scope.terapias_all[c].cantidad);
+        }
+
+        console.log($scope.consultas_all);
+        console.log($scope.labels);
+        console.log($scope.consultas);
+        console.log($scope.terapias);
+
         $scope.series = ['Consultas Realizadas', 'Terapias Realizadas'];
-        
         
         $scope.colours =    [
             { // grey
@@ -106,9 +73,9 @@
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "#59c2e6"
             }
-        ];        
-        
-        $scope.labels_facturas_pagos = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        ];
+
+       /* $scope.labels_facturas_pagos = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         
         $scope.series_facturas_pagos = ['Ventas', 'Pagos'];
         
@@ -136,23 +103,41 @@
                 pointDotRadius : 5,
                 pointHitDetectionRadius : 10,
 
-         };
+         };*/
         
         $scope.resumen = function() {
-            $scope.ventas = 0;
+
+            $scope.fechita = $scope.fecha;
+            $scope.fechita = $scope.fechita.setDate($scope.fecha.getDate());
+            $scope.fechita = $filter('date')($scope.fechita,'yyyy-MM-dd');
+            console.log($scope.fechita);
+
+            consultasFac.consultasporfecha($scope.fechita).success(function(data) {
+                $scope.consultasporfecha = parseInt(data[0].consultasRealizadas);
+            });
+
+            terapiasFac.terapiasporfecha($scope.fechita).success(function(data) {
+                $scope.terapiasporfecha = parseInt(data[0].terapiasRealizadas);
+            });
+
+            console.log($scope.consultasporfecha);
+            console.log($scope.terapiasporfecha);
+            console.log($scope.pacientesatendidos);
+
+           /* $scope.ventas = 0;
             $scope.pagos_recibidos = 0;
             $scope.ingresos_recibidos = 0;
             $scope.terapias = [];
             $scope.consultas = [];
             $scope.facturas = [];
-            $scope.pagos = [];
-            $scope.terapias = terapias.data;
-            $scope.consultas = consultas.data;
-            $scope.facturas = facturas.data;
-            $scope.pagos = pagos.data;
+            $scope.pagos = [];*/
+            //$scope.terapias = terapias.data;
+            //$scope.consultas = consultas.data;
+            //$scope.facturas = facturas.data;
+            //$scope.pagos = pagos.data;
             
             //Get All Terapias
-            for(c=0; c<$scope.terapias.length; c++) {
+/*            for(c=0; c<$scope.terapias.length; c++) {
                 $scope.terapias[c].terapia_sesion_fecha = new Date($scope.terapias[c].terapia_sesion_fecha);
                 $scope.terapias[c].terapia_sesion_fecha.setDate($scope.terapias[c].terapia_sesion_fecha.getDate()+1);
                 $scope.terapias[c].terapia_sesion_fecha = $filter('date')($scope.terapias[c].terapia_sesion_fecha,'yyyy-MM-dd');
@@ -170,9 +155,9 @@
             //Get All Pagos
             for(c=0; c<$scope.pagos.length; c++) {
                 $scope.pagos[c].pago_fecha = $filter('date')($scope.pagos[c].pago_fecha,'yyyy-MM-dd');
-            }
+            }*/
             
-            console.log($scope.facturas);
+           /* console.log($scope.facturas);
             console.log($scope.pagos);            
             $scope.fechita = $scope.fecha;
             $scope.fechita = $scope.fechita.setDate($scope.fecha.getDate());
@@ -182,10 +167,10 @@
             $scope.consultas = $filter('filter')($scope.consultas, {consulta_fecha: $scope.fechita});        
             $scope.facturas = $filter('filter')($scope.facturas, {factura_fecha: $scope.fechita});
             $scope.pagos = $filter('filter')($scope.pagos, {pago_fecha: $scope.fechita});
-            $scope.facturas_contado = $filter('filter')($scope.facturas, {factura_tipo: "Contado"});
+            $scope.facturas_contado = $filter('filter')($scope.facturas, {factura_tipo: "Contado"});*/
             
             //Get All Pacientes Atendidos
-            $scope.pacientes_atendidos = $scope.terapias.length + $scope.consultas.length;
+            /*$scope.pacientes_atendidos = $scope.terapias.length + $scope.consultas.length;
 
             //Get All Pagos Recibidos
             for(c=0; c<$scope.pagos.length; c++) {
@@ -209,13 +194,12 @@
             console.log($scope.facturas);
             console.log($scope.pagos);
             console.log($scope.ventas);
-            console.log($scope.pagos_recibidos);
+            console.log($scope.pagos_recibidos);*/
         }
         
         $scope.resumen();        
         
-        //Get All Consultas Por Mes
-        for(c=0; c<$scope.consultas_all.length; c++) {
+        /*for(c=0; c<$scope.consultas_all.length; c++) {
             console.log($scope.consultas_all[c]);
             var mes = 0;
             $scope.consultas_all[c].consulta_fecha = new Date($scope.consultas_all[c].consulta_fecha);
@@ -259,10 +243,10 @@
             else if($scope.mes_consulta == 12){
                 $scope.consultas_diciembre++;
             }
-        }
+        }*/
         
         //Get All Terapias Por Mes
-        for(c=0; c<$scope.terapias_all.length; c++) {
+        /*for(c=0; c<$scope.terapias_all.length; c++) {
             if($scope.terapias_all[c].estado_id == 4) {   
                 $scope.terapias_all[c].terapia_sesion_fecha = new Date($scope.terapias_all[c].terapia_sesion_fecha);
                 $scope.mes_terapia = $scope.terapias_all[c].terapia_sesion_fecha.getMonth();
@@ -306,10 +290,10 @@
                     $scope.terapias_diciembre++;
                 }
             }
-        }
+        }*/
         
         //Get All Ventas por Mes
-        for(c=0; c<$scope.facturas_all.length; c++) {
+        /*for(c=0; c<$scope.facturas_all.length; c++) {
             $scope.facturas_all[c].factura_fecha = new Date($scope.facturas_all[c].factura_fecha);
             $scope.mes_factura = $scope.facturas_all[c].factura_fecha.getUTCMonth();
             $scope.mes_factura++;
@@ -353,7 +337,7 @@
         }
         
         //Get All Pagos por Mes
-        for(c=0; c<$scope.pagos_all.length; c++) {
+       for(c=0; c<$scope.pagos_all.length; c++) {
             $scope.pagos_all[c].pago_fecha = new Date($scope.pagos_all[c].pago_fecha);
             $scope.mes_pago = $scope.pagos_all[c].pago_fecha.getMonth();
             $scope.mes_pago++;
@@ -394,9 +378,10 @@
             else if($scope.mes_pago == 12){
                 $scope.pagos_diciembre = $scope.pagos_diciembre + parseFloat($scope.pagos_all[c].pago_monto);
             }
-        }        
-        
-        $scope.data = [
+        }  */
+
+        $scope.data = [$scope.consultas, $scope.terapias];
+        /*$scope.data = [
             [
                 $scope.consultas_enero,
                 $scope.consultas_febrero,
@@ -425,7 +410,7 @@
                 $scope.terapias_noviembre,
                 $scope.terapias_diciembre
             ]
-        ]
+         ]
         
         $scope.data_facturas_pagos = [ 
               [
@@ -457,9 +442,9 @@
                 $scope.pagos_diciembre                      
               ]
         ]       
-        
+
+        console.log($scope.data_facturas_pagos);*/
         console.log($scope.data);
-        console.log($scope.data_facturas_pagos);
         
         $scope.onClick = function(points, evt) {
             console.log(points, evt);

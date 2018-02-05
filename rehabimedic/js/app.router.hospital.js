@@ -45,14 +45,14 @@ angular.module('app')
                                     );
                                 }
                             ],
-                            terapias: function(terapiasDetallesFac) {
-                                return terapiasDetallesFac.all();
+                            terapiasmensuales: function(terapiasFac) {
+                                return terapiasFac.terapiasmensuales();
                             },
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
                             },
-                            consultas: function(consultasFac) {
-                                return consultasFac.all();
+                            consultasmensuales: function(consultasFac) {
+                                return consultasFac.consultasmensuales();
                             },
                             pagos: function(pagosFac) {
                                 return pagosFac.all();
@@ -506,7 +506,7 @@ angular.module('app')
                         controller: 'TerapiasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.someFields();
                             }
                         }
                     })
@@ -516,11 +516,11 @@ angular.module('app')
                         controller: 'TerapiasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },                            
+                                return pacientesFac.someFields();
+                            }/*,
                             terapias: function(terapiasFac) {
                                 return terapiasFac.all();
-                            }
+                            }*/
                         }
                     })					
                     .state('app.terapia-sesion-nuevo', {
@@ -529,7 +529,7 @@ angular.module('app')
                         controller: 'TerapiasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.someFields();
                             }
                         }                    
                     })                

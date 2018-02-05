@@ -9,8 +9,21 @@ app.factory('terapiasFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 return data;
             });
             return promise;            
-        }, 
-        
+        },
+        terapiasmensuales : function() {
+            var promise = $http.get(urlBase + "/terapiasmensuales");
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;
+        },
+        terapiasporfecha : function(fecha) {
+            var promise = $http.get(urlBase + "/terapiasporfecha/" + fecha);
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;
+        },
         all : function() {
             var promise = $http.get(urlBase);
             promise.success(function(data, status, headers, conf){

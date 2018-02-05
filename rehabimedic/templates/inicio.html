@@ -89,7 +89,7 @@
                             <div class="tile-counter bg-accent">
                                 <div class="content" tooltip-class="danger animated fadeIn " uib-tooltip="Consultas y terapias realizadas en el día" tooltip-placement="top">
                                     <i class='material-icons'>people</i>
-                                    <h2 class="number_counter">{{pacientes_atendidos}}</h2>
+                                    <h2 class="number_counter">{{consultasporfecha + terapiasporfecha}}</h2>
                                     <span>Pacientes atendidos</span>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                             <div class="tile-counter bg-primary">
                                 <div class="content" tooltip-class="success animated fadeIn " uib-tooltip="Total de consultas realizadas en el día" tooltip-placement="top">
                                     <i class='material-icons'>people</i>
-                                    <h2 class="number_counter">{{consultas.length}}</h2>
+                                    <h2 class="number_counter">{{consultasporfecha}}</h2>
                                     <span>Consultas realizadas</span>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                             <div class="tile-counter bg-warning">
                                 <div class="content" tooltip-class="info animated fadeIn " uib-tooltip="Total de terapias realizadas en el día" tooltip-placement="top">
                                     <i class='material-icons'>healing</i>
-                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{terapias.length}}</h2>
+                                    <h2 count-to="1001" value="0" duration="5" class="number_counter">{{terapiasporfecha}}</h2>
                                     <div class="clearfix"></div>
                                     <span>Terapias realizadas</span>
                                 </div>

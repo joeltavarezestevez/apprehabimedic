@@ -28,11 +28,11 @@ app.controller('ConsultasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal',
 	$scope.tbOptions = {
 		data: $scope.consultas,
 		aoColumns: [
-			{ mData: 'id' },                              
+			{ mData: 'consulta_id' },
 			{
 				mData: null,
 				bSortable: true,
-				mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente.id + '">'+o.paciente.persona_nombres+' '+ o.paciente.persona_apellidos +'</a>'; }
+				mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.paciente_id + '">'+o.paciente_nombres+' '+ o.paciente_apellidos +'</a>'; }
 			},
 			{
 				mData: null,
@@ -42,12 +42,12 @@ app.controller('ConsultasCtrl', ['$rootScope', '$scope', '$filter', '$uibModal',
 			{
 				mData: null,
 				bSortable: true,
-				mRender: function (o) { return o.usuario.persona_nombres+' '+ o.usuario.persona_apellidos; }
+				mRender: function (o) { return o.usuario_nombres+' '+ o.usuario_apellidos; }
 			},
 			{
 				mData: null,
 				bSortable: false,
-				mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/consultas/editar/'+ o.id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteConsultas('+ o.id + ')"><i class="fa fa-trash"></i></button></div>'; }
+				mRender: function (o) { return '<div class="text-center"><a class="btn btn-xs btn-info" href="#/app/consultas/editar/'+ o.consulta_id + '"><i class="fa fa-pencil"></i></a>&nbsp;<button class="btn btn-xs btn-danger ng-click-active" onclick="openModalDeleteConsultas('+ o.consulta_id + ')"><i class="fa fa-trash"></i></button></div>'; }
 			}
 		]
 	}

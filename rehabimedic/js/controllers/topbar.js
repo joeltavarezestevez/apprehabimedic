@@ -86,7 +86,7 @@ app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', 
         for (var i = 0; i < data.length; i++) {
           if(data[i].estado_id == 1 && data[i].pacientes_terapias_detalle.length > 0) {
             j = data[i].pacientes_terapias_detalle.length - 1;
-			console.log(data[i].pacientes_terapias_detalle[j]);
+			//console.log(data[i].pacientes_terapias_detalle[j]);
 			data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha = new Date(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha);
 			data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha.setDate(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha.getDate()+1);
 			if(data[i].pacientes_terapias_detalle[j].terapia_sesion_fecha <= d) {
@@ -94,7 +94,7 @@ app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', 
 			  terapiavencida.paciente = data[i].paciente;
 			  terapiavencida.terapia_sesiones = data[i].terapia_sesiones;
 			  terapiavencida.terapias_realizadas = data[i].pacientes_terapias_detalle.length;
-			  console.log(terapiavencida);
+			  //console.log(terapiavencida);
 			  $scope.terapias.push(terapiavencida);
 			}
           }
@@ -102,6 +102,7 @@ app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', 
         console.log($scope.terapias);
       })          
     }
+
     $scope.getTerapiasPendientes();
 
     $rootScope.$on('sesionRealizada', function(event) {

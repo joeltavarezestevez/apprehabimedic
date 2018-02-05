@@ -9,8 +9,21 @@ app.factory('consultasFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 return data;
             });
             return promise;            
-        }, 
-        
+        },
+        consultasmensuales : function() {
+            var promise = $http.get(urlBase + "/consultasmensuales");
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;
+        },
+        consultasporfecha : function(fecha) {
+            var promise = $http.get(urlBase + "/consultasporfecha/" + fecha);
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;
+        },
         all : function() {
             var promise = $http.get(urlBase);
             promise.success(function(data, status, headers, conf){
