@@ -10,8 +10,14 @@ app.factory('pacientesFac', ['$http', 'BASEURL', function($http, BASEURL) {
                 return data;
             });
             return promise;
-        }, 
-		
+        },
+        pacientesNombres : function() {
+            var promise = $http.get(urlBase + "/pacientesNombres");
+            promise.success(function(data, status, headers, conf){
+                return data;
+            });
+            return promise;
+        },
         all : function() {
             var promise = $http.get(urlBase);
             promise.success(function(data, status, headers, conf){

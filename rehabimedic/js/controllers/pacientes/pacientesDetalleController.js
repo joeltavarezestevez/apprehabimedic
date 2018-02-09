@@ -17,7 +17,7 @@ app.controller('ModalInstancePacienteCtrl', ['$scope', '$rootScope','$uibModalIn
     };    
 }])
 
-app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'aseguradorasFac', 'pacientesImagenesFac', 'pacientesNotasEspecialesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', 'pacientes', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, aseguradorasFac, pacientesImagenesFac, pacientesNotasEspecialesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos, pacientes){
+app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'pacientesFac', 'aseguradorasFac', 'pacientesImagenesFac', 'pacientesNotasEspecialesFac', 'aseguradoras', 'cuerpoPartes', 'enfermedades', 'estadosCiviles', 'gruposSanguineos', 'paises', 'sexos', function($scope, $modal, $state, $stateParams, $filter, $window, $timeout, Notification, pacientesFac, aseguradorasFac, pacientesImagenesFac, pacientesNotasEspecialesFac, aseguradoras, cuerpoPartes, enfermedades, estadosCiviles, gruposSanguineos, paises, sexos){
 
     $scope.alert = false;
     $scope.paciente = {};
@@ -40,7 +40,6 @@ app.controller('PacientesDetalleCtrl', ['$scope', '$uibModal', '$state', '$state
     $scope.grupos_sanguineos = gruposSanguineos.data;
     $scope.paises = paises.data;
     $scope.sexos = sexos.data;
-    $scope.pacientes = pacientes.data;
     
     $scope.closeAlert = function() {
         $scope.alert = false;

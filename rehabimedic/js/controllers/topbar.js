@@ -70,7 +70,7 @@ app.controller('ModalInstanceBorrarTerapiasCtrl', ['$scope', '$filter', '$uibMod
 }])
 
 app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', '$state', '$uibModal', 'terapiasFac', 'Notification', function($scope, $rootScope, $filter, $state, $modal, terapiasFac, Notification) {
-    $scope.getTerapiasPendientes = function() {
+   /* $scope.getTerapiasPendientes = function() {
       $scope.terapias = [];
       $scope.registro = {};
       var d = new Date();
@@ -101,12 +101,12 @@ app.controller('NotificationsDropDownCtrl', ['$scope', '$rootScope', '$filter', 
         }
         console.log($scope.terapias);
       })          
-    }
+    }*/
 
-    $scope.getTerapiasPendientes();
+    //$scope.getTerapiasPendientes();
 
     $rootScope.$on('sesionRealizada', function(event) {
-      $scope.getTerapiasPendientes();
+      //$scope.getTerapiasPendientes();
     });
              
         /*$scope.cancelCita = function (size,windowClass,Id) {

@@ -52,15 +52,15 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                 {
                     mData: null,
                     bSortable: false,
-                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
                 },
                 {
                     mData: null,
                     bSortable: true,
-                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona_nombres+' '+ o.persona_apellidos +'</a>'; }
                 },
-                { mData: 'persona.persona_telefono' },
-                { mData: 'persona.persona_correo_electronico' },
+                { mData: 'persona_telefono' },
+                { mData: 'persona_correo_electronico' },
                 { mData: 'paciente_balance' },
                 {   
                     mData: null,
@@ -78,15 +78,15 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                 {
                     mData: null,
                     bSortable: false,
-                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
                 },
                 {
                     mData: null,
                     bSortable: true,
-                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona_nombres+' '+ o.persona_apellidos +'</a>'; }
                 },
-                { mData: 'persona.persona_telefono' },
-                { mData: 'persona.persona_correo_electronico' },
+                { mData: 'persona_telefono' },
+                { mData: 'persona_correo_electronico' },
                 { mData: 'paciente_balance' },
                 {   
                     mData: null,
@@ -104,16 +104,16 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                 {
                     mData: null,
                     bSortable: false,
-                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
                 },
                 {
                     mData: null,
                     bSortable: true,
-                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona_nombres+' '+ o.persona_apellidos +'</a>'; }
                 },
-                { mData: 'persona.grupo_sanguineo.grupo_sanguineo_nombre' },
+                { mData: 'persona.grupo_sanguineo_nombre' },
                 { mData: 'persona.persona_edad' },
-                { mData: 'persona.sexo.sexo_nombre' },
+                { mData: 'persona.sexo_nombre' },
                 {   
                     mData: null,
                     bSortable: false,
@@ -130,16 +130,16 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                 {
                     mData: null,
                     bSortable: false,
-                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
+                    mRender: function (o) { return '<a class="text-center preview" href="#/app/pacientes/perfil/'+ o.id + '"><i class="fa fa-image"></i><span><img src="'+o.persona_imagen_perfil+'" class="hide-image" height="70" /></span></div>'; }
                 },
                 {
                     mData: null,
                     bSortable: true,
-                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona.persona_nombres+' '+ o.persona.persona_apellidos +'</a>'; }
+                    mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona_nombres+' '+ o.persona_apellidos +'</a>'; }
                 },
-                { mData: 'persona.grupo_sanguineo.grupo_sanguineo_nombre' },
+                { mData: 'persona.grupo_sanguineo_nombre' },
                 { mData: 'persona.persona_edad' },
-                { mData: 'persona.sexo.sexo_nombre' },
+                { mData: 'persona.sexo_nombre' },
                 {   
                     mData: null,
                     bSortable: false,

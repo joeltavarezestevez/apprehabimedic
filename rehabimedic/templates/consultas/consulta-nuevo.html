@@ -26,15 +26,50 @@
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
                                         <img src="{{paciente.persona.persona_imagen_perfil}}" width="150px">
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12 text-center">
                                         <h4>
-                                            <a href="#/app/pacientes/perfil/{{paciente.id}}">
-                                                {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} 
-                                            </a>
+                                            {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} <br><small>{{paciente.persona.pais.pais_nombre}}</small>
                                         </h4>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4 text-left">
+                                        <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
+                                        <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
+                                        <p><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
+                                        <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
+                                    </div>
+                                    <div class="col-lg-3 text-left">
+                                        <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                                        <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
+                                        <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
+                                        <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
+                                    </div>
+                                    <div class="col-lg-3 text-left">
+                                        <p ng-if="paciente.pacientes_enfermedades.length > 0">
+                                            <i class="fa fa-stethoscope"></i> <b>Enfermedades:</b>
+                                        <li ng-repeat="enfermedad in paciente.pacientes_enfermedades">
+                                            {{enfermedad.enfermedad.enfermedad_nombre}}
+                                        </li>
+                                        </p>
+                                        <p ng-if="paciente.pacientes_cirugias.length > 0">
+                                            <i class="fa fa-user-md"></i> <b>Cirug&iacute;as:</b>
+                                        <li ng-repeat="cirugia in paciente.pacientes_cirugias">
+                                            {{cirugia.cirugia_descripcion}}
+                                        </li>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-2 text-left">
+                                        <p ng-if="paciente.pacientes_fracturas.length > 0">
+                                            <i class="fa fa-wheelchair"></i> <b>Fracturas:</b>
+                                        <li ng-repeat="fractura in paciente.pacientes_fracturas">
+                                            {{fractura.cuerpo_parte.cuerpo_parte_nombre}}
+                                        </li>
+                                        </p>
                                     </div>
                                 </div>
                                 <br>
@@ -47,7 +82,7 @@
                                 <div class="controls">
                                     <select ui-jq="chosen" class="form-control" ng-model="consulta.paciente_id" required ng-change="updatePaciente(consulta.paciente_id)">
                                         <option value="">Seleccione el paciente</option>
-                                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</option>
+                                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona_nombres}} {{paciente.persona_apellidos}}</option>
                                     </select>
                                 </div>
                             </div>                         

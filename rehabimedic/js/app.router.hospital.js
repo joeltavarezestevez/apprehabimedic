@@ -104,7 +104,7 @@ angular.module('app')
                         controller: 'ConsultasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }
                         }
                     })                   
@@ -115,7 +115,7 @@ angular.module('app')
                         controller: 'ConsultasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.someFields();
                             }
                         }
                     })                
@@ -129,7 +129,7 @@ angular.module('app')
                         resolve: {
                             doctores: function(doctoresFac) {
                                 return doctoresFac.all();
-                            },                            
+                            }
                         }
                     })              
                     .state('app.doctor-nuevo', {
@@ -232,7 +232,7 @@ angular.module('app')
                         controller: 'FacturacionCtrl',
                         resolve: {                        
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             },
                             servicios: function(serviciosFac) {
                                 return serviciosFac.all();
@@ -261,41 +261,33 @@ angular.module('app')
                         url: '/pacientes/estadocuenta',
                         templateUrl: 'templates/pacientes/paciente-estado-cuenta.html',
                         controller: 'PacientesDetalleCtrl',
-                        resolve: {                        
-                            pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },
-                            aseguradoras: function(aseguradorasFac) {
-                                return aseguradorasFac.all();
-                            },
-                            cuerpoPartes: function(cuerpoPartesFac) {
-                                return cuerpoPartesFac.all();
-                            },
-                            enfermedades: function(enfermedadesFac) {
-                                return enfermedadesFac.all();
-                            },
-                            estadosCiviles: function(estadosCivilesFac) {
-                                return estadosCivilesFac.all();
-                            },
-                            gruposSanguineos: function(gruposSanguineosFac) {
-                                return gruposSanguineosFac.all();
-                            },
-                            paises: function(paisesFac) {
-                                return paisesFac.all();
-                            },
-                            sexos: function(sexosFac) {
-                                return sexosFac.all();
-                            }                            
+                        aseguradoras: function(aseguradorasFac) {
+                            return aseguradorasFac.all();
+                        },
+                        cuerpoPartes: function(cuerpoPartesFac) {
+                            return cuerpoPartesFac.all();
+                        },
+                        enfermedades: function(enfermedadesFac) {
+                            return enfermedadesFac.all();
+                        },
+                        estadosCiviles: function(estadosCivilesFac) {
+                            return estadosCivilesFac.all();
+                        },
+                        gruposSanguineos: function(gruposSanguineosFac) {
+                            return gruposSanguineosFac.all();
+                        },
+                        paises: function(paisesFac) {
+                            return paisesFac.all();
+                        },
+                        sexos: function(sexosFac) {
+                            return sexosFac.all();
                         }
                     })
                     .state('app.paciente-nuevo', {
                         url: '/pacientes/nuevo',
                         templateUrl: 'templates/pacientes/paciente-nuevo.html',
                         controller: 'PacientesDetalleCtrl',
-                        resolve: {    
-                            pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },                            
+                        resolve: {
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -324,9 +316,6 @@ angular.module('app')
                         templateUrl: 'templates/pacientes/paciente-editar.html',
                         controller: 'PacientesDetalleCtrl',
                         resolve: {
-                            pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },                            
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -360,9 +349,6 @@ angular.module('app')
                                     return uiLoad.load(['../bower_components/font-awesome/css/font-awesome.css']);
                                 }
                             ],
-                            pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },                            
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -396,9 +382,6 @@ angular.module('app')
                                     return uiLoad.load(['../bower_components/font-awesome/css/font-awesome.css']);
                                 }
                             ],
-                            pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
-                            },                            
                             aseguradoras: function(aseguradorasFac) {
                                 return aseguradorasFac.all();
                             },
@@ -506,7 +489,7 @@ angular.module('app')
                         controller: 'TerapiasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.someFields();
+                                return pacientesFac.pacientesNombres();
                             }
                         }
                     })
@@ -529,7 +512,7 @@ angular.module('app')
                         controller: 'TerapiasDetalleCtrl',
                         resolve: {
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.someFields();
+                                return pacientesFac.pacientesNombres();
                             }
                         }                    
                     })                
@@ -656,7 +639,7 @@ angular.module('app')
                                 return consultasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })
@@ -669,7 +652,7 @@ angular.module('app')
                                 return consultasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })                
@@ -702,7 +685,7 @@ angular.module('app')
                                 return facturasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })
@@ -715,7 +698,7 @@ angular.module('app')
                                 return facturasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })
@@ -728,7 +711,7 @@ angular.module('app')
                                 return facturasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })                
@@ -741,7 +724,7 @@ angular.module('app')
                                 return facturasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })
@@ -834,7 +817,7 @@ angular.module('app')
                                 return terapiasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })
@@ -847,7 +830,7 @@ angular.module('app')
                                 return terapiasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })
@@ -860,7 +843,7 @@ angular.module('app')
                                 return terapiasFac.all();
                             },
                             pacientes: function(pacientesFac) {
-                                return pacientesFac.all();
+                                return pacientesFac.pacientesNombres();
                             }                            
                         }
                     })                

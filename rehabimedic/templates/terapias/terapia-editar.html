@@ -13,7 +13,7 @@
         </ol>
         <div class="alert ng-isolate-scope alert-danger alert-dismissible" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissible' : null]" role="alert" type="danger minimal" ng-hide="!alert">
             <button type="button" class="close" ng-click="closeAlert()">
-                <span aria-hidden="true">×</span>
+                <span aria-hidden="true">ï¿½</span>
                 <span class="sr-only">Close</span>
             </button>
             <div>
@@ -33,68 +33,52 @@
                 </header>
                 <div class="content-body padding-bottom-0">
                     <div class="row well">
-                        <div class="form-group" ng-if="consulta.paciente_id">
+                        <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="row">
-                                    <div class="col-lg-12 text-center">
-                                        <img src="{{paciente.persona.persona_imagen_perfil}}" width="150px">
-                                    </div>                                    
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 text-center">
-                                        <h4>
-                                            {{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}} <br><small>{{paciente.persona.pais.pais_nombre}}</small>
-                                        </h4> 
+                                <div class="col-lg-4 text-left">
+                                    <label class="form-label" for="field-1">Paciente</label>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <img src="{{terapia.paciente.persona.persona_imagen_perfil}}" width="150px">
+                                            <h4>
+                                                <a href="#/app/pacientes/perfil/{{terapia.paciente.id}}">
+                                                    {{terapia.paciente.persona.persona_nombres}} {{terapia.paciente.persona.persona_apellidos}}
+                                                </a>
+                                                <br>
+                                            </h4>
+                                        </div>
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-4 text-left">
-                                        <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
-                                        <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
-                                        <p><i class="fa fa-envelope"></i> {{paciente.persona.persona_correo_electronico}}</p>
-                                        <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
-                                    </div>
-                                    <div class="col-lg-3 text-left">
-                                        <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
-                                        <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}}</p>
-                                        <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
-                                        <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>
-                                    </div>
-                                    <div class="col-lg-3 text-left">
-                                        <p ng-if="paciente.pacientes_enfermedades.length > 0">
-                                            <i class="fa fa-stethoscope"></i> <b>Enfermedades:</b>
-                                            <li ng-repeat="enfermedad in paciente.pacientes_enfermedades">
-                                                {{enfermedad.enfermedad.enfermedad_nombre}}
-                                            </li>
-                                        </p>
-                                        <p ng-if="paciente.pacientes_cirugias.length > 0">
-                                            <i class="fa fa-user-md"></i> <b>Cirug&iacute;as:</b>
-                                            <li ng-repeat="cirugia in paciente.pacientes_cirugias">
-                                                {{cirugia.cirugia_descripcion}}
-                                            </li>              
-                                        </p>
-                                    </div>
-                                    <div class="col-lg-2 text-left">
-                                        <p ng-if="paciente.pacientes_fracturas.length > 0">
-                                            <i class="fa fa-wheelchair"></i> <b>Fracturas:</b>
-                                            <li ng-repeat="fractura in paciente.pacientes_fracturas">
-                                                {{fractura.cuerpo_parte.cuerpo_parte_nombre}}
-                                            </li>                                            
-                                        </p>
+                                <div class="col-lg-4 text-left">
+                                    <label class="form-label" for="field-1">Doctor</label>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <img src="{{terapia.usuario.persona.persona_imagen_perfil}}" width="150px">
+                                            <h4>
+                                                {{terapia.usuario.persona.persona_nombres}} {{terapia.usuario.persona.persona_apellidos}}
+                                                <br>
+                                            </h4>
+                                        </div>
                                     </div>
                                 </div>
-                                <br>
+                                <div class="col-lg-4 text-left">
+                                    <label class="form-label" for="field-1">Fecha</label>
+                                    <br>
+                                    <label>{{terapia.paciente_terapia_fecha |date:'dd/MM/yyyy'}}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <label class="form-label" for="field-1">Paciente <span class="text-danger">*</span></label>
-                                <span class="desc">Seleccione el paciente que está realizando la consulta</span>
+                                <span class="desc">Seleccione el paciente que estÃ¡ realizando la consulta</span>
                                 <div class="controls">
                                     <select ui-jq="chosen" class="form-control" ng-model="terapia.paciente_id" required ng-change="updatePaciente(terapia.paciente_id)">
                                         <option value="">Seleccione el paciente</option>
-                                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona.persona_nombres}} {{paciente.persona.persona_apellidos}}</option>
+                                        <option ng-repeat="paciente in pacientes" value="{{paciente.id}}">{{paciente.persona_nombres}} {{paciente.persona_apellidos}}</option>
                                     </select>
                                 </div>
                             </div>                         
@@ -105,7 +89,7 @@
                         <div class="form-group">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <label class="form-label" for="terapia_sesiones">Cantidad de Sesiones <span class="text-danger">*</span></label>
-                                <span class="desc">Escriba la cantidad de sesiones que durará la terapia</span>
+                                <span class="desc">Escriba la cantidad de sesiones que durarï¿½ la terapia</span>
                                 <div class="controls">
                                     <input id="terapia_sesiones" name="terapia_sesiones" ui-jq="TouchSpin" type="number" value="10" class="form-control" data-min='0' data-max="365" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="terapia.terapia_sesiones" required>
                                 </div>
@@ -159,7 +143,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label class="form-label" for="terapia_semanas">Cantidad de Semanas <span class="text-danger">*</span></label>
-                                            <span class="desc">Escriba la cantidad de semanas de duración de la terapia</span>
+                                            <span class="desc">Escriba la cantidad de semanas de duraciï¿½n de la terapia</span>
                                             <div class="controls">
                                                 <input id="terapia_semanas" name="terapia_semanas" ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="52" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="terapia.terapia_semanas" required ng-change="resumen()">
                                             </div>                                
@@ -171,7 +155,7 @@
                                     <div class="form-group">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label class="form-label" for="terapia_sesiones_duracion">Duraci&oacute;n de Sesiones <span class="text-danger">*</span></label>
-                                            <span class="desc">Escriba el tiempo de duración de cada sesi&oacute;n en horas</span>
+                                            <span class="desc">Escriba el tiempo de duraciï¿½n de cada sesi&oacute;n en horas</span>
                                             <div class="controls">
                                                 <input id="terapia_sesiones_duracion" name="terapia_sesiones_duracion" ui-jq="TouchSpin" type="text" value="10" class="form-control" data-min='0' data-max="12" data-verticalbuttons="true" data-verticalupclass="fa fa-plus" data-verticaldownclass="fa fa-minus" ng-model="terapia.terapia_sesiones_duracion" required ng-change="resumen()">
                                             </div>                                

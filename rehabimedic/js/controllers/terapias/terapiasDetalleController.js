@@ -1,6 +1,7 @@
 app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$stateParams', '$filter' ,'$window', '$timeout', 'Notification', 'terapiasFac', 'terapiasDetallesFac', 'pacientes', 'pacientesFac', function($scope, $rootScope, $state, $stateParams, $filter, $window, $timeout, Notification, terapiasFac, terapiasDetallesFac, pacientes, pacientesFac) {
     
     $scope.selected = [];
+    //$scope.paciente = [];
     $scope.pacientes = pacientes.data;
     $scope.diamayor = 0;
     $scope.terapia = {};
@@ -10,6 +11,8 @@ app.controller('TerapiasDetalleCtrl', ['$scope', '$rootScope', '$state', '$state
     //$scope.cita = {};
     $scope.detalle = {};
     console.log($rootScope.user);
+    console.log("hola");
+    console.log($scope.pacientes);
     $scope.terapia_detalle.terapia_sesion_fecha = $filter('date')(new Date(),'yyyy-MM-dd');
     
     $scope.hstep = 1;
