@@ -221,6 +221,11 @@ angular.module('app')
                         templateUrl: 'templates/facturas/facturas.html',
                         controller: 'FacturasCtrl',
                         resolve: {
+                            deps: ['$ocLazyLoad',
+                                function($ocLazyLoad) {
+                                    return $ocLazyLoad.load('js/controllers/facturas/facturasController.js');
+                                }
+                            ],
                             facturas: function(facturasFac) {
                                 return facturasFac.all();
                             }
@@ -958,48 +963,6 @@ angular.module('app')
                         controller: 'ReferidoresDetalleCtrl'                
                     })					
                 
-                    .state('app.hos-payments', {
-                        url: '/hospital/payments',
-                        templateUrl: 'partials/hos-payments.html'
-                    })  
-                    .state('app.hos-payment-add', {
-                        url: '/hospital/payment-add',
-                        templateUrl: 'partials/hos-payment-add.html',
-                        controller: 'HospitalPaymentAddCtrl',
-                        resolve: {
-                            deps: ['$ocLazyLoad',
-                                function($ocLazyLoad) {
-                                    return $ocLazyLoad.load('xeditable').then(
-                                        function() {
-                                            return $ocLazyLoad.load('js/controllers/facturas/facturacion.js');
-                                        }
-                                    );
-                                }
-                            ]
-                        }
-                    })
-                    .state('app.hos-patient-invoice', {
-                        url: '/hospital/patient-invoice',
-                        templateUrl: 'templates/hos-patient-invoice.html'
-                    })   
-                    .state('app.hos-events', {
-                        url: '/hospital/events',
-                        templateUrl: 'partials/hos-events.html',
-                        resolve: {
-                            deps: ['$ocLazyLoad', 'uiLoad',
-                                function($ocLazyLoad, uiLoad) {
-                                    return uiLoad.load(
-                                        JQ_CONFIG.fullcalendar.concat('js/controllers/hos-events.js')
-                                    ).then(
-                                        function() {
-                                            return $ocLazyLoad.load('ui.calendar');
-                                        }
-                                    )
-                                }
-                            ]
-                        }
-                    })
-
                     .state('app.hos-centres', {
                         url: '/hospital/centres',
                         templateUrl: 'partials/hos-centres.html',
@@ -1026,34 +989,8 @@ angular.module('app')
                                 }
                             ]
                         }
-                    }) 
-                    .state('app.hos-report-hospital', {
-                        url: '/hospital/report-hospital',
-                        templateUrl: 'partials/hos-report-hospital.html',
-                        resolve: {
-                            deps: ['$ocLazyLoad',
-                                function($ocLazyLoad) {
-                                    return $ocLazyLoad.load('chart.js').then(
-                                        function() {
-                                            return $ocLazyLoad.load('js/controllers/hos-report-hospital.js');
-                                        }
-                                    );
-                                }
-                            ]
-                        }
-                    })
-                    .state('app.hos-report-sales', {
-                        url: '/hospital/report-sales',
-                        templateUrl: 'partials/hos-report-sales.html',
-                        resolve: {
-                            deps: ['$ocLazyLoad',
-                                function($ocLazyLoad) {
-                                    return $ocLazyLoad.load(['js/controllers/hos-report-sales.js']);
-                                }
-                            ]
-                        }
-                    })                 
-                
+                    })                
+               
             }
         ]
     );

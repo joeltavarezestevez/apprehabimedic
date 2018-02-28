@@ -77,7 +77,16 @@
                                     <i class="material-icons icon-md">person</i>Info
                                 </uib-tab-heading>
                                 <big><b>Informaci&oacute;n General</b></big>
-                                <hr>                                
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div ng-hide="perfil_usuario == 3 || perfil_usuario == 4">
+                                            <big><b>Referido Por:</b></big>
+                                                {{paciente.paciente_referencia.persona_referencia}} ({{paciente.paciente_referencia.referencia_tipo}})
+                                        </div>
+									</div>
+								</div>	
+								<br>								
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div ng-hide="perfil_usuario == 3 || perfil_usuario == 4">

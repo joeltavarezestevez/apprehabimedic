@@ -49,6 +49,14 @@
                                 </div>
                                 <br>
                                 <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <h4>
+                                            Referido por: {{paciente.paciente_referencia.persona_referencia}} ({{paciente.paciente_referencia.referencia_tipo}})
+                                        </h4>
+                                    </div>
+                                </div>
+                                <br>								
+                                <div class="row">
                                     <div class="col-lg-4 text-left">
                                         <p><i class="fa fa-birthday-cake"></i> {{fecha_nacimiento}} ({{paciente.persona.persona_edad}} años)</p>
                                         <p><i class="fa fa-phone"></i> {{paciente.persona_celular}}</p>
