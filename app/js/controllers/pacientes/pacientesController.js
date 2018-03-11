@@ -60,7 +60,7 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                     mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona_nombres+' '+ o.persona_apellidos +'</a>'; }
                 },
                 { mData: 'persona_telefono' },
-				{ mData: 'persona_referencia' },
+				{ mData: 'referidor_nombre' },
                 { mData: 'paciente_balance' },
                 {   
                     mData: null,
@@ -86,7 +86,7 @@ app.controller('PacientesCtrl', ['$scope', '$rootScope', '$uibModal', '$statePar
                     mRender: function (o) { return '<a class="text-center" href="#/app/pacientes/perfil/'+ o.id + '">'+o.persona_nombres+' '+ o.persona_apellidos +'</a>'; }
                 },
                 { mData: 'persona_telefono' },				
-				{ mData: 'persona_referencia' },				
+				{ mData: 'referidor_nombre' },
                 { mData: 'paciente_balance' },
                 {   
                     mData: null,

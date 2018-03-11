@@ -43,7 +43,7 @@
                                     <p><i class="fa fa-map-marker"></i> {{paciente.persona.persona_direccion}}</p>
                                 </div>
                                 <div class="col-lg-5 text-left">
-                                    <p><i class="fa fa-tint"></i> {{paciente.persona.grupo_sanguineo.grupo_sanguineo_nombre}}</p>
+                                    <p><i class="fa fa-tint"></i> Referido por: {{paciente.paciente_referidor.referidor.referidor_nombre}} ({{paciente.paciente_referidor.referidor.referidor_tipo}})</p>
                                     <p><i class="fa fa-building"></i> {{paciente.aseguradora.aseguradora_nombre}} - {{paciente.plan.plan_descripcion}}</p>
                                     <p><i class="fa fa-sort-numeric-asc"></i> {{paciente.paciente_nss}}</p>
                                     <p><i class="fa fa-usd"></i> {{paciente.paciente_balance}}</p>

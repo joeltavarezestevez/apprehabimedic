@@ -1,7 +1,7 @@
 var app =  angular.module('app')
 
-  .constant("BASEURL", "http://192.168.8.122")
-  //.constant("BASEURL", "https://rehabimedic.app/rehabimedic/public/index.php")
+ // .constant("BASEURL", "http://192.168.8.122")
+  .constant("BASEURL", "https://rehabimedic.app/rehabimedic/public/index.php")
   //.constant("BASEURL", "https://test-dbrehabimedic.rehabimedic.local")
 
   .config(
